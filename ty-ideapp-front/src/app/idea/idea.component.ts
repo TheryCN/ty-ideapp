@@ -11,10 +11,14 @@ export class IdeaComponent implements OnInit {
 
   @Input() idea:Idea;
 
+  ratingArray:number[];
+
+  editable:boolean = false;
+
   constructor() { }
 
   ngOnInit() {
-
+    this.ratingArray = Array(this.idea.rating).fill().map((x,i)=>i);
   }
 
 }
