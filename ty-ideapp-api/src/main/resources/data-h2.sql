@@ -1,7 +1,15 @@
 -- Populate Workspace
 INSERT INTO Workspace(WKS_NAME) VALUES('MyWorkspace');
 
--- Populate Ideas
+-- Populate Ideas of MyWorkspace
 INSERT INTO Idea(IDA_NAME, IDA_DESCRIPTION, IDA_RATING, IDA_FEASIBILITY, IDA_WKS_ID) VALUES('Change it?#1', 'Change it?#1', 3, 'NORMAL', 1);
 INSERT INTO Idea(IDA_NAME, IDA_DESCRIPTION, IDA_RATING, IDA_FEASIBILITY, IDA_WKS_ID) VALUES('Change it?#2', 'Change it?#2', 4, 'NORMAL', 1);
 INSERT INTO Idea(IDA_NAME, IDA_DESCRIPTION, IDA_RATING, IDA_FEASIBILITY, IDA_WKS_ID) VALUES('Change it?#3', 'Change it?#3', 5, 'NORMAL', 1);
+
+-- Populate Workspace
+INSERT INTO Workspace(WKS_NAME) VALUES('AnotherWorkspace');
+
+-- Populate Ideas of AnotherWorkspace
+INSERT INTO Idea(IDA_NAME, IDA_DESCRIPTION, IDA_RATING, IDA_FEASIBILITY, IDA_WKS_ID) VALUES('Change it?#4', 'Change it?#4', 3, 'NORMAL', 2);
+INSERT INTO Idea(IDA_NAME, IDA_DESCRIPTION, IDA_RATING, IDA_FEASIBILITY, IDA_WKS_ID) VALUES('Change it?#5', 'Change it?#5', 4, 'NORMAL', 2);
+INSERT INTO Idea(IDA_NAME, IDA_DESCRIPTION, IDA_RATING, IDA_FEASIBILITY, IDA_WKS_ID) VALUES('Change it?#6', 'Change it?#6', 5, 'NORMAL', 2);
