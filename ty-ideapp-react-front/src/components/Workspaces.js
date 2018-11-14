@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import Ideas from './Ideas.js';
+import Ideas from '../containers/Ideas.js';
 
 class Workspaces extends Component {
   constructor(props) {

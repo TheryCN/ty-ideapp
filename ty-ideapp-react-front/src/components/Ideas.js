@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import {List, ListItem} from 'material-ui/List';
 
 class Ideas extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {ideas: []};
-  }
 
-  // Wait until props available
-  componentWillReceiveProps(nextProps){
-    axios.get('/api/workspaces/'+nextProps.workspaceId+'/ideas').then(response => {
-      this.setState({ideas: response.data._embedded.ideas});
-    });
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(prevProps.workspaceId !== this.props.workspaceId) {
+      this.props.loadHandler(this.props.workspaceId);
+    }
   }
 
   render() {
-    const listItems = this.state.ideas.map((idea) => <ListItem primaryText={idea.name} secondaryText={idea.description} />);
+    const listItems = this.props.ideas.map((idea) => <ListItem primaryText={idea.name} secondaryText={idea.description} />);
 
     return (
       <div>
