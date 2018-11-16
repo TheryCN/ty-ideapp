@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import './App.css';
 import 'typeface-roboto';
-import logo from './assets/ideapp.PNG';
 import theme from './theme.js';
 
 import Header from './components/Header.js';
