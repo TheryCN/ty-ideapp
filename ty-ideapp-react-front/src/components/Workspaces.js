@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 import Ideas from '../containers/Ideas.js';
 
 class Workspaces extends Component {
   constructor(props) {
     super(props);
-    this.state = {workspaces: []};
+    this.state = {workspaces: [], value: 0};
   }
 
   componentDidMount() {
@@ -16,24 +18,29 @@ class Workspaces extends Component {
     });
   }
 
-  handleChange = (event, index, value) => this.setState({value});
+  handleChange = (event, index, value) => this.setState({value: event.target.value});
 
   render() {
-    const listItems = this.state.workspaces.map((workspace) => <MenuItem value={workspace.id} primaryText={workspace.name} />);
+    const listItems = this.state.workspaces.map((workspace) => <MenuItem key={workspace.id} value={workspace.id}>{workspace.name}</MenuItem>);
 
     // Ideas is a subelement of Workspaces only because props are readonly from childs
     return (
       <div>
-        <SelectField
-          floatingLabelText="Workspaces"
-          value={this.state.value}
-          onChange={this.handleChange}
-          autoWidth={true}
-        >
-          {listItems}
-        </SelectField>
+        <FormControl>
+          <InputLabel htmlFor="workspacesId">Workspaces</InputLabel>
+          <Select
+            value={this.state.value}
+            onChange={this.handleChange}
+            inputProps={{
+              name: 'value',
+              id: 'workspacesId'
+            }}
+          >
+            {listItems}
+          </Select>
 
-        <Ideas workspaceId={this.state.value} />
+          <Ideas workspaceId={this.state.value} />
+        </FormControl>
       </div>
     );
   }
