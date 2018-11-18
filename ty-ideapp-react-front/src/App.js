@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import Grid from '@material-ui/core/Grid';
 import './App.css';
 import 'typeface-roboto';
 import theme from './theme.js';
@@ -13,12 +14,14 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">
-          <div>
-            <Header />
-          </div>
-          <div>
-            <Workspaces />
-          </div>
+          <Grid container>
+            <Grid item xs={12} sm={12}>
+                <Header />
+            </Grid>
+            <Grid item xs={12} sm={12}>
+                <Workspaces />
+            </Grid>
+          </Grid>
         </div>
       </MuiThemeProvider>
     );
