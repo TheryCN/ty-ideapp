@@ -7,6 +7,7 @@ import theme from './theme.js';
 
 import Header from './components/Header.js';
 import Workspaces from './components/Workspaces.js';
+import Idea from './containers/Idea.js';
 
 class App extends Component {
   render() {
@@ -18,8 +19,11 @@ class App extends Component {
             <Grid item xs={12} sm={12}>
                 <Header />
             </Grid>
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={3} sm={3}>
                 <Workspaces />
+            </Grid>
+            <Grid item xs={9} sm={9}>
+                <Idea />
             </Grid>
           </Grid>
         </div>

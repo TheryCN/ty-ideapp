@@ -5,7 +5,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Ideas from '../containers/Ideas.js';
-import Idea from '../containers/Idea.js';
 
 class Workspaces extends Component {
   constructor(props) {
@@ -41,7 +40,6 @@ class Workspaces extends Component {
           </Select>
 
           <Ideas workspaceId={this.state.value} />
-          <Idea />
         </FormControl>
       </div>
     );
