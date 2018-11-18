@@ -1,9 +1,11 @@
-import { FETCH_IDEAS } from '../actions/types';
+import { FETCH_IDEAS, SELECT_IDEA } from '../actions/types';
 
-const ideas = (state = [], action) => {
+const ideas = (state = {ideas: [], selectedIndex: 0}, action) => {
   switch (action.type) {
+    case SELECT_IDEA:
+      return Object.assign({}, state, {selectedIndex: action.selectedIndex});
     case FETCH_IDEAS:
-      return action.ideas;
+      return Object.assign({}, state, {ideas: action.ideas});
     default:
       return state;
   }

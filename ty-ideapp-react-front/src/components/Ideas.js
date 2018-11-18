@@ -15,8 +15,9 @@ class Ideas extends Component {
   }
 
   render() {
-    const listItems = this.props.ideas.map((idea) =>
-    <ListItem button key={idea.id}>
+    const listItems = this.props.ideas.map((idea, index) =>
+    <ListItem button selected={this.props.selectedIndex === index} key={idea.id}
+      onClick={event => this.props.clickHandler(index)}>
       <Avatar className={'rating-' + idea.rating}>
       </Avatar>
       <ListItemText primary={idea.name} secondary={idea.description} />
