@@ -1,0 +1,19 @@
+.rating-1 {
+  background-color: rgb(255,0,0);
+}
+
+.rating-2 {
+  background-color: rgba(255,0,0,0.5);
+}
+
+.rating-3 {
+  background-color: rgb(205,127,50);
+}
+
+.rating-4 {
+  background-color: rgb(192,192,192);
+}
+
+.rating-5 {
+  background-color: rgb(255,215,0);
+}
