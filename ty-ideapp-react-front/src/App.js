@@ -19,10 +19,10 @@ class App extends Component {
             <Grid item xs={12} sm={12}>
                 <Header />
             </Grid>
-            <Grid item xs={3} sm={3}>
+            <Grid item xs={3} sm={3} className="left-layout">
                 <Workspaces />
             </Grid>
-            <Grid item xs={9} sm={9}>
+            <Grid item xs={9} sm={9} className="mid-layout">
                 <Idea />
             </Grid>
           </Grid>
