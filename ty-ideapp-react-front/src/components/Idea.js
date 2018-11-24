@@ -8,6 +8,7 @@ class Idea extends Component {
       return (
         <div>
           <div>{idea.name}</div>
+          <div>{idea.subTitle}</div>
           <div>{idea.description}</div>
           <div>{idea.rating}</div>
           <div>{idea.feasibility}</div>

@@ -20,7 +20,7 @@ class Ideas extends Component {
       onClick={event => this.props.clickHandler(index)}>
       <Avatar className={'rating-' + idea.rating}>
       </Avatar>
-      <ListItemText primary={idea.name} secondary={idea.description} />
+      <ListItemText primary={idea.name} secondary={idea.subTitle} />
     </ListItem>);
 
     return (
