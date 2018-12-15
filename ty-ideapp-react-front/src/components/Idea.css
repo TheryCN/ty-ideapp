@@ -16,3 +16,12 @@
 .idea-content .subtitle {
   font-size: 15px;
 }
+
+
+.idea .actions {
+  float: right;
+}
+
+.idea {
+  max-width: 700px;
+}
