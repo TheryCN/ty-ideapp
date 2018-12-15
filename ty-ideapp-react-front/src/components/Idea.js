@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import Grid from '@material-ui/core/Grid';
 import IdeaBackground from '../assets/idea-background.jpg';
 
+import './Idea.css';
+
 const ideaBackgroundStyle = {
-  background: "url(" + IdeaBackground + ") no-repeat fixed center",
-  height: '80vh'
+  background: "url(" + IdeaBackground + ") no-repeat fixed center"
 };
 
 class Idea extends Component {
@@ -15,29 +15,17 @@ class Idea extends Component {
       if(idea) {
       return (
         <div className="idea" style={ideaBackgroundStyle}>
-          <Grid container>
-            <Grid item xs={12} sm={12}>
-              <div>{idea.name}</div>
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <div>{idea.subTitle}</div>
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <div>{idea.description}</div>
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <div>{idea.rating}</div>
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <div>{idea.feasibility}</div>
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <div>{moment(idea.createdOn).format('LLL')}</div>
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <div>{moment(idea.updatedOn).format('LLL')}</div>
-            </Grid>
-          </Grid>
+          <div container className="idea-content">
+            <div className="title-content">
+              <span className="title">{idea.name}</span>
+              <span className="subtitle">{idea.subTitle}</span>
+            </div>
+            <div>{idea.description}</div>
+            <div>{idea.rating}</div>
+            <div>{idea.feasibility}</div>
+            <div>{moment(idea.createdOn).format('LLL')}</div>
+            <div>{moment(idea.updatedOn).format('LLL')}</div>
+          </div>
         </div>
       );
     } else {
