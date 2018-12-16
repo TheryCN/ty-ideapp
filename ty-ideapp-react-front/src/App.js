@@ -6,7 +6,7 @@ import 'typeface-roboto';
 import theme from './theme.js';
 
 import Header from './components/Header.js';
-import Workspaces from './components/Workspaces.js';
+import Workspaces from './containers/Workspaces.js';
 import Idea from './containers/Idea.js';
 
 class App extends Component {

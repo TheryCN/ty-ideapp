@@ -3,9 +3,9 @@ import Idea from '../components/Idea';
 import { selectIdeaActionType } from '../actions/ideaActions';
 
 const mapStateToProps = state => ({
-  ideas: state.ideas,
-  selectedIndex: state.selectedIndex,
-  actionType: state.actionType
+  ideas: state.ideas.ideas,
+  selectedIndex: state.ideas.selectedIndex,
+  actionType: state.ideas.actionType
 })
 
 const mapDispatchToProps = dispatch => ({

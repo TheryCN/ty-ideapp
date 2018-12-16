@@ -3,8 +3,9 @@ import { fetchIdeasCall, selectIdea } from '../actions/ideaActions';
 import Ideas from '../components/Ideas';
 
 const mapStateToProps = state => ({
-  ideas: state.ideas,
-  selectedIndex: state.selectedIndex
+  ideas: state.ideas.ideas,
+  selectedIndex: state.ideas.selectedIndex,
+  workspaceId: state.workspaces.selectedIndex
 })
 
 const mapDispatchToProps = dispatch => ({

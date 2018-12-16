@@ -1,3 +1,7 @@
+// Workspace actions
+export const FETCH_WORKSPACES = 'FETCH_WORKSPACES';
+export const SELECT_WORKSPACE = 'SELECT_WORKSPACE';
+
 // Idea actions
 export const FETCH_IDEAS = 'FETCH_IDEAS';
 export const SORT_IDEAS = 'SORT_IDEAS';
