@@ -5,33 +5,50 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import IdeaBackground from '../assets/idea-background.jpg';
-import IdeaView from './IdeaView.js';
+import IdeaView from './IdeaView';
+import IdeaAdd from '../containers/IdeaAdd';
 import './Idea.css';
 
 const ideaBackgroundStyle = {
   background: "url(" + IdeaBackground + ") no-repeat fixed center"
 };
 
+export const ACTION_TYPE_ADD = 'ADD';
+export const ACTION_TYPE_EDIT = 'EDIT';
+export const ACTION_TYPE_DELETE = 'DELETE';
+
 class Idea extends Component {
 
   render() {
     const idea = this.props.ideas[this.props.selectedIndex];
       if(idea) {
+        let ideaViewAction;
+        switch(this.props.actionType) {
+          case ACTION_TYPE_EDIT:
+            ideaViewAction = <IdeaView idea={idea} />;
+            break;
+          case ACTION_TYPE_ADD:
+            ideaViewAction = <IdeaAdd />;
+            break;
+          default:
+            ideaViewAction = <IdeaView idea={idea} />;
+            break;
+        }
       return (
         <div className="idea" style={ideaBackgroundStyle}>
           <div className="actions">
-            <IconButton aria-label="Edit Idea">
+            <IconButton aria-label="Edit Idea" onClick={() => this.props.selectActionTypeHandler(ACTION_TYPE_EDIT)}>
               <EditIcon />
             </IconButton>
-            <IconButton aria-label="Add Idea">
+            <IconButton aria-label="Add Idea" onClick={() => this.props.selectActionTypeHandler(ACTION_TYPE_ADD)}>
               <AddIcon />
             </IconButton>
-            <IconButton aria-label="Delete Idea">
+            <IconButton aria-label="Delete Idea" onClick={() => this.props.selectActionTypeHandler(ACTION_TYPE_DELETE)}>
               <DeleteIcon />
             </IconButton>
           </div>
           <div className="idea-content">
-            <IdeaView idea={idea} />
+            {ideaViewAction}
           </div>
         </div>
       );
