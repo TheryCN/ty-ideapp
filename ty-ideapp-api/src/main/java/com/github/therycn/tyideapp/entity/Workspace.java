@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Workspace entity.
@@ -22,6 +23,7 @@ import lombok.Getter;
 @Table(name = "WORKSPACE")
 @Entity
 @Getter
+@Setter
 public class Workspace extends AbstractEntity<Long> {
 
     /** Serial version. */
