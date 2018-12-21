@@ -28,9 +28,17 @@ class IdeaAdd extends Component {
             onChange={this.handleChange('subTitle')}
             value={this.state.idea.subTitle}
           />
+
+          <TextField
+            label="Description"
+            onChange={this.handleChange('description')}
+            value={this.state.idea.description}
+            multiline={true}
+          />
+
         </div>
         <div>
-          <Button variant="contained" onClick={() => this.props.saveIdeaHandler(this.state.idea)}>
+          <Button variant="contained" onClick={() => this.props.saveIdeaHandler(this.state.idea, this.props.workspaceId)}>
             Sauvegarder
           </Button>
         </div>

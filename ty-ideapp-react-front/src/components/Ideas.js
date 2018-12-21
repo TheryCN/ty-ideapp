@@ -9,7 +9,8 @@ import './Ideas.css';
 class Ideas extends Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevProps.workspaceId !== this.props.workspaceId) {
+    if(prevProps.workspaceId !== this.props.workspaceId
+      || prevProps.ideas.length !== this.props.ideas.length) {
       this.props.loadHandler(this.props.workspaceId);
     }
   }
