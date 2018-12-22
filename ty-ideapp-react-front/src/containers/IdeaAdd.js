@@ -2,12 +2,12 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import IdeaForm from '../components/IdeaForm';
-import { saveIdea } from '../actions/ideaActions';
+import { addIdea } from '../actions/ideaActions';
 
 export const fetchPostIdeaCall = (dispatch, idea, workspaceId) => {
   idea.workspaceId = workspaceId;
   axios.post('/api/idea/', idea).then(response => {
-    dispatch(saveIdea(response.data));
+    dispatch(addIdea(response.data));
   });
 }
 

@@ -3,6 +3,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import ViewIcon from '@material-ui/icons/ViewArray';
 
 import IdeaBackground from '../assets/idea-background.jpg';
 import IdeaView from './IdeaView';
@@ -38,6 +39,9 @@ class Idea extends Component {
       return (
         <div className="idea" style={ideaBackgroundStyle}>
           <div className="actions">
+            <IconButton aria-label="View Idea" onClick={() => this.props.selectActionTypeHandler(undefined)}>
+              <ViewIcon />
+            </IconButton>
             <IconButton aria-label="Edit Idea" onClick={() => this.props.selectActionTypeHandler(ACTION_TYPE_EDIT)}>
               <EditIcon />
             </IconButton>

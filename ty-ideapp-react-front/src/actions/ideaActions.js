@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_IDEAS, SELECT_IDEA, SELECT_IDEA_ACTION_TYPE, SAVE_IDEA } from './types';
+import { FETCH_IDEAS, SELECT_IDEA, SELECT_IDEA_ACTION_TYPE, ADD_IDEA, EDIT_IDEA } from './types';
 
 export const fetchIdeas = ideas => ({
   type: FETCH_IDEAS,
@@ -16,8 +16,13 @@ export const selectIdeaActionType = actionType => ({
   actionType
 });
 
-export const saveIdea = idea => ({
-  type: SAVE_IDEA,
+export const addIdea = idea => ({
+  type: ADD_IDEA,
+  idea
+});
+
+export const editIdea = idea => ({
+  type: EDIT_IDEA,
   idea
 });
 

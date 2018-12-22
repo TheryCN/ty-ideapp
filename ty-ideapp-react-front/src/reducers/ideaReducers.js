@@ -1,4 +1,4 @@
-import { FETCH_IDEAS, SELECT_IDEA, SELECT_IDEA_ACTION_TYPE, SAVE_IDEA } from '../actions/types';
+import { FETCH_IDEAS, SELECT_IDEA, SELECT_IDEA_ACTION_TYPE, ADD_IDEA, EDIT_IDEA } from '../actions/types';
 
 const ideas = (state = {ideas: [], selectedIndex: 0}, action) => {
   switch (action.type) {
@@ -8,11 +8,15 @@ const ideas = (state = {ideas: [], selectedIndex: 0}, action) => {
       return Object.assign({}, state, {ideas: action.ideas, selectedIndex: action.ideas[0].id});
     case SELECT_IDEA_ACTION_TYPE:
       return Object.assign({}, state, {actionType: action.actionType});
-    case SAVE_IDEA:
+    case ADD_IDEA:
       let ideas = [];
       ideas = ideas.concat(state.ideas);
       ideas.push(action.idea);
       return Object.assign({}, state, {ideas: ideas, selectedIndex: action.idea.id, actionType: undefined});
+    case EDIT_IDEA:
+      let editIdeas = [];
+      editIdeas = editIdeas.concat(state.ideas);
+      return Object.assign({}, state, {ideas: editIdeas.map(idea => (idea.id === action.idea.id) ? action.idea : idea), actionType: undefined});
     default:
       return state;
   }
