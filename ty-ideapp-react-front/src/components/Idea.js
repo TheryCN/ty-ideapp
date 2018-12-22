@@ -17,7 +17,6 @@ const ideaBackgroundStyle = {
 
 export const ACTION_TYPE_ADD = 'ADD';
 export const ACTION_TYPE_EDIT = 'EDIT';
-export const ACTION_TYPE_DELETE = 'DELETE';
 
 class Idea extends Component {
 
@@ -48,7 +47,7 @@ class Idea extends Component {
             <IconButton aria-label="Add Idea" onClick={() => this.props.selectActionTypeHandler(ACTION_TYPE_ADD)}>
               <AddIcon />
             </IconButton>
-            <IconButton aria-label="Delete Idea" onClick={() => this.props.selectActionTypeHandler(ACTION_TYPE_DELETE)}>
+            <IconButton aria-label="Delete Idea" onClick={() => this.props.deleteIdea(this.props.selectedIndex)}>
               <DeleteIcon />
             </IconButton>
           </div>
