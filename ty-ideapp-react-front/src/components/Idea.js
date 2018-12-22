@@ -6,6 +6,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import IdeaBackground from '../assets/idea-background.jpg';
 import IdeaView from './IdeaView';
+import IdeaEdit from '../containers/IdeaEdit';
 import IdeaAdd from '../containers/IdeaAdd';
 import './Idea.css';
 
@@ -25,7 +26,7 @@ class Idea extends Component {
       let ideaViewAction;
       switch(this.props.actionType) {
         case ACTION_TYPE_EDIT:
-          ideaViewAction = <IdeaView idea={idea} />;
+          ideaViewAction = <IdeaEdit />;
           break;
         case ACTION_TYPE_ADD:
           ideaViewAction = <IdeaAdd />;
