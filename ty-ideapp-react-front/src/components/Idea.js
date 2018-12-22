@@ -20,20 +20,20 @@ export const ACTION_TYPE_DELETE = 'DELETE';
 class Idea extends Component {
 
   render() {
-    const idea = this.props.ideas[this.props.selectedIndex];
-      if(idea) {
-        let ideaViewAction;
-        switch(this.props.actionType) {
-          case ACTION_TYPE_EDIT:
-            ideaViewAction = <IdeaView idea={idea} />;
-            break;
-          case ACTION_TYPE_ADD:
-            ideaViewAction = <IdeaAdd />;
-            break;
-          default:
-            ideaViewAction = <IdeaView idea={idea} />;
-            break;
-        }
+    const idea = this.props.ideas.filter(idea => idea.id === this.props.selectedIndex)[0];
+    if(idea) {
+      let ideaViewAction;
+      switch(this.props.actionType) {
+        case ACTION_TYPE_EDIT:
+          ideaViewAction = <IdeaView idea={idea} />;
+          break;
+        case ACTION_TYPE_ADD:
+          ideaViewAction = <IdeaAdd />;
+          break;
+        default:
+          ideaViewAction = <IdeaView idea={idea} />;
+          break;
+      }
       return (
         <div className="idea" style={ideaBackgroundStyle}>
           <div className="actions">
