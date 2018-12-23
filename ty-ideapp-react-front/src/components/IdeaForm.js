@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Rating from './Rating';
 
 class IdeaForm extends Component {
 
@@ -17,6 +18,10 @@ class IdeaForm extends Component {
 
   handleChange = name => event => {
     this.setState({idea: {...this.state.idea, [name]: event.target.value}})
+  };
+
+  handleRatingChange = value => {
+    this.setState({idea: {...this.state.idea, rating: value}})
   };
 
   render() {
@@ -41,6 +46,8 @@ class IdeaForm extends Component {
             value={this.state.idea.description}
             multiline={true}
           />
+
+          <Rating value={this.state.idea.rating} max={5} onChange={this.handleRatingChange} readOnly={false} />
 
         </div>
         <div>

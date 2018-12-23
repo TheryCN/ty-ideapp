@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import Rating from './Rating';
 
 const IdeaView = ({ idea }) => (
   <div>
@@ -8,7 +9,7 @@ const IdeaView = ({ idea }) => (
       <span className="subtitle">{idea.subTitle}</span>
     </div>
     <div>{idea.description}</div>
-    <div>{idea.rating}</div>
+    <Rating value={idea.rating} max={5} readOnly={true} />
     <div>{idea.feasibility}</div>
     <div>{moment(idea.createdOn).format('LLL')}</div>
     <div>{moment(idea.updatedOn).format('LLL')}</div>
