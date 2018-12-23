@@ -3,10 +3,12 @@ import axios from 'axios';
 
 import Idea from '../components/Idea';
 import { selectIdeaActionType, deleteIdea } from '../actions/ideaActions';
+import { notify } from '../actions/notificationActions';
 
 export const deleteIdeaCall = (dispatch, ideaId) => {
   axios.delete('/api/ideas/'+ideaId).then(response => {
     dispatch(deleteIdea(ideaId));
+    dispatch(notify("Idea deleted"));
   });
 }
 

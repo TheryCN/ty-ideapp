@@ -21,7 +21,7 @@ class Rating extends Component {
       } else {
         style = starDefaultStyle;
       }
-      stars.push(<IconButton aria-label={i+1} onClick={() => this.props.onChange(i+1)} disabled={this.props.readOnly}>
+      stars.push(<IconButton key={i+1} aria-label={i+1} onClick={() => this.props.onChange(i+1)} disabled={this.props.readOnly}>
                   <StarIcon style={style} />
                 </IconButton>);
     }
