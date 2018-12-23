@@ -13,7 +13,7 @@ export const fetchPostIdeaCall = (dispatch, idea, workspaceId) => {
 
 const mapStateToProps = state => ({
   workspaceId: state.workspaces.selectedIndex,
-  idea: {name: "", subTitle: ""}
+  idea: {name: "", subTitle: "", feasibility: "NORMAL"}
 })
 
 const mapDispatchToProps = dispatch => ({
