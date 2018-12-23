@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
 import Rating from './Rating';
 
 class IdeaForm extends Component {
@@ -49,6 +50,17 @@ class IdeaForm extends Component {
 
           <Rating value={this.state.idea.rating} max={5} onChange={this.handleRatingChange} readOnly={false} />
 
+          <TextField
+            select
+            label="Feasibility"
+            value={this.state.idea.feasibility}
+            onChange={this.handleChange('feasibility')}
+          >
+            <MenuItem key="EASY" value="EASY">Easy</MenuItem>
+            <MenuItem key="NORMAL" value="NORMAL">Normal</MenuItem>
+            <MenuItem key="HARD" value="HARD">Hard</MenuItem>
+            <MenuItem key="IMPOSSIBLE" value="IMPOSSIBLE">Impossible</MenuItem>
+          </TextField>
         </div>
         <div>
           <Button variant="contained" onClick={() => this.props.saveIdeaHandler(this.state.idea, this.props.workspaceId)}>
