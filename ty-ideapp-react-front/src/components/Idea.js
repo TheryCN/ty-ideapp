@@ -57,7 +57,13 @@ class Idea extends Component {
         </div>
       );
     } else {
-      return <div />;
+      return (
+        <div className="idea" style={ideaBackgroundStyle}>
+          <div className="idea-content">
+            <IdeaAdd />
+          </div>
+        </div>
+      );
     }
   }
 }
