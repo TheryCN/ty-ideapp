@@ -1,4 +1,4 @@
-import { FETCH_WORKSPACES, SELECT_WORKSPACE, UPDATE_COUNTER_WORKSPACE } from './types';
+import { FETCH_WORKSPACES, SELECT_WORKSPACE, UPDATE_COUNTER_WORKSPACE, ADD_WORKSPACE } from './types';
 
 export const fetchWorkspaces = workspaces => ({
   type: FETCH_WORKSPACES,
@@ -15,3 +15,8 @@ export const updateWorkspaceCounter = (id, counter) => ({
   id,
   counter
 })
+
+export const addWorkspace = workspace => ({
+  type: ADD_WORKSPACE,
+  workspace
+});

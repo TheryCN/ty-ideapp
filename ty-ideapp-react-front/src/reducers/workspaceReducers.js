@@ -1,4 +1,4 @@
-import { FETCH_WORKSPACES, SELECT_WORKSPACE, UPDATE_COUNTER_WORKSPACE } from '../actions/types';
+import { FETCH_WORKSPACES, SELECT_WORKSPACE, UPDATE_COUNTER_WORKSPACE, ADD_WORKSPACE } from '../actions/types';
 
 const workspaces = (state = {workspaces: [], selectedIndex: 0}, action) => {
   switch (action.type) {
@@ -14,6 +14,11 @@ const workspaces = (state = {workspaces: [], selectedIndex: 0}, action) => {
         return workspace;
       });
       return Object.assign({}, state, {workspaces: workspaces});
+    case ADD_WORKSPACE:
+      let addWorkspaces = [];
+      addWorkspaces = addWorkspaces.concat(state.workspaces);
+      addWorkspaces.push(action.workspace);
+      return Object.assign({}, state, {workspaces: addWorkspaces, selectedIndex: action.workspace.id});
     default:
       return state;
   }
