@@ -7,7 +7,7 @@ import theme from './theme.js';
 
 import Header from './components/Header.js';
 import LeftLayout from './components/LeftLayout.js';
-import Idea from './containers/Idea.js';
+import MidLayout from './components/MidLayout.js';
 import Notification from './containers/Notification.js';
 
 class App extends Component {
@@ -25,7 +25,7 @@ class App extends Component {
                 <LeftLayout />
             </Grid>
             <Grid item xs={9} sm={9} className="mid-layout">
-                <Idea />
+                <MidLayout />
             </Grid>
           </Grid>
         </div>

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
 import Divider from '@material-ui/core/Divider';
 

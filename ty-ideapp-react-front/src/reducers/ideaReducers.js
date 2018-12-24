@@ -5,7 +5,7 @@ const ideas = (state = {ideas: [], selectedIndex: 0}, action) => {
     case SELECT_IDEA:
       return Object.assign({}, state, {selectedIndex: action.selectedIndex});
     case FETCH_IDEAS:
-      return Object.assign({}, state, {ideas: action.ideas, selectedIndex: action.ideas[0].id});
+      return Object.assign({}, state, {ideas: action.ideas, selectedIndex: (action.ideas.length > 0) ? action.ideas[0].id : -1});
     case SELECT_IDEA_ACTION_TYPE:
       return Object.assign({}, state, {actionType: action.actionType});
     case ADD_IDEA:

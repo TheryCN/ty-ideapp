@@ -10,6 +10,12 @@ class Workspaces extends Component {
     this.props.loadHandler();
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(prevProps.ideas.length !== this.props.ideas.length) {
+      this.props.updateHandler(this.props.selectedIndex, this.props.ideas.length);
+    }
+  }
+
   render() {
     const listItems = this.props.workspaces.map((workspace) =>
     <ListItem button selected={this.props.selectedIndex === workspace.id} key={workspace.id}
