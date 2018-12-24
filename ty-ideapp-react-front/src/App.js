@@ -6,7 +6,7 @@ import 'typeface-roboto';
 import theme from './theme.js';
 
 import Header from './components/Header.js';
-import Workspaces from './containers/Workspaces.js';
+import LeftLayout from './components/LeftLayout.js';
 import Idea from './containers/Idea.js';
 import Notification from './containers/Notification.js';
 
@@ -22,7 +22,7 @@ class App extends Component {
                 <Header />
             </Grid>
             <Grid item xs={3} sm={3} className="left-layout">
-                <Workspaces />
+                <LeftLayout />
             </Grid>
             <Grid item xs={9} sm={9} className="mid-layout">
                 <Idea />

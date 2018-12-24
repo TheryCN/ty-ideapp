@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Ideas from '../containers/Ideas.js';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
 
 class Workspaces extends Component {
 
@@ -12,26 +11,20 @@ class Workspaces extends Component {
   }
 
   render() {
-    const listItems = this.props.workspaces.map((workspace) => <MenuItem key={workspace.id} value={workspace.id}>{workspace.name}</MenuItem>);
-
+    const listItems = this.props.workspaces.map((workspace) =>
+    <ListItem button selected={this.props.selectedIndex === workspace.id} key={workspace.id}
+      onClick={event => this.props.changeHandler(workspace.id)}>
+      <Avatar>
+        {workspace.nbIdeas}
+      </Avatar>
+      <ListItemText primary={workspace.name} />
+    </ListItem>);
     // Ideas is a subelement of Workspaces only because props are readonly from childs
     return (
       <div>
-        <FormControl>
-          <InputLabel htmlFor="workspacesId">Workspaces</InputLabel>
-          <Select
-            value={this.props.selectedIndex}
-            onChange={(event) => this.props.changeHandler(event.target.value)}
-            inputProps={{
-              name: 'value',
-              id: 'workspacesId'
-            }}
-          >
+          <List>
             {listItems}
-          </Select>
-
-          <Ideas />
-        </FormControl>
+          </List>
       </div>
     );
   }

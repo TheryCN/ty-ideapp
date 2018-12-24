@@ -4,8 +4,8 @@ import { fetchWorkspaces, selectWorkspace } from '../actions/workspaceActions';
 import Workspaces from '../components/Workspaces';
 
 const fetchWorkspacesCall = (dispatch) => {
-  axios.get('/api/workspaces').then(response => {
-    dispatch(fetchWorkspaces(response.data._embedded.workspaces));
+  axios.get('/api/workspace/').then(response => {
+    dispatch(fetchWorkspaces(response.data));
   });
 }
 
