@@ -13,3 +13,4 @@ export const SELECT_IDEA_ACTION_TYPE = 'SELECT_IDEA_ACTION_TYPE';
 
 // Notification actions
 export const NOTIFY = 'NOTIFY';
+export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION';

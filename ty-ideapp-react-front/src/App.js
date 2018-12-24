@@ -8,12 +8,14 @@ import theme from './theme.js';
 import Header from './components/Header.js';
 import Workspaces from './containers/Workspaces.js';
 import Idea from './containers/Idea.js';
+import Notification from './containers/Notification.js';
 
 class App extends Component {
   render() {
 
     return (
       <MuiThemeProvider theme={theme}>
+        <Notification />
         <div className="App">
           <Grid container>
             <Grid item xs={12} sm={12}>
