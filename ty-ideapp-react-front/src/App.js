@@ -17,10 +17,8 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <Notification />
         <div className="App">
-          <Grid container>
-            <Grid item xs={12} sm={12}>
-                <Header />
-            </Grid>
+          <Header />
+          <Grid container className="layout">
             <Grid item xs={3} sm={3} className="left-layout">
                 <LeftLayout />
             </Grid>
