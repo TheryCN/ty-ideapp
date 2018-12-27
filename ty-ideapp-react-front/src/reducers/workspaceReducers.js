@@ -1,4 +1,4 @@
-import { FETCH_WORKSPACES, SELECT_WORKSPACE, UPDATE_COUNTER_WORKSPACE, ADD_WORKSPACE } from '../actions/types';
+import { FETCH_WORKSPACES, SELECT_WORKSPACE, UPDATE_COUNTER_WORKSPACE, ADD_WORKSPACE, EDIT_WORKSPACE, DELETE_WORKSPACE } from '../actions/types';
 
 const workspaces = (state = {workspaces: [], selectedIndex: 0}, action) => {
   switch (action.type) {
@@ -19,6 +19,16 @@ const workspaces = (state = {workspaces: [], selectedIndex: 0}, action) => {
       addWorkspaces = addWorkspaces.concat(state.workspaces);
       addWorkspaces.push(action.workspace);
       return Object.assign({}, state, {workspaces: addWorkspaces, selectedIndex: action.workspace.id});
+    case EDIT_WORKSPACE:
+      let editWorkspaces = [];
+      editWorkspaces = editWorkspaces.concat(state.workspaces);
+      return Object.assign({}, state, {workspaces: editWorkspaces.map(workspace => (workspace.id === action.workspace.id) ? action.workspace : workspace)});
+    case DELETE_WORKSPACE:
+      let deleteWorkspaces = [];
+      deleteWorkspaces = deleteWorkspaces.concat(state.workspaces);
+      let workspaceIndex = deleteWorkspaces.findIndex(workspace => workspace.id === workspace.workspaceId);
+      deleteWorkspaces.splice(workspaceIndex,1);
+      return Object.assign({}, state, {workspaces: deleteWorkspaces, selectedIndex: state.workspaces[0].id});
     default:
       return state;
   }

@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 
-class Workspaces extends Component {
+class IdeaWorkspaces extends Component {
 
   componentDidMount() {
     this.props.loadHandler();
@@ -36,4 +36,4 @@ class Workspaces extends Component {
   }
 }
 
-export default Workspaces;
+export default IdeaWorkspaces;

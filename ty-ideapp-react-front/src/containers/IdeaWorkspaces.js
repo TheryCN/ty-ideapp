@@ -3,7 +3,7 @@ import axios from 'axios';
 import { fetchWorkspaces, selectWorkspace } from '../actions/workspaceActions';
 import { updateWorkspaceCounter } from '../actions/workspaceActions';
 
-import Workspaces from '../components/Workspaces';
+import IdeaWorkspaces from '../components/IdeaWorkspaces';
 
 const fetchWorkspacesCall = (dispatch) => {
   axios.get('/api/workspace/').then(response => {
@@ -26,4 +26,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Workspaces)
+)(IdeaWorkspaces)

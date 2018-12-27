@@ -9,22 +9,43 @@ import Header from './components/Header.js';
 import LeftLayout from './components/LeftLayout.js';
 import MidLayout from './components/MidLayout.js';
 import Notification from './containers/Notification.js';
+import WorkspaceEditableList from './containers/WorkspaceEditableList.js';
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { activeMenuId: 1 };
+  }
+
+  changeActiveMenuHandler = (id) => this.setState({ activeMenuId: id })
+
   render() {
+    let layout = [];
+    if(this.state.activeMenuId === 1) {
+      layout.push(
+        <Grid item xs={3} sm={3} className="left-layout">
+            <LeftLayout />
+        </Grid>);
+      layout.push(
+        <Grid item xs={9} sm={9} className="mid-layout">
+            <MidLayout />
+        </Grid>);
+    } else {
+      layout.push(
+        <Grid item xs={12} sm={12} className="left-layout">
+          <WorkspaceEditableList />
+        </Grid>
+      );
+    }
 
     return (
       <MuiThemeProvider theme={theme}>
         <Notification />
         <div className="App">
-          <Header />
+          <Header activeMenuId={this.state.activeMenuId} changeActiveMenuHandler={this.changeActiveMenuHandler} />
           <Grid container className="layout">
-            <Grid item xs={3} sm={3} className="left-layout">
-                <LeftLayout />
-            </Grid>
-            <Grid item xs={9} sm={9} className="mid-layout">
-                <MidLayout />
-            </Grid>
+            {layout}
           </Grid>
         </div>
       </MuiThemeProvider>

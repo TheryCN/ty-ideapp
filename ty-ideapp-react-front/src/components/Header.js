@@ -6,12 +6,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import logo from '../assets/ideapp.PNG';
 import './Header.css';
 
-const menus = [{id: 1, name: "Workspaces"}, {id: 2, name: "Ideas"}];
+const menus = [{id: 1, name: "Ideas"}, {id: 2, name: "Workspaces"}];
 
-const Header = ({ activeMenuId = 2 }) => {
+const Header = ({ activeMenuId = 1, changeActiveMenuHandler }) => {
   const listItems = menus.map(menu =>
     <ListItem classes={(menu.id === activeMenuId) ? { root: 'menu-selected' } : {}}
-      selected={menu.id === activeMenuId} key={menu.id}>
+      selected={menu.id === activeMenuId} key={menu.id} onClick={event => changeActiveMenuHandler(menu.id)}>
       <ListItemText classes={(menu.id === activeMenuId) ? { primary: 'menu-selected' } : {}}
         className="item" primary={menu.name} />
     </ListItem>
