@@ -7,7 +7,9 @@ import Avatar from '@material-ui/core/Avatar';
 class IdeaWorkspaces extends Component {
 
   componentDidMount() {
-    this.props.loadHandler();
+    if(this.props.workspaces.length === 0) {
+      this.props.loadHandler();
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {

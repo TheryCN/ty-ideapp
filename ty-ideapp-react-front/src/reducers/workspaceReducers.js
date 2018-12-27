@@ -22,7 +22,7 @@ const workspaces = (state = {workspaces: [], selectedIndex: 0}, action) => {
     case EDIT_WORKSPACE:
       let editWorkspaces = [];
       editWorkspaces = editWorkspaces.concat(state.workspaces);
-      return Object.assign({}, state, {workspaces: editWorkspaces.map(workspace => (workspace.id === action.workspace.id) ? action.workspace : workspace)});
+      return Object.assign({}, state, {workspaces: editWorkspaces.map(workspace => (workspace.id === action.workspace.id) ? action.workspace : workspace), selectedIndex: action.workspace.id});
     case DELETE_WORKSPACE:
       let deleteWorkspaces = [];
       deleteWorkspaces = deleteWorkspaces.concat(state.workspaces);
