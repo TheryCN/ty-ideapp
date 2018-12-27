@@ -22,18 +22,18 @@ class WorkspaceEditableList extends Component {
   render() {
     let listItems = [];
     listItems.push(
-      <WorkspaceListItemForm saveHandler={this.props.saveWorkspaceHandler} workspace={emptyWorkspace} />
+      <WorkspaceListItemForm key={emptyWorkspace.id} saveHandler={this.props.saveWorkspaceHandler} workspace={emptyWorkspace} />
     );
 
     if(this.props.workspaces) {
       listItems.push(this.props.workspaces.map((workspace) => {
         if(this.state.editId === workspace.id) {
-          return <WorkspaceListItemForm saveHandler={this.editHandler} workspace={workspace} />
+          return <WorkspaceListItemForm key={workspace.id} saveHandler={this.editHandler} workspace={workspace} />
         } else {
-          return <WorkspaceListItemView deleteHandler={this.props.deleteWorkspaceHandler} editHandler={(id) => this.setState({ editId: id })} workspace={workspace} />
+          return <WorkspaceListItemView key={workspace.id} deleteHandler={this.props.deleteWorkspaceHandler} editHandler={(id) => this.setState({ editId: id })} workspace={workspace} />
         }
       }));
-  }
+    }
 
     return (
       <div>

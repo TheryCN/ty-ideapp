@@ -24,16 +24,16 @@ class App extends Component {
     let layout = [];
     if(this.state.activeMenuId === 1) {
       layout.push(
-        <Grid item xs={3} sm={3} className="left-layout">
+        <Grid key={1} item xs={3} sm={3} className="left-layout">
             <LeftLayout />
         </Grid>);
       layout.push(
-        <Grid item xs={9} sm={9} className="mid-layout">
+        <Grid key={2} item xs={9} sm={9} className="mid-layout">
             <MidLayout />
         </Grid>);
     } else {
       layout.push(
-        <Grid item xs={12} sm={12} className="left-layout">
+        <Grid key={1} item xs={12} sm={12} className="left-layout">
           <WorkspaceEditableList />
         </Grid>
       );

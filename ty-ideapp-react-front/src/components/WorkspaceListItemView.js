@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const WorkspaceListItemView = ({ workspace, editHandler, deleteHandler }) => (
-  <ListItem button key={workspace.id}>
+  <ListItem button>
     <ListItemText primary={workspace.name} />
     <ListItemSecondaryAction>
       <IconButton aria-label="Edit Workspace" onClick={() => editHandler(workspace.id)}>

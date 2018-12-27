@@ -26,7 +26,7 @@ class WorkspaceListItemForm extends Component {
   render() {
     const workspace = this.state.workspace;
     return (
-      <ListItem button key={workspace.id}>
+      <ListItem button>
         <TextField
           onChange={this.handleChange('name')}
           value={workspace.name}
