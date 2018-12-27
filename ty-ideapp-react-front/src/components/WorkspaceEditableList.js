@@ -30,7 +30,7 @@ class WorkspaceEditableList extends Component {
         if(this.state.editId === workspace.id) {
           return <WorkspaceListItemForm saveHandler={this.editHandler} workspace={workspace} />
         } else {
-          return <WorkspaceListItemView editHandler={(id) => this.setState({ editId: id })} workspace={workspace} />
+          return <WorkspaceListItemView deleteHandler={this.props.deleteWorkspaceHandler} editHandler={(id) => this.setState({ editId: id })} workspace={workspace} />
         }
       }));
   }

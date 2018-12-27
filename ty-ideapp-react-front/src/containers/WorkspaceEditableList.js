@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import WorkspaceEditableList from '../components/WorkspaceEditableList';
-import { addWorkspace, editWorkspace } from '../actions/workspaceActions';
+import { addWorkspace, editWorkspace, deleteWorkspace } from '../actions/workspaceActions';
 import { notify } from '../actions/notificationActions';
 
 export const postWorkspaceAddCall = (dispatch, workspace) => {
@@ -18,6 +18,12 @@ export const postWorkspaceEditCall = (dispatch, workspace) => {
     dispatch(notify("Workspace edited"));
   });
 }
+export const deleteWorkspaceCall = (dispatch, workspaceId) => {
+  axios.delete('/api/workspaces/'+workspaceId).then(response => {
+    dispatch(deleteWorkspace(workspaceId));
+    dispatch(notify("Workspace deleted"));
+  });
+}
 
 const mapStateToProps = state => ({
   workspaces: state.workspaces.workspaces
@@ -25,7 +31,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   saveWorkspaceHandler: (workspace) => postWorkspaceAddCall(dispatch, workspace),
-  editWorkspaceHandler: (workspace) => postWorkspaceEditCall(dispatch, workspace)
+  editWorkspaceHandler: (workspace) => postWorkspaceEditCall(dispatch, workspace),
+  deleteWorkspaceHandler: (workspaceId) => deleteWorkspaceCall(dispatch, workspaceId)
 })
 
 export default connect(
