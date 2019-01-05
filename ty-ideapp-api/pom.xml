@@ -104,65 +104,6 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-
-			<!-- React Front Packaging -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>exec-npm-install</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<phase>generate-sources</phase>
-						<configuration>
-							<executable>npm</executable>
-							<arguments>
-								<argument>install</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>exec-npm-build</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<phase>generate-sources</phase>
-						<configuration>
-							<executable>npm</executable>
-							<arguments>
-								<argument>run</argument>
-								<argument>build</argument>
-							</arguments>
-						</configuration>
-					</execution>
-				</executions>
-				<configuration>
-					<workingDirectory>${basedir}/../ty-ideapp-react-front</workingDirectory>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${basedir}/target/classes/static/</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${basedir}/../ty-ideapp-react-front/build</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 

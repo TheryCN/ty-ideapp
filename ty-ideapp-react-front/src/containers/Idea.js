@@ -6,7 +6,7 @@ import { selectIdeaActionType, deleteIdea } from '../actions/ideaActions';
 import { notify } from '../actions/notificationActions';
 
 export const deleteIdeaCall = (dispatch, ideaId) => {
-  axios.delete('/api/ideas/'+ideaId).then(response => {
+  axios.delete(process.env.REACT_APP_BACKEND+'/api/ideas/'+ideaId).then(response => {
     dispatch(deleteIdea(ideaId));
     dispatch(notify("Idea deleted"));
   });

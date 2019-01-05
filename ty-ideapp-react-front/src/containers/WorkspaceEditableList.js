@@ -6,20 +6,20 @@ import { addWorkspace, editWorkspace, deleteWorkspace } from '../actions/workspa
 import { notify } from '../actions/notificationActions';
 
 export const postWorkspaceAddCall = (dispatch, workspace) => {
-  axios.post('/api/workspaces/', workspace).then(response => {
+  axios.post(process.env.REACT_APP_BACKEND+'/api/workspaces/', workspace).then(response => {
     dispatch(addWorkspace(response.data));
     dispatch(notify("Workspace added"));
   });
 }
 
 export const postWorkspaceEditCall = (dispatch, workspace) => {
-  axios.post('/api/workspaces/', workspace).then(response => {
+  axios.post(process.env.REACT_APP_BACKEND+'/api/workspaces/', workspace).then(response => {
     dispatch(editWorkspace(response.data));
     dispatch(notify("Workspace edited"));
   });
 }
 export const deleteWorkspaceCall = (dispatch, workspaceId) => {
-  axios.delete('/api/workspaces/'+workspaceId).then(response => {
+  axios.delete(process.env.REACT_APP_BACKEND+'/api/workspaces/'+workspaceId).then(response => {
     dispatch(deleteWorkspace(workspaceId));
     dispatch(notify("Workspace deleted"));
   });

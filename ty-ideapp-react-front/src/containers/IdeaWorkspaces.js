@@ -6,7 +6,7 @@ import { updateWorkspaceCounter } from '../actions/workspaceActions';
 import IdeaWorkspaces from '../components/IdeaWorkspaces';
 
 const fetchWorkspacesCall = (dispatch) => {
-  axios.get('/api/workspace/').then(response => {
+  axios.get(process.env.REACT_APP_BACKEND+'/api/workspace/').then(response => {
     dispatch(fetchWorkspaces(response.data));
   });
 }

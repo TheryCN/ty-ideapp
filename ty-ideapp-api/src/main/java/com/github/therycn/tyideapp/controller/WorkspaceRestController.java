@@ -3,6 +3,7 @@ package com.github.therycn.tyideapp.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,8 @@ import lombok.AllArgsConstructor;
  *
  */
 @RestController
-@RequestMapping("/api/workspace")
+@RequestMapping("/workspace")
+@CrossOrigin
 @AllArgsConstructor
 public class WorkspaceRestController {
 
