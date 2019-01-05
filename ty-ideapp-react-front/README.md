@@ -3,6 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Deployment
 
 npm install -g serve
+
 serve -s build
 
 serve-h
