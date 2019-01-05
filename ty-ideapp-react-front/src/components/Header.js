@@ -26,6 +26,10 @@ const Header = ({ activeMenuId = 1, changeActiveMenuHandler }) => {
       <List className="menu">
         {listItems}
       </List>
+
+      <div className="env">
+        {process.env.REACT_APP_VERSION} / {process.env.REACT_APP_HOST_ENV}
+      </div>
     </div>
   );
 }

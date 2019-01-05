@@ -132,7 +132,7 @@
 						<configuration>
 							<executable>npm</executable>
 							<arguments>
-								<argument>run-script</argument>
+								<argument>run</argument>
 								<argument>build</argument>
 							</arguments>
 						</configuration>
@@ -148,7 +148,7 @@
 				<executions>
 					<execution>
 						<id>copy-resources</id>
-						<phase>validate</phase>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
