@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
  *
  */
 @RestController
-@RequestMapping("workspace")
+@RequestMapping("/api/workspace")
 @AllArgsConstructor
 public class WorkspaceRestController {
 

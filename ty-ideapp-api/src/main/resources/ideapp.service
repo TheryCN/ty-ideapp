@@ -1,0 +1,10 @@
+[Unit]
+Description=Ideapp Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/home/pi/Documents/GitHub/ty-ideapp/ty-ideapp-api/target/ty-ideapp.jar
+
+[Install]
+WantedBy=multi-user.target

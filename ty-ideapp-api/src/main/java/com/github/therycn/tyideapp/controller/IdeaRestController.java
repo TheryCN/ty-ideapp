@@ -18,17 +18,17 @@ import lombok.AllArgsConstructor;
  *
  */
 @RestController
-@RequestMapping("idea")
+@RequestMapping("/api/idea")
 @AllArgsConstructor
 public class IdeaRestController {
 
-    private IdeaRepository ideaRepo;
+	private IdeaRepository ideaRepo;
 
-    private IdeaMapper ideaMapper;
+	private IdeaMapper ideaMapper;
 
-    @PostMapping("/")
-    public IdeaSave save(@RequestBody IdeaSave idea) {
-        return ideaMapper.to(ideaRepo.save(ideaMapper.to(idea)));
-    }
+	@PostMapping("/")
+	public IdeaSave save(@RequestBody IdeaSave idea) {
+		return ideaMapper.to(ideaRepo.save(ideaMapper.to(idea)));
+	}
 
 }
