@@ -30,6 +30,7 @@ class IdeaForm extends Component {
       <div>
         <div className="title-content">
           <TextField
+            className="title"
             label="Title"
             onChange={this.handleChange('name')}
             value={this.state.idea.name}
@@ -40,16 +41,19 @@ class IdeaForm extends Component {
             onChange={this.handleChange('subTitle')}
             value={this.state.idea.subTitle}
           />
-
+        </div>
+        <div>
           <TextField
             label="Description"
             onChange={this.handleChange('description')}
             value={this.state.idea.description}
             multiline={true}
           />
-
+        </div>
+        <div>
           <Rating value={this.state.idea.rating} max={5} onChange={this.handleRatingChange} readOnly={false} />
-
+        </div>
+        <div>
           <TextField
             select
             label="Feasibility"
@@ -63,7 +67,7 @@ class IdeaForm extends Component {
           </TextField>
         </div>
         <div>
-          <Button variant="contained" onClick={() => this.props.saveIdeaHandler(this.state.idea, this.props.workspaceId)}>
+          <Button className="save-button" variant="contained" onClick={() => this.props.saveIdeaHandler(this.state.idea, this.props.workspaceId)}>
             Sauvegarder
           </Button>
         </div>

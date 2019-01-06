@@ -8,6 +8,14 @@
   margin: 15px;
 }
 
+.idea-content .title-content .title {
+  margin-right: 10px;
+}
+
+.idea-content .save-button {
+  margin-top: 15px;
+}
+
 .idea-content .title {
   font-size: 20px;
   margin-right: 15px;
