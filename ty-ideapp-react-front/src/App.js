@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import './App.css';
 import 'typeface-roboto';
 import theme from './theme.js';
+import axios from 'axios';
 
 import Header from './components/Header.js';
 import LeftLayout from './components/LeftLayout.js';
@@ -15,6 +16,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    axios.defaults.headers.common['Authorization'] = 'Basic VGhlcnk6Q2hhbmdlSXQ=';
     this.state = { activeMenuId: 1 };
   }
 
