@@ -34,7 +34,7 @@ public class TyIdeappApplicationTests {
 	@Test
 	public void testListWorkspaces() {
 		// Given
-		HttpHeaders headers = createHeaders("Thery", "ChangeIt");
+		HttpHeaders headers = createHeaders();
 
 		// When
 		ResponseEntity<WorkspaceListItem[]> response = restTemplate.exchange("/workspace/", HttpMethod.GET,
@@ -42,6 +42,26 @@ public class TyIdeappApplicationTests {
 
 		// Then
 		assertThat(response.getBody().length).isEqualTo(2);
+	}
+
+	/**
+	 * Test /user/ Endpoint.
+	 */
+	@Test
+	public void testGetLoggedUser() {
+		// Given
+		HttpHeaders headers = createHeaders();
+
+		// When
+		ResponseEntity<UserInfo> response = restTemplate.exchange("/user/", HttpMethod.GET,
+				new HttpEntity<Object>(headers), UserInfo.class);
+
+		// Then
+		assertThat(response.getBody().getUsername()).isEqualTo("Thery");
+	}
+
+	private HttpHeaders createHeaders() {
+		return createHeaders("Thery", "ChangeIt");
 	}
 
 	private HttpHeaders createHeaders(String username, String password) {
