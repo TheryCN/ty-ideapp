@@ -16,6 +16,6 @@ import com.github.therycn.tyideapp.entity.Workspace;
 @CrossOrigin
 public interface WorkspaceRepository extends JpaRepository<Workspace, Long> {
 
-	Collection<Workspace> findByOrderByName();
+	Collection<Workspace> findByUserIdOrderByName(Long userId);
 
 }

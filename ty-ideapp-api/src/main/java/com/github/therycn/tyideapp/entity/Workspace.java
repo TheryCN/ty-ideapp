@@ -6,9 +6,12 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -35,11 +38,15 @@ public class Workspace extends AbstractEntity<Long> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "WKS_NAME", unique = true)
+	@Column(name = "WKS_NAME")
 	private String name;
 
 	@OneToMany(mappedBy = "workspace", cascade = CascadeType.REMOVE)
 	private Collection<Idea> ideas;
+
+	@ManyToOne
+	@JoinColumn(name = "WKS_USR_ID", foreignKey = @ForeignKey(name = "FK_WKS_USR"))
+	private User user;
 
 	/*
 	 * (non-Javadoc)
