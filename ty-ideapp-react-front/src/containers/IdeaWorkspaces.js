@@ -14,7 +14,8 @@ const fetchWorkspacesCall = (dispatch) => {
 const mapStateToProps = state => ({
   workspaces: state.workspaces.workspaces,
   selectedIndex: state.workspaces.selectedIndex,
-  ideas: state.ideas.ideas
+  ideas: state.ideas.ideas,
+  loggedUser: state.users.loggedUser
 })
 
 const mapDispatchToProps = dispatch => ({

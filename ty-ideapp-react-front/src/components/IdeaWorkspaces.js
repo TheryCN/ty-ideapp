@@ -13,7 +13,7 @@ class IdeaWorkspaces extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if(prevProps.ideas.length !== this.props.ideas.length) {
+    if(prevProps.ideas.length !== this.props.ideas.length || prevProps.loggedUser.id !== this.props.loggedUser.id) {
       this.props.updateHandler(this.props.selectedIndex, this.props.ideas.length);
     }
   }
