@@ -9,6 +9,12 @@ import './Ideas.css';
 
 class Ideas extends Component {
 
+  componentDidMount() {
+    if(this.props.workspaceId) {
+      this.props.loadHandler(this.props.workspaceId);
+    }
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     if(prevProps.workspaceId !== this.props.workspaceId) {
       this.props.loadHandler(this.props.workspaceId);

@@ -6,7 +6,7 @@ import { addWorkspace, editWorkspace, deleteWorkspace } from '../actions/workspa
 import { notify } from '../actions/notificationActions';
 
 export const postWorkspaceAddCall = (dispatch, workspace) => {
-  axios.post(process.env.REACT_APP_BACKEND+'/api/workspaces/', workspace).then(response => {
+  axios.post(process.env.REACT_APP_BACKEND+'/api/workspace/', workspace).then(response => {
     dispatch(addWorkspace(response.data));
     dispatch(notify("Workspace added"));
   });
