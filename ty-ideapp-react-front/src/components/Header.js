@@ -3,6 +3,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import UserHeader from '../containers/UserHeader';
 import logo from '../assets/ideapp.PNG';
 import './Header.css';
 
@@ -26,9 +27,11 @@ const Header = ({ activeMenuId = 1, changeActiveMenuHandler }) => {
       <List className="menu">
         {listItems}
       </List>
-
-      <div className="env">
+      <div className="right">
         {process.env.REACT_APP_VERSION} / {process.env.REACT_APP_HOST_ENV}
+      </div>
+      <div className="right">
+        <UserHeader />
       </div>
     </div>
   );
