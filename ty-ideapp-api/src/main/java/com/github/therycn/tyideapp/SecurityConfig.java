@@ -3,12 +3,14 @@ package com.github.therycn.tyideapp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
 
 import com.github.therycn.tyideapp.service.UserService;
@@ -29,10 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().logout().permitAll().and()
-				.httpBasic().and().cors()
-				.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues()).and().csrf()
-				.disable();
+		// Returns 403 instead of redirect if login KO
+		http.exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
+
+		http.authorizeRequests().antMatchers("/login*").permitAll().anyRequest().authenticated().and().logout()
+				.permitAll().and().formLogin().defaultSuccessUrl("/user/").and().httpBasic().and().cors()
+				.configurationSource(request -> corsConfig()).and().csrf().disable();
 	}
 
 	/*
@@ -49,6 +53,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	private CorsConfiguration corsConfig() {
+		CorsConfiguration corsConfig = new CorsConfiguration();
+		corsConfig.addAllowedOrigin("http://localhost:3000");
+		corsConfig.addAllowedMethod(HttpMethod.GET);
+		corsConfig.addAllowedMethod(HttpMethod.POST);
+		corsConfig.addAllowedMethod(HttpMethod.DELETE);
+		corsConfig.addAllowedMethod(HttpMethod.PUT);
+		corsConfig.addAllowedMethod(HttpMethod.HEAD);
+		corsConfig.setMaxAge(1800L);
+		corsConfig.addAllowedHeader("*");
+		corsConfig.setAllowCredentials(true);
+
+		return corsConfig;
 	}
 
 }

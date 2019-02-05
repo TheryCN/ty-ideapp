@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import axios from 'axios';
+
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -7,6 +9,8 @@ import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './reducers';
+
+axios.defaults.withCredentials = true;
 
 const store = createStore(rootReducer);
 

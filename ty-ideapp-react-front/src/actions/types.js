@@ -18,3 +18,7 @@ export const SELECT_IDEA_ACTION_TYPE = 'SELECT_IDEA_ACTION_TYPE';
 // Notification actions
 export const NOTIFY = 'NOTIFY';
 export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION';
+
+// User actions
+export const FETCH_LOGGED_USER = 'FETCH_LOGGED_USER';
+export const BEFORE_FETCH_LOGGED_USER = 'BEFORE_FETCH_LOGGED_USER';
