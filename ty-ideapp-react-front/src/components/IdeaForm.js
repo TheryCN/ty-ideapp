@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -75,5 +77,16 @@ class IdeaForm extends Component {
     );
   }
 }
+
+IdeaForm.propTypes = {
+  saveIdeaHandler: PropTypes.func.isRequired,
+  idea: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    description: PropTypes.string,
+    rating: PropTypes.number,
+    feasibility: PropTypes.string
+  }).isRequired
+};
 
 export default IdeaForm;

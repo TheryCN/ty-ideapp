@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -41,5 +42,13 @@ class WorkspaceListItemForm extends Component {
     );
   }
 }
+
+WorkspaceListItemForm.propTypes = {
+  saveHandler: PropTypes.func.isRequired,
+  workspace: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string
+  }).isRequired
+};
 
 export default WorkspaceListItemForm;
