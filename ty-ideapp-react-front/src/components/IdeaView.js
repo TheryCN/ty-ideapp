@@ -13,7 +13,7 @@ const IdeaView = ({ idea }) => (
     <div>{idea.description}</div>
     <Rating value={idea.rating} max={5} readOnly={true} />
     <div>{idea.feasibility}</div>
-    <div>{idea.createdOn}</div>
+    <div>{moment(idea.createdOn).format('LLL')}</div>
     <div>{moment(idea.updatedOn).format('LLL')}</div>
   </div>
 )
