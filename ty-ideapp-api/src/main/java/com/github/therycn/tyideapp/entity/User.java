@@ -2,6 +2,8 @@ package com.github.therycn.tyideapp.entity;
 
 import java.util.Collection;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +33,11 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@AttributeOverrides({
+		@AttributeOverride(name = "createdOn", column = @Column(name = "USR_CREATED_ON", updatable = false)),
+		@AttributeOverride(name = "updatedOn", column = @Column(name = "USR_UPDATED_ON")),
+		@AttributeOverride(name = "createdBy", column = @Column(name = "USR_CREATED_BY", updatable = false)),
+		@AttributeOverride(name = "modifiedBy", column = @Column(name = "USR_MODIFIED_BY")) })
 public class User extends AbstractEntity<Long> implements UserDetails {
 
 	/** Serial version. */

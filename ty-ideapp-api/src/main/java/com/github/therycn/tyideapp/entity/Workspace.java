@@ -3,6 +3,8 @@ package com.github.therycn.tyideapp.entity;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +30,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@AttributeOverrides({
+		@AttributeOverride(name = "createdOn", column = @Column(name = "WKS_CREATED_ON", updatable = false)),
+		@AttributeOverride(name = "updatedOn", column = @Column(name = "WKS_UPDATED_ON")),
+		@AttributeOverride(name = "createdBy", column = @Column(name = "WKS_CREATED_BY", updatable = false)),
+		@AttributeOverride(name = "modifiedBy", column = @Column(name = "WKS_MODIFIED_BY")) })
 public class Workspace extends AbstractEntity<Long> {
 
 	/** Serial version. */

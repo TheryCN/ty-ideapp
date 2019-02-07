@@ -1,7 +1,7 @@
 package com.github.therycn.tyideapp.entity;
 
-import java.util.Date;
-
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -27,6 +27,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@AttributeOverrides({
+		@AttributeOverride(name = "createdOn", column = @Column(name = "IDA_CREATED_ON", updatable = false)),
+		@AttributeOverride(name = "updatedOn", column = @Column(name = "IDA_UPDATED_ON")),
+		@AttributeOverride(name = "createdBy", column = @Column(name = "IDA_CREATED_BY", updatable = false)),
+		@AttributeOverride(name = "modifiedBy", column = @Column(name = "IDA_MODIFIED_BY")) })
 public class Idea extends AbstractEntity<Long> {
 
 	/** Serial version. */
@@ -57,27 +62,5 @@ public class Idea extends AbstractEntity<Long> {
 	@ManyToOne
 	@JoinColumn(name = "IDA_WKS_ID", foreignKey = @ForeignKey(name = "FK_IDA_WKS"))
 	private Workspace workspace;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.github.therycn.tyideapp.entity.AbstractEntity#getCreatedOn()
-	 */
-	@Column(name = "IDA_CREATED_ON")
-	@Override
-	public Date getCreatedOn() {
-		return super.getCreatedOn();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.github.therycn.tyideapp.entity.AbstractEntity#getUpdatedOn()
-	 */
-	@Column(name = "IDA_UPDATED_ON")
-	@Override
-	public Date getUpdatedOn() {
-		return super.getUpdatedOn();
-	}
 
 }
