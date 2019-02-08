@@ -8,6 +8,8 @@ import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { Vector as VectorSource } from 'ol/source.js';
 import XYZ from 'ol/source/XYZ';
 import { Fill, Stroke, Style } from 'ol/style.js';
+import Feature from 'ol/Feature.js';
+import Circle from 'ol/geom/Circle.js';
 
 const mapStyle = {
     margin: 10
@@ -21,8 +23,8 @@ class IdeaMap extends Component {
   }
 
   componentDidMount() {
-    // https://openlayers.org/en/latest/examples/draw-and-modify-features.html
-    // https://openlayers.org/en/latest/examples/snap.html
+    // ol.source.ServerVector
+    // Store as GeoJSON
     var source = new VectorSource();
     var vector = new VectorLayer({
       source: source,
@@ -37,6 +39,7 @@ class IdeaMap extends Component {
       })
     });
 
+    source.addFeature(new Feature(new Circle([258296.24484698195, 5815573.833591854, 923926.3105553072, 5815573.833591854], 665630.0657083252)));
 
     var map = new Map({
       target: 'map',
@@ -80,6 +83,8 @@ class IdeaMap extends Component {
         }
     });
 
+    var extent = source.getExtent();
+    map.getView().fit(extent, map.getSize());
     this.setState({ map: map, select: select, draw: draw });
   }
 
@@ -95,10 +100,12 @@ class IdeaMap extends Component {
   }
 
   clearSelection() {
-    var selectedFeatures = this.state.select.getFeatures();
-    selectedFeatures.forEach(function(feature) {
-      selectedFeatures.remove(feature);
-    });
+    if(this.state.select) {
+      var selectedFeatures = this.state.select.getFeatures();
+      selectedFeatures.forEach(function(feature) {
+        selectedFeatures.remove(feature);
+      });
+    }
   }
 
   render() {
