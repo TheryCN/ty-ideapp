@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Rating from './Rating';
+import IdeaMap from './IdeaMap';
 
 class IdeaForm extends Component {
 
@@ -67,6 +68,9 @@ class IdeaForm extends Component {
             <MenuItem key="HARD" value="HARD">Hard</MenuItem>
             <MenuItem key="IMPOSSIBLE" value="IMPOSSIBLE">Impossible</MenuItem>
           </TextField>
+        </div>
+        <div>
+          <IdeaMap />
         </div>
         <div>
           <Button className="save-button" variant="contained" onClick={() => this.props.saveIdeaHandler(this.state.idea, this.props.workspaceId)}>
