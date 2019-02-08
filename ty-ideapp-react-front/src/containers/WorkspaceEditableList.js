@@ -13,7 +13,7 @@ export const postWorkspaceAddCall = (dispatch, workspace) => {
 }
 
 export const postWorkspaceEditCall = (dispatch, workspace) => {
-  axios.post(process.env.REACT_APP_BACKEND+'/api/workspaces/', workspace).then(response => {
+  axios.post(process.env.REACT_APP_BACKEND+'/api/workspace/', workspace).then(response => {
     dispatch(editWorkspace(response.data));
     dispatch(notify("Workspace edited"));
   });
