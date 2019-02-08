@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import WorkspaceEditableList from '../components/WorkspaceEditableList';
-import { addWorkspace, editWorkspace, deleteWorkspace } from '../actions/workspaceActions';
+import { fetchWorkspacesCall, addWorkspace, editWorkspace, deleteWorkspace } from '../actions/workspaceActions';
 import { notify } from '../actions/notificationActions';
 
 export const postWorkspaceAddCall = (dispatch, workspace) => {
@@ -30,6 +30,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  loadHandler: workspaceId => fetchWorkspacesCall(dispatch),
   saveWorkspaceHandler: (workspace) => postWorkspaceAddCall(dispatch, workspace),
   editWorkspaceHandler: (workspace) => postWorkspaceEditCall(dispatch, workspace),
   deleteWorkspaceHandler: (workspaceId) => deleteWorkspaceCall(dispatch, workspaceId)

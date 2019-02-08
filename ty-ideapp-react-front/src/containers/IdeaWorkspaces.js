@@ -1,15 +1,9 @@
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { fetchWorkspaces, selectWorkspace } from '../actions/workspaceActions';
+import { fetchWorkspacesCall, selectWorkspace } from '../actions/workspaceActions';
 import { updateWorkspaceCounter } from '../actions/workspaceActions';
 
 import IdeaWorkspaces from '../components/IdeaWorkspaces';
-
-const fetchWorkspacesCall = (dispatch) => {
-  axios.get(process.env.REACT_APP_BACKEND+'/api/workspace/').then(response => {
-    dispatch(fetchWorkspaces(response.data));
-  });
-}
 
 const mapStateToProps = state => ({
   workspaces: state.workspaces.workspaces,

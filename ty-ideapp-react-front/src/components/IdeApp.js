@@ -9,18 +9,37 @@ import MidLayout from './MidLayout.js';
 import Notification from '../containers/Notification.js';
 import WorkspaceEditableList from '../containers/WorkspaceEditableList.js';
 
+const menus = [{
+	id: 1,
+	name: 'Ideas',
+	location: '/ideas'
+}, {
+	id: 2,
+	name: 'Workspaces',
+	location: '/workspaces'
+}];
+
 class IdeApp extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { activeMenuId: 1 };
+    let selectedMenus = menus.filter(menu => menu.location === this.props.history.location.pathname);
+    let activeMenu = selectedMenus.length > 0 ? selectedMenus[0] : menus[0];
+    this.props.history.push(activeMenu.location);
+    this.state = { activeMenuId: activeMenu.id };
   }
 
   componentDidMount() {
     this.props.loadLoggedUserHandler();
   }
 
-  changeActiveMenuHandler = (id) => this.setState({ activeMenuId: id })
+  changeActiveMenuHandler = (id) => {
+    let selectedMenus = menus.filter(menu => menu.id === id);
+    if(selectedMenus.length > 0) {
+      this.props.history.push(menus.filter(menu => menu.id === id)[0].location);
+    }
+    this.setState({ activeMenuId: id });
+  }
 
   render() {
     if(!this.props.loggedUserLoaded) {
@@ -51,7 +70,7 @@ class IdeApp extends Component {
       <div>
         <Notification />
         <div className="App">
-          <Header activeMenuId={this.state.activeMenuId} changeActiveMenuHandler={this.changeActiveMenuHandler} />
+          <Header menus={menus} activeMenuId={this.state.activeMenuId} changeActiveMenuHandler={this.changeActiveMenuHandler} />
           <Grid container className="layout">
             {layout}
           </Grid>

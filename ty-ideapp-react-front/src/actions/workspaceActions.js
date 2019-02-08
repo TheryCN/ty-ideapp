@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { FETCH_WORKSPACES, SELECT_WORKSPACE, UPDATE_COUNTER_WORKSPACE, ADD_WORKSPACE, EDIT_WORKSPACE, DELETE_WORKSPACE } from './types';
 
 export const fetchWorkspaces = workspaces => ({
@@ -30,3 +31,9 @@ export const deleteWorkspace = workspaceId => ({
   type: DELETE_WORKSPACE,
   workspaceId
 });
+
+export const fetchWorkspacesCall = (dispatch) => {
+  axios.get(process.env.REACT_APP_BACKEND+'/api/workspace/').then(response => {
+    dispatch(fetchWorkspaces(response.data));
+  });
+}

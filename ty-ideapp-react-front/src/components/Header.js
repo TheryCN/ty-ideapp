@@ -7,9 +7,7 @@ import UserHeader from '../containers/UserHeader';
 import logo from '../assets/ideapp.PNG';
 import './Header.css';
 
-const menus = [{id: 1, name: "Ideas"}, {id: 2, name: "Workspaces"}];
-
-const Header = ({ activeMenuId = 1, changeActiveMenuHandler }) => {
+const Header = ({ menus=[], activeMenuId = 1, changeActiveMenuHandler }) => {
   const listItems = menus.map(menu =>
     <ListItem classes={(menu.id === activeMenuId) ? { root: 'menu-selected' } : {}}
       selected={menu.id === activeMenuId} key={menu.id} onClick={event => changeActiveMenuHandler(menu.id)}>

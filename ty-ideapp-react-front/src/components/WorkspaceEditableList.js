@@ -13,6 +13,12 @@ class WorkspaceEditableList extends Component {
     this.state = { editId: undefined };
     this.editHandler = this.editHandler.bind(this);
   }
+  
+  componentDidMount() {
+    if(this.props.workspaces.length === 0) {
+      this.props.loadHandler();
+    }
+  }
 
   editHandler(workspace) {
     this.props.editWorkspaceHandler(workspace);
