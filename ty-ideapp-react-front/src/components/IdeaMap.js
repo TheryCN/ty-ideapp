@@ -23,8 +23,10 @@ class IdeaMap extends Component {
   }
 
   componentDidMount() {
+    // TODO
     // ol.source.ServerVector
-    // Store as GeoJSON
+    // Store as GeoJSON -> Postgis
+    // Ideas groupment by geographical zone
     var source = new VectorSource();
     var vector = new VectorLayer({
       source: source,
