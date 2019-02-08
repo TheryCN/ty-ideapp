@@ -4,8 +4,7 @@ import { Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 
 import Header from './Header.js';
-import LeftLayout from './LeftLayout.js';
-import MidLayout from './MidLayout.js';
+import IdeasLayout from './IdeasLayout.js';
 import Notification from '../containers/Notification.js';
 import WorkspaceEditableList from '../containers/WorkspaceEditableList.js';
 
@@ -50,20 +49,9 @@ class IdeApp extends Component {
 
     let layout = [];
     if(this.state.activeMenuId === 1) {
-      layout.push(
-        <Grid key={1} item xs={3} sm={3} className="left-layout">
-            <LeftLayout />
-        </Grid>);
-      layout.push(
-        <Grid key={2} item xs={9} sm={9} className="mid-layout">
-            <MidLayout />
-        </Grid>);
+      layout.push(<IdeasLayout />);
     } else {
-      layout.push(
-        <Grid key={1} item xs={12} sm={12} className="left-layout">
-          <WorkspaceEditableList />
-        </Grid>
-      );
+      layout.push(<WorkspaceEditableList />);
     }
 
     return (
@@ -71,9 +59,7 @@ class IdeApp extends Component {
         <Notification />
         <div className="App">
           <Header menus={menus} activeMenuId={this.state.activeMenuId} changeActiveMenuHandler={this.changeActiveMenuHandler} />
-          <Grid container className="layout">
-            {layout}
-          </Grid>
+          {layout}
         </div>
       </div>
     );
