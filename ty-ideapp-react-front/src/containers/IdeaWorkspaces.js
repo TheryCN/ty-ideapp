@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import axios from 'axios';
 import { fetchWorkspacesCall, selectWorkspace } from '../actions/workspaceActions';
 import { updateWorkspaceCounter } from '../actions/workspaceActions';
 

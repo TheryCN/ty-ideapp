@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import Grid from '@material-ui/core/Grid';
-
 import Header from './Header.js';
 import IdeasLayout from './IdeasLayout.js';
 import Notification from '../containers/Notification.js';
@@ -49,9 +47,9 @@ class IdeApp extends Component {
 
     let layout = [];
     if(this.state.activeMenuId === 1) {
-      layout.push(<IdeasLayout />);
+      layout.push(<IdeasLayout key={1} />);
     } else {
-      layout.push(<WorkspaceEditableList />);
+      layout.push(<WorkspaceEditableList key={2} />);
     }
 
     return (
