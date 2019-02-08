@@ -20,6 +20,7 @@ class IdeaMap extends Component {
   constructor(props) {
     super(props);
     this.selectHandler = this.selectHandler.bind(this);
+    this.clearSelection = this.clearSelection.bind(this);
   }
 
   componentDidMount() {
