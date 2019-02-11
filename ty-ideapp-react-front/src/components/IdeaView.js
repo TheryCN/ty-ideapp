@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import moment from 'moment';
 import Rating from './Rating';
+import IdeaMap from './IdeaMap';
 
 const IdeaView = ({ idea }) => (
   <div>
@@ -15,6 +16,8 @@ const IdeaView = ({ idea }) => (
     <div>{idea.feasibility}</div>
     <div>{moment(idea.createdOn).format('LLL')}</div>
     <div>{moment(idea.updatedOn).format('LLL')}</div>
+
+    <IdeaMap readOnly={true} />
   </div>
 )
 

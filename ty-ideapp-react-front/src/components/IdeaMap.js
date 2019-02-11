@@ -59,34 +59,39 @@ class IdeaMap extends Component {
       })
     });
 
-    var modify = new Modify({source: source});
-    map.addInteraction(modify);
+    var select, draw;
 
-    var draw, snap, select;
-    draw = new Draw({
-      source: source,
-      type: 'Circle'
-    });
-    map.addInteraction(draw);
-    select = new Select();
-    map.addInteraction(select);
-    select.setActive(false);
+    if(!this.props.readOnly) {
+      var modify = new Modify({source: source});
+      map.addInteraction(modify);
 
-    snap = new Snap({source: source});
-    map.addInteraction(snap);
+      var snap;
+      draw = new Draw({
+        source: source,
+        type: 'Circle'
+      });
+      map.addInteraction(draw);
+      select = new Select();
+      map.addInteraction(select);
+      select.setActive(false);
 
-    var self = this;
-    document.addEventListener('keydown', function(evt) {
-        if(evt.keyCode === 46) {
-          select.getFeatures().forEach(function(feature) {
-            source.removeFeature(feature);
-          });
-          self.clearSelection(select);
-        }
-    });
+      snap = new Snap({source: source});
+      map.addInteraction(snap);
+
+      var self = this;
+      document.addEventListener('keydown', function(evt) {
+          if(evt.keyCode === 46) {
+            select.getFeatures().forEach(function(feature) {
+              source.removeFeature(feature);
+            });
+            self.clearSelection(select);
+          }
+      });
+    }
 
     var extent = source.getExtent();
     map.getView().fit(extent, map.getSize());
+
     this.setState({ map: map, select: select, draw: draw });
   }
 
@@ -111,12 +116,21 @@ class IdeaMap extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <div id="map" style={mapStyle}></div>
-        <div onClick={this.selectHandler}>Select</div>
-      </div>
-    );
+    if(this.props.readOnly) {
+      return (
+        <div>
+          <div id="map" style={mapStyle}></div>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <div id="map" style={mapStyle}></div>
+          <div onClick={this.selectHandler}>Select</div>
+        </div>
+      );
+    }
+
   }
 }
 
