@@ -20,7 +20,6 @@ class IdeaMap extends Component {
   constructor(props) {
     super(props);
     this.selectHandler = this.selectHandler.bind(this);
-    this.clearSelection = this.clearSelection.bind(this);
   }
 
   componentDidMount() {
@@ -82,7 +81,7 @@ class IdeaMap extends Component {
           select.getFeatures().forEach(function(feature) {
             source.removeFeature(feature);
           });
-          self.clearSelection();
+          self.clearSelection(select);
         }
     });
 
@@ -96,15 +95,15 @@ class IdeaMap extends Component {
       this.state.select.setActive(true);
       this.state.draw.setActive(false);
     } else {
-      this.clearSelection();
+      this.clearSelection(this.state.select);
       this.state.select.setActive(false);
       this.state.draw.setActive(true);
     }
   }
 
-  clearSelection() {
-    if(this.state.select) {
-      var selectedFeatures = this.state.select.getFeatures();
+  clearSelection(select) {
+    if(select) {
+      var selectedFeatures = select.getFeatures();
       selectedFeatures.forEach(function(feature) {
         selectedFeatures.remove(feature);
       });
