@@ -55,6 +55,9 @@ public class Idea extends AbstractEntity<Long> {
 	@Column(name = "IDA_RATING")
 	private int rating;
 
+	@Column(name = "IDA_ACHIEVE", nullable = false)
+	private boolean achieve;
+
 	@Column(name = "IDA_FEASIBILITY")
 	@Enumerated(EnumType.STRING)
 	private FeasibilityType feasibility;

@@ -25,6 +25,8 @@ public class IdeaSave {
 
 	private int rating;
 
+	private boolean achieve;
+
 	private String feasibility;
 
 	private Long workspaceId;

@@ -6,6 +6,8 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Rating from './Rating';
 import IdeaMap from './IdeaMap';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 class IdeaForm extends Component {
 
@@ -26,6 +28,10 @@ class IdeaForm extends Component {
 
   handleRatingChange = value => {
     this.setState({idea: {...this.state.idea, rating: value}})
+  };
+
+  handleCheckChange = name => event => {
+    this.setState({idea: {...this.state.idea, [name]: event.target.checked}})
   };
 
   render() {
@@ -73,6 +79,18 @@ class IdeaForm extends Component {
           <IdeaMap />
         </div>
         <div>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={this.state.idea.achieve}
+                onChange={this.handleCheckChange('achieve')}
+                value="achieve"
+              />
+            }
+            label="Achieved ?"
+          />
+        </div>
+        <div>
           <Button className="save-button" variant="contained" onClick={() => this.props.saveIdeaHandler(this.state.idea, this.props.workspaceId)}>
             Sauvegarder
           </Button>
@@ -89,7 +107,8 @@ IdeaForm.propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     rating: PropTypes.number,
-    feasibility: PropTypes.string
+    feasibility: PropTypes.string,
+    achieve: PropTypes.boolean
   }).isRequired
 };
 
