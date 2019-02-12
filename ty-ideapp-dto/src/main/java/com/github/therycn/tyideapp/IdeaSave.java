@@ -1,6 +1,7 @@
 package com.github.therycn.tyideapp;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -34,5 +35,7 @@ public class IdeaSave {
 	private Date createdOn;
 
 	private Date updatedOn;
+
+	private List<CircleSave> localizations;
 
 }

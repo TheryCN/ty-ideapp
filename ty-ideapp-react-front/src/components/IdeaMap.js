@@ -27,6 +27,7 @@ class IdeaMap extends Component {
     // ol.source.ServerVector
     // Store as GeoJSON -> Postgis
     // Ideas groupment by geographical zone
+    var self = this;
     var source = new VectorSource();
     var vector = new VectorLayer({
       source: source,
@@ -40,8 +41,6 @@ class IdeaMap extends Component {
         })
       })
     });
-
-    source.addFeature(new Feature(new Circle([258296.24484698195, 5815573.833591854, 923926.3105553072, 5815573.833591854], 665630.0657083252)));
 
     var map = new Map({
       target: 'map',
@@ -78,20 +77,23 @@ class IdeaMap extends Component {
       snap = new Snap({source: source});
       map.addInteraction(snap);
 
-      var self = this;
       document.addEventListener('keydown', function(evt) {
           if(evt.keyCode === 46) {
             select.getFeatures().forEach(function(feature) {
+              console.log(feature);
               source.removeFeature(feature);
             });
             self.clearSelection(select);
           }
       });
+
+      vector.on('change', function(e) {
+        self.props.onChange(vector.getSource().getFeatures());
+      });
     }
 
-    var extent = source.getExtent();
-    map.getView().fit(extent, map.getSize());
 
+    this.initVectorLayer(map);
     this.setState({ map: map, select: select, draw: draw });
   }
 
@@ -112,6 +114,26 @@ class IdeaMap extends Component {
       selectedFeatures.forEach(function(feature) {
         selectedFeatures.remove(feature);
       });
+    }
+  }
+
+  initVectorLayer(map) {
+    let vector = map.getLayers().getArray()[1];
+    let source = vector.getSource();
+    source.clear();
+
+    if(this.props.localizations && this.props.localizations.length > 0) {
+      this.props.localizations.forEach(function(localization) {
+        source.addFeature(new Feature(new Circle(localization.coordinates, localization.radius)));
+      });
+      var extent = source.getExtent();
+      map.getView().fit(extent, map.getSize());
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(JSON.stringify(prevProps.localizations) !== JSON.stringify(this.props.localizations)) {
+      this.initVectorLayer(this.state.map);
     }
   }
 

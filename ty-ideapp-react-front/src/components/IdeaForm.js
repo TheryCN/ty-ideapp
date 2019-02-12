@@ -34,6 +34,13 @@ class IdeaForm extends Component {
     this.setState({idea: {...this.state.idea, [name]: event.target.checked}})
   };
 
+  handleMapChange = data => {
+    let localizations = data.map(feature => {
+      return {radius: feature.getGeometry().getRadius(), coordinates: feature.getGeometry().getFlatCoordinates()};
+    });
+    this.setState({idea: {...this.state.idea, localizations: localizations}})
+  };
+
   render() {
     return (
       <div>
@@ -76,7 +83,7 @@ class IdeaForm extends Component {
           </TextField>
         </div>
         <div>
-          <IdeaMap />
+          <IdeaMap localizations={this.props.idea.localizations} onChange={this.handleMapChange} />
         </div>
         <div>
           <FormControlLabel

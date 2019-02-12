@@ -1,7 +1,10 @@
 package com.github.therycn.tyideapp.entity;
 
+import java.util.Collection;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,7 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.github.therycn.tyideapp.entity.geom.Geometry;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -66,4 +72,6 @@ public class Idea extends AbstractEntity<Long> {
 	@JoinColumn(name = "IDA_WKS_ID", foreignKey = @ForeignKey(name = "FK_IDA_WKS"))
 	private Workspace workspace;
 
+	@OneToMany(mappedBy = "idea", cascade = CascadeType.ALL)
+	private Collection<Geometry> localizations;
 }

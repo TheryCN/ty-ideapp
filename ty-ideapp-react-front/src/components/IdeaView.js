@@ -17,7 +17,7 @@ const IdeaView = ({ idea }) => (
     <div>{moment(idea.createdOn).format('LLL')}</div>
     <div>{moment(idea.updatedOn).format('LLL')}</div>
 
-    <IdeaMap readOnly={true} />
+    <IdeaMap localizations={idea.localizations} readOnly={true} />
   </div>
 )
 
