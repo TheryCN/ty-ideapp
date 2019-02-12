@@ -22,3 +22,6 @@ export const CLEAR_NOTIFICATION = 'CLEAR_NOTIFICATION';
 // User actions
 export const FETCH_LOGGED_USER = 'FETCH_LOGGED_USER';
 export const BEFORE_FETCH_LOGGED_USER = 'BEFORE_FETCH_LOGGED_USER';
+
+// Root actions
+export const RESET_APP = 'RESET_APP';
