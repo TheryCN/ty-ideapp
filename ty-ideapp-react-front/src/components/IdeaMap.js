@@ -80,7 +80,6 @@ class IdeaMap extends Component {
       document.addEventListener('keydown', function(evt) {
           if(evt.keyCode === 46) {
             select.getFeatures().forEach(function(feature) {
-              console.log(feature);
               source.removeFeature(feature);
             });
             self.clearSelection(select);

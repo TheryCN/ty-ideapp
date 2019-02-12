@@ -72,6 +72,6 @@ public class Idea extends AbstractEntity<Long> {
 	@JoinColumn(name = "IDA_WKS_ID", foreignKey = @ForeignKey(name = "FK_IDA_WKS"))
 	private Workspace workspace;
 
-	@OneToMany(mappedBy = "idea", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "idea", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Collection<Geometry> localizations;
 }

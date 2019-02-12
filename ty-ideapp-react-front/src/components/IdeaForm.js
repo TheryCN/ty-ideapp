@@ -36,7 +36,7 @@ class IdeaForm extends Component {
 
   handleMapChange = data => {
     let localizations = data.map(feature => {
-      return {radius: feature.getGeometry().getRadius(), coordinates: feature.getGeometry().getFlatCoordinates()};
+      return {radius: feature.getGeometry().getRadius(), coordinates: feature.getGeometry().getCenter()};
     });
     this.setState({idea: {...this.state.idea, localizations: localizations}})
   };
