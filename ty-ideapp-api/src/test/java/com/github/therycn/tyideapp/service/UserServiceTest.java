@@ -2,12 +2,15 @@ package com.github.therycn.tyideapp.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.repository.UserRepository;
@@ -26,8 +29,14 @@ public class UserServiceTest {
 	@Mock
 	private UserRepository userRepo;
 
+	@Mock
+	private PasswordEncoder passwordEncoder;
+
 	@InjectMocks
 	private UserService userService;
+
+	@Rule
+	public ExpectedException expectedEx = ExpectedException.none();
 
 	/**
 	 * Test method {@link UserService#loadUserByUsername(String)}.

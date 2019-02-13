@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +31,10 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return userRepo.findByUsername(username);
+	}
+
+	public User save(User user) {
+		return userRepo.save(user);
 	}
 
 }
