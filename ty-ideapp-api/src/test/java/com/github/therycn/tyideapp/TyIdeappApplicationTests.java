@@ -17,12 +17,18 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.github.therycn.tyideapp.entity.User;
+import com.github.therycn.tyideapp.repository.UserRepository;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class TyIdeappApplicationTests {
 
 	@Autowired
 	private TestRestTemplate restTemplate;
+
+	@Autowired
+	private UserRepository userRepo;
 
 	@Test
 	public void contextLoads() {
@@ -65,15 +71,21 @@ public class TyIdeappApplicationTests {
 	 */
 	@Test
 	public void testPostSavePassword() {
-		// Given
-		HttpHeaders headers = createHeaders();
+		User user = userRepo.findById(1L).orElse(null);
+		try {
+			// Given
+			HttpHeaders headers = createHeaders();
 
-		// When
-		ResponseEntity<UserInfo> response = restTemplate.exchange("/user/password", HttpMethod.POST,
-				new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt01", "ChangeIt"), headers), UserInfo.class);
+			// When
+			ResponseEntity<UserInfo> response = restTemplate.exchange("/user/password", HttpMethod.POST,
+					new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt01", "ChangeIt"), headers), UserInfo.class);
 
-		// Then
-		assertThat(response.getBody().getUsername()).isEqualTo("Thery");
+			// Then
+			assertThat(response.getBody().getUsername()).isEqualTo("Thery");
+		} finally {
+			// Reset password
+			userRepo.save(user);
+		}
 	}
 
 	private HttpHeaders createHeaders() {
