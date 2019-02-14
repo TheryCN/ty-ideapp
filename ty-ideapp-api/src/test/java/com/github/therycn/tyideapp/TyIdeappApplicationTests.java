@@ -60,6 +60,22 @@ public class TyIdeappApplicationTests {
 		assertThat(response.getBody().getUsername()).isEqualTo("Thery");
 	}
 
+	/**
+	 * Test /user/password Endpoint.
+	 */
+	@Test
+	public void testPostSavePassword() {
+		// Given
+		HttpHeaders headers = createHeaders();
+
+		// When
+		ResponseEntity<UserInfo> response = restTemplate.exchange("/user/password", HttpMethod.POST,
+				new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt01", "ChangeIt"), headers), UserInfo.class);
+
+		// Then
+		assertThat(response.getBody().getUsername()).isEqualTo("Thery");
+	}
+
 	private HttpHeaders createHeaders() {
 		return createHeaders("Thery", "ChangeIt");
 	}

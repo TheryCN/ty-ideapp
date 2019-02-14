@@ -2,9 +2,7 @@ package com.github.therycn.tyideapp.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -34,9 +32,6 @@ public class UserServiceTest {
 
 	@InjectMocks
 	private UserService userService;
-
-	@Rule
-	public ExpectedException expectedEx = ExpectedException.none();
 
 	/**
 	 * Test method {@link UserService#loadUserByUsername(String)}.

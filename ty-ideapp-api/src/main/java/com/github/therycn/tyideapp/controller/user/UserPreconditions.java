@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.github.therycn.tyideapp.UserPasswordUpdate;
@@ -15,14 +16,8 @@ import com.github.therycn.tyideapp.exception.ValidationException;
  * @author TCHARASS
  *
  */
-public final class UserPreconditions {
-
-	/**
-	 * Private constructor.
-	 */
-	private UserPreconditions() {
-		throw new AssertionError();
-	}
+@Component
+public class UserPreconditions {
 
 	public static void checkPassword(PasswordEncoder passwordEncoder, String actualPasswordEncoded,
 			UserPasswordUpdate passwordUpdate) throws ValidationException {
