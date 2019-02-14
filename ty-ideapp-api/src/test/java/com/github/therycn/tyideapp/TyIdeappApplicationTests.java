@@ -14,12 +14,19 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.repository.UserRepository;
 
+/**
+ * Spring context + Endpoint tests.
+ * 
+ * @author tcharass
+ *
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class TyIdeappApplicationTests {
@@ -86,6 +93,23 @@ public class TyIdeappApplicationTests {
 			// Reset password
 			userRepo.save(user);
 		}
+	}
+
+	/**
+	 * Test /user/password Endpoint + ValidationException Handler.
+	 */
+	@Test
+	public void testPostSavePasswordKo() {
+		// Given
+		HttpHeaders headers = createHeaders();
+
+		// When
+		ResponseEntity<String[]> response = restTemplate.exchange("/user/password", HttpMethod.POST,
+				new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt", "ChangeIt"), headers), String[].class);
+
+		// Then
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
 	}
 
 	private HttpHeaders createHeaders() {
