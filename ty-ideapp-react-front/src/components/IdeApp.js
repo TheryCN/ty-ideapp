@@ -1,19 +1,27 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
+import Notification from '../containers/Notification.js';
 import Header from './Header.js';
 import IdeasLayout from './IdeasLayout.js';
-import Notification from '../containers/Notification.js';
 import WorkspaceEditableList from '../containers/WorkspaceEditableList.js';
+import ProfileLayout from './ProfileLayout.js';
 
 const menus = [{
 	id: 1,
 	name: 'Ideas',
-	location: '/ideas'
+	location: '/ideas',
+	render: <IdeasLayout />
 }, {
 	id: 2,
 	name: 'Workspaces',
-	location: '/workspaces'
+	location: '/workspaces',
+	render: <WorkspaceEditableList />
+}, {
+	id: 3,
+	name: 'Profile',
+	location: '/profile',
+	render: <ProfileLayout />
 }];
 
 class IdeApp extends Component {
@@ -45,12 +53,13 @@ class IdeApp extends Component {
       return <Redirect to='/login' />
     }
 
-    let layout = [];
-    if(this.state.activeMenuId === 1) {
-      layout.push(<IdeasLayout key={1} />);
-    } else {
-      layout.push(<WorkspaceEditableList key={2} />);
-    }
+    let layout;
+		let selectedMenus = menus.filter(menu => menu.id === this.state.activeMenuId);
+    if(selectedMenus.length > 0) {
+			layout = selectedMenus[0].render;
+		} else {
+			layout = <IdeasLayout />;
+		}
 
     return (
       <div>
