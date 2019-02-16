@@ -115,7 +115,7 @@ IdeaForm.propTypes = {
     description: PropTypes.string,
     rating: PropTypes.number,
     feasibility: PropTypes.string,
-    achieve: PropTypes.boolean
+    achieve: PropTypes.bool
   }).isRequired
 };
 
