@@ -55,6 +55,10 @@ class LoginForm extends Component {
             Login
           </Button>
         </div>
+
+        <div>
+          {this.props.loginError}
+        </div>
       </form>
     );
   }
