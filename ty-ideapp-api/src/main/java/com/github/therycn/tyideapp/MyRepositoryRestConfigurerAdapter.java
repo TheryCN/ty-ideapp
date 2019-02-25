@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
+import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 
 /**
  * Repository Rest Configurer Adapter, used to add entities ids.
@@ -16,7 +16,7 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapt
  *
  */
 @Configuration
-public class MyRepositoryRestConfigurerAdapter extends RepositoryRestConfigurerAdapter {
+public class MyRepositoryRestConfigurerAdapter implements RepositoryRestConfigurer {
 
     @Autowired
     private EntityManager entityManager;
