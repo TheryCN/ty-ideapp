@@ -35,20 +35,20 @@ import lombok.Setter;
 @Setter
 public abstract class Geometry {
 
-	@Id
-	@Column(name = "GEO_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @Column(name = "GEO_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(name = "GEO_TYPE", insertable = false, updatable = false)
-	@Enumerated(EnumType.STRING)
-	private GeometryType type;
+    @Column(name = "GEO_TYPE", insertable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
+    private GeometryType type;
 
-	@Column(name = "GEO_COORDINATES")
-	private Double[] coordinates;
+    @Column(name = "GEO_COORDINATES")
+    private Double[] coordinates;
 
-	@ManyToOne
-	@JoinColumn(name = "IDA_WKS_ID", foreignKey = @ForeignKey(name = "FK_IDA_WKS"))
-	private Idea idea;
+    @ManyToOne
+    @JoinColumn(name = "GEO_IDA_ID", foreignKey = @ForeignKey(name = "FK_GEO_IDA"))
+    private Idea idea;
 
 }
