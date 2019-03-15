@@ -120,8 +120,8 @@
 				</configuration>
 			</plugin>
 
-			<!-- Build : dockerfile:build -->
-			<!-- Push to dockerhub : dockerfile:push -->
+			<!-- Build : docker:build -->
+			<!-- Push to dockerhub : docker:push -->
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
