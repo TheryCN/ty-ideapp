@@ -9,4 +9,4 @@ COPY target/ty-ideapp-api.jar ty-ideapp-api.jar
 EXPOSE 8100
 
 # Run app
-ENTRYPOINT ["java","-jar","-Dspring.profiles.active=dev","/ty-ideapp-api.jar"]
+ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=dev","/ty-ideapp-api.jar"]
