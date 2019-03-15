@@ -92,7 +92,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>ty-ideapp</finalName>
+		<finalName>ty-ideapp-api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
