@@ -1,0 +1,30 @@
+version: "3.1"
+services:
+  api:
+    image: ty-ideapp-api:latest
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=jdbc:postgresql://postgres:5432/ideapp
+      - DATASOURCE_USER=pi-ideapp
+      - DATASOURCE_PASSWORD=pi-ideapp
+      - DATASOURCE_DRIVER=org.postgresql.Driver
+      - HIBERNATE_DDL_AUTO=update
+
+  react:
+    image: ty-ideapp-react-front:latest
+    depends_on:
+      - api
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=pi-ideapp
+      - POSTGRES_PASSWORD=pi-ideapp
+      - POSTGRES_DB=ideapp
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
