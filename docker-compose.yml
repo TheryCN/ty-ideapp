@@ -10,6 +10,7 @@ services:
       - DATASOURCE_PASSWORD=pi-ideapp
       - DATASOURCE_DRIVER=org.postgresql.Driver
       - HIBERNATE_DDL_AUTO=update
+      - LOGGING_PATH=/tmp/ideapp.log
 
   react:
     image: ty-ideapp-react-front:latest
