@@ -25,4 +25,4 @@ COPY ${DEPENDENCY}/BOOT-INF/classes /app
 EXPOSE 8100
 
 # Run app
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.github.therycn.tyideapp.TyIdeappApplication"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=dev","-cp","app:app/lib/*","com.github.therycn.tyideapp.TyIdeappApplication"]

@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -45,14 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.configurationSource(request -> corsConfig()).and().csrf().disable();
 	}
 
-	@Bean
-	public DaoAuthenticationProvider authProvider() {
-		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-		authProvider.setUserDetailsService(userDetailsService());
-		authProvider.setPasswordEncoder(passwordEncoder());
-		return authProvider;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -66,7 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(4, new SecureRandom(new byte[20]));
+		return new BCryptPasswordEncoder(4, secureRandom());
+	}
+
+	private SecureRandom secureRandom() {
+		return new SecureRandom(new byte[20]);
 	}
 
 	private CorsConfiguration corsConfig() {
