@@ -26,7 +26,7 @@ import lombok.Setter;
  * @author tcharass
  *
  */
-@Table(name = "USER")
+@Table(name = "APP_USER")
 @Entity
 @Getter
 @Setter
