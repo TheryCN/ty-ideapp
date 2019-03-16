@@ -1,7 +1,5 @@
 package com.github.therycn.tyideapp;
 
-import java.security.SecureRandom;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,11 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder(4, secureRandom());
-	}
-
-	private SecureRandom secureRandom() {
-		return new SecureRandom(new byte[20]);
+		return new BCryptPasswordEncoder();
 	}
 
 	private CorsConfiguration corsConfig() {
