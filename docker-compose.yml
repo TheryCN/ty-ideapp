@@ -23,8 +23,6 @@ services:
       - POSTGRES_USER=pi-ideapp
       - POSTGRES_PASSWORD=pi-ideapp
       - POSTGRES_DB=ideapp
-  volumes:
-    - /data/ideapp/postgres:/var/lib/postgresql/data
 
   adminer:
     image: adminer

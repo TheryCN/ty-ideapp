@@ -27,3 +27,4 @@ docker service ls
 docker stack rm ideapp
 
 docker exec -it <Container ID> /bin/sh
+command winpty docker exec -it <Container ID> bash
