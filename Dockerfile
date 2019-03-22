@@ -3,7 +3,7 @@
 #VOLUME /tmp
 
 # Copy
-#COPY target/ty-ideapp-api.jar ty-ideapp-api.jar
+#COPY ty-ideapp-api/target/ty-ideapp-api.jar ty-ideapp-api.jar
 
 # Make port 8100 available to the world outside this container
 #EXPOSE 8100
@@ -16,7 +16,7 @@ FROM openjdk:8-jdk-alpine
 
 VOLUME /tmp
 
-ARG DEPENDENCY=target/dependency
+ARG DEPENDENCY=ty-ideapp-api/target/dependency
 COPY ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY ${DEPENDENCY}/META-INF /app/META-INF
 COPY ${DEPENDENCY}/BOOT-INF/classes /app

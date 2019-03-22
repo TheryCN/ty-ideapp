@@ -1,0 +1,8 @@
+/.git
+/.settings
+.gitignore
+.gitattributes
+.project
+
+/ty-ideapp-front
+/ty-ideapp-react-front

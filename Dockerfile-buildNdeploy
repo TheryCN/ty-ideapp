@@ -1,0 +1,16 @@
+FROM maven:3.6-jdk-8-alpine
+
+VOLUME /tmp
+
+# Copy
+COPY . /usr/src/app
+WORKDIR /usr/src/app
+
+RUN apk update
+RUN mvn clean package --batch-mode
+
+# Make port 8100 available to the world outside this container
+EXPOSE 8100
+
+# Run app
+ENTRYPOINT ["java","-jar","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=it","target/ty-ideapp-api.jar"]
