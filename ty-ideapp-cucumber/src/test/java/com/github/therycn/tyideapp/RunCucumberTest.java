@@ -12,7 +12,7 @@ import cucumber.api.junit.Cucumber;
  *
  */
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = { "pretty" }, features = "src/test/resources/features/")
+@CucumberOptions(plugin = { "pretty" }, features = "classpath:features/")
 public class RunCucumberTest {
 
 }
