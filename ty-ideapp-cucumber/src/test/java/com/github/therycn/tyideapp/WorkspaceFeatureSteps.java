@@ -37,6 +37,8 @@ public class WorkspaceFeatureSteps {
 
     private WorkspaceSave workspaceSave;
 
+    private Long deleteId;
+
     @Given("authenticate as {string}")
     public void authenticate_as(String user) {
         initProperties();
@@ -78,7 +80,12 @@ public class WorkspaceFeatureSteps {
 
     @Given("I want to delete workspace with id {long}")
     public void i_want_to_delete_workspace_with_id(Long id) {
-        restTemplate.exchange(baseUri + "/workspaces/" + id, HttpMethod.DELETE, new HttpEntity<Object>(headers),
+        deleteId = id;
+    }
+
+    @When("I ask for deleting workspace")
+    public void i_ask_for_deleting_workspace() {
+        restTemplate.exchange(baseUri + "/workspaces/" + deleteId, HttpMethod.DELETE, new HttpEntity<Object>(headers),
                 Void.class);
     }
 
