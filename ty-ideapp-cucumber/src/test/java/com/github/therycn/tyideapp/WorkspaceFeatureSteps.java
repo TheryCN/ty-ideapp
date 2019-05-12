@@ -37,7 +37,7 @@ public class WorkspaceFeatureSteps {
 
     private WorkspaceSave workspaceSave;
 
-    private Long deleteId;
+    private Long selectedWorkspaceId;
 
     @Given("authenticate as {string}")
     public void authenticate_as(String user) {
@@ -67,26 +67,31 @@ public class WorkspaceFeatureSteps {
 
     @When("I ask for saving workspace")
     public void i_ask_for_saving_workspace() {
-        restTemplate.exchange(baseUri + "/workspace/", HttpMethod.POST, new HttpEntity<Object>(workspaceSave, headers),
-                WorkspaceListItem.class);
+        ResponseEntity<WorkspaceListItem> response = restTemplate.exchange(baseUri + "/workspace/", HttpMethod.POST,
+                new HttpEntity<Object>(workspaceSave, headers), WorkspaceListItem.class);
+        selectedWorkspaceId = response.getBody().getId();
     }
 
-    @Given("I want to update a workspace with id {long} with new name {string}")
-    public void i_want_to_update_a_workspace_with_id_with_new_name(Long id, String name) {
+    @Given("I want to update it with new name {string}")
+    public void i_want_to_update_it_with_new_name(String name) {
         workspaceSave = new WorkspaceSave();
-        workspaceSave.setId(id);
+        workspaceSave.setId(selectedWorkspaceId);
         workspaceSave.setName(name);
     }
 
-    @Given("I want to delete workspace with id {long}")
-    public void i_want_to_delete_workspace_with_id(Long id) {
-        deleteId = id;
+    @Given("an existing workspace named {string}")
+    public void an_existing_workspace_named(String name) {
+        workspaceSave = new WorkspaceSave();
+        workspaceSave.setName(name);
+        ResponseEntity<WorkspaceListItem> response = restTemplate.exchange(baseUri + "/workspace/", HttpMethod.POST,
+                new HttpEntity<Object>(workspaceSave, headers), WorkspaceListItem.class);
+        selectedWorkspaceId = response.getBody().getId();
     }
 
-    @When("I ask for deleting workspace")
-    public void i_ask_for_deleting_workspace() {
-        restTemplate.exchange(baseUri + "/workspaces/" + deleteId, HttpMethod.DELETE, new HttpEntity<Object>(headers),
-                Void.class);
+    @When("I delete the selected workspace")
+    public void i_delete_the_selected_workspace() {
+        restTemplate.exchange(baseUri + "/workspaces/" + selectedWorkspaceId, HttpMethod.DELETE,
+                new HttpEntity<Object>(headers), Void.class);
     }
 
     private HttpHeaders createHeaders(String username, String password) {
