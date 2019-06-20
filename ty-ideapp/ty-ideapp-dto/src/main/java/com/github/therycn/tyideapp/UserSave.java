@@ -13,8 +13,6 @@ import lombok.Setter;
 @Setter
 public class UserSave {
 
-	private Long id;
-
 	private String username;
 
 	private String email;

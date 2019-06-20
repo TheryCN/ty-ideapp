@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.github.therycn.tyideapp.entity.User;
@@ -25,6 +26,8 @@ public class UserService implements UserDetailsService {
 
 	private UserRepository userRepo;
 
+	private PasswordEncoder passwordEncoder;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -36,10 +39,23 @@ public class UserService implements UserDetailsService {
 		return userRepo.findByUsername(username);
 	}
 
+	/**
+	 * Get user by id.
+	 * 
+	 * @param id
+	 * @return {@link User}
+	 */
 	public User getUser(Long id) {
 		return userRepo.getOne(id);
 	}
 
+	/**
+	 * Create a new user.
+	 * 
+	 * @param user {@link User}
+	 * @return {@link User}
+	 * @throws ValidationException
+	 */
 	public User create(User user) throws ValidationException {
 		if (user.getId() != null) {
 			throw new IllegalArgumentException("User must have no id, it's a creation !");
@@ -51,6 +67,13 @@ public class UserService implements UserDetailsService {
 		return userRepo.save(user);
 	}
 
+	/**
+	 * Update an existing user.
+	 * 
+	 * @param user {@link User}
+	 * @return {@link User}
+	 * @throws ValidationException
+	 */
 	public User update(User user) throws ValidationException {
 		// If username has changed then check unicity
 		if (!hasUniqueUsername(user.getId(), user.getUsername())) {
@@ -58,6 +81,21 @@ public class UserService implements UserDetailsService {
 		}
 
 		return userRepo.save(user);
+	}
+
+	/**
+	 * Check if the old password is correct.
+	 * 
+	 * @param user        {@link User}
+	 * @param oldPassword the old password not encoded
+	 * @return true if it's ok
+	 */
+	public boolean checkOldPasswordEq(User user, String oldPassword) {
+		return passwordEncoder.matches(oldPassword, user.getPassword());
+	}
+
+	public String encodePassword(String nonEncodedPassword) {
+		return passwordEncoder.encode(nonEncodedPassword);
 	}
 
 	private boolean hasUniqueUsername(Long id, String username) {

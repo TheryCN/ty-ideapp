@@ -1,10 +1,13 @@
 package com.github.therycn.tyideapp.controller.user;
 
+import java.util.Arrays;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,29 +38,33 @@ public class UserRestController {
 
 	@ApiOperation(value = "Create user")
 	@PostMapping("/")
-	public UserInfo create(UserSave userSave) throws ValidationException {
+	public UserInfo create(@RequestBody UserSave userSave) throws ValidationException {
 		// Check Inputs
 		if (!StringUtils.isEmpty(userSave.getNewPassword())) {
 			UserPreconditions.checkLengthAndNumeric(userSave.getNewPassword());
 		}
 
 		// Map to a user object
-		User userToSave = userMapper.to(userSave);
+		User userToCreate = userMapper.to(userSave);
 
 		// Save it with functionals checks
-		return userMapper.to(userService.create(userToSave));
+		return userMapper.to(userService.create(userToCreate));
 	}
 
 	@ApiOperation(value = "Update user")
 	@PutMapping("/")
-	public UserInfo update(UserSave userSave) throws ValidationException {
-		// Check Inputs
-		if (!StringUtils.isEmpty(userSave.getNewPassword())) {
-			UserPreconditions.checkLengthAndNumeric(userSave.getNewPassword());
-		}
+	public UserInfo update(@RequestBody UserSave userSave, Authentication authentication) throws ValidationException {
+		// Retrieve logged user
+		User user = (User) authentication.getPrincipal();
 
-		// Retrieve existing user
-		User user = userService.getUser(userSave.getId());
+		if (!StringUtils.isEmpty(userSave.getNewPassword())) {
+			// Check Inputs
+			UserPreconditions.checkLengthAndNumeric(userSave.getNewPassword());
+
+			if (!userService.checkOldPasswordEq(user, userSave.getPassword())) {
+				throw new ValidationException(Arrays.asList("user.validation.password.olddifferent"));
+			}
+		}
 
 		// Map changes to the existing user
 		userMapper.updateUser(userSave, user);
