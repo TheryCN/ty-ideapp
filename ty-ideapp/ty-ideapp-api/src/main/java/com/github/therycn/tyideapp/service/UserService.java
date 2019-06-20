@@ -97,10 +97,23 @@ public class UserService implements UserDetailsService {
 		return passwordEncoder.matches(oldPassword, user.getPassword());
 	}
 
+	/**
+	 * Encode the given password.
+	 * 
+	 * @param nonEncodedPassword the non encoded password
+	 * @return the encoded password
+	 */
 	public String encodePassword(String nonEncodedPassword) {
 		return passwordEncoder.encode(nonEncodedPassword);
 	}
 
+	/**
+	 * Update user password.
+	 * 
+	 * @param id                 the user id
+	 * @param nonEncodedPassword the non encoded password
+	 * @return 1 if it has been updated
+	 */
 	@Transactional
 	public int updatePassword(Long id, String nonEncodedPassword) {
 		return userRepo.updatePassword(id, encodePassword(nonEncodedPassword));
