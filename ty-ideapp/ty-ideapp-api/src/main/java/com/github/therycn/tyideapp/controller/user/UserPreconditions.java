@@ -3,11 +3,9 @@ package com.github.therycn.tyideapp.controller.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.github.therycn.tyideapp.UserPasswordUpdate;
 import com.github.therycn.tyideapp.exception.ValidationException;
 
 /**
@@ -19,10 +17,8 @@ import com.github.therycn.tyideapp.exception.ValidationException;
 @Component
 public class UserPreconditions {
 
-	public static void checkPassword(PasswordEncoder passwordEncoder, String actualPasswordEncoded,
-			UserPasswordUpdate passwordUpdate) throws ValidationException {
+	public static void checkLengthAndNumeric(String newPassword) throws ValidationException {
 		List<String> errorCodes = new ArrayList<>();
-		String newPassword = passwordUpdate.getNewPassword();
 
 		// Check length
 		if (!newPassword.matches("^.{8,}$")) {
@@ -34,19 +30,8 @@ public class UserPreconditions {
 			errorCodes.add("user.validation.password.numeric");
 		}
 
-		// Compare old password
-		if (!passwordEncoder.matches(passwordUpdate.getOldPassword(), actualPasswordEncoded)) {
-			errorCodes.add("user.validation.password.olddifferent");
-		}
-
-		// Compare new password
-		if (passwordEncoder.matches(newPassword, actualPasswordEncoded)) {
-			errorCodes.add("user.validation.password.notdifferent");
-		}
-
 		if (!CollectionUtils.isEmpty(errorCodes)) {
 			throw new ValidationException(errorCodes);
 		}
 	}
-
 }

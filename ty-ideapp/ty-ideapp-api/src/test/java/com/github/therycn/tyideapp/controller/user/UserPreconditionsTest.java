@@ -3,14 +3,10 @@ package com.github.therycn.tyideapp.controller.user;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.Matchers;
 import org.hamcrest.core.CombinableMatcher;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.mockito.Mockito;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.github.therycn.tyideapp.UserPasswordUpdate;
 import com.github.therycn.tyideapp.exception.ValidationException;
 
 /**
@@ -21,62 +17,40 @@ import com.github.therycn.tyideapp.exception.ValidationException;
  */
 public class UserPreconditionsTest {
 
-	private PasswordEncoder encoder;
-
 	@Rule
 	public ExpectedException expectedEx = ExpectedException.none();
-
-	@Before
-	public void init() {
-		encoder = Mockito.mock(PasswordEncoder.class);
-		Mockito.doAnswer(invocation -> (invocation.getArguments())[0]).when(encoder)
-				.encode(Mockito.<CharSequence>any());
-		Mockito.when(encoder.matches(Mockito.anyString(), Mockito.anyString()))
-				.thenAnswer(invocation -> (invocation.getArguments())[0].equals((invocation.getArguments())[1]));
-	}
 
 	@Test
 	public void testCheckPasswordOk() throws ValidationException {
 		// Given + When
-		checkPassword("ChangeIt", "ChangeIt01", "ChangeIt");
+		UserPreconditions.checkLengthAndNumeric("ChangeIt001");
 
 		// Then - no exception thrown
 	}
 
 	@Test
-	public void testCheckPasswordKo_withLengthAndNumericAndOldDifferentErrors() throws ValidationException {
+	public void testCheckPasswordKo_withLengthAndNumericErrors() throws ValidationException {
 		// Given
 		expectedEx.expect(CombinableMatcher.both(CoreMatchers.is(CoreMatchers.instanceOf(ValidationException.class)))
-				.and(Matchers.hasProperty("errorCodes", CoreMatchers.hasItems("user.validation.password.length",
-						"user.validation.password.numeric", "user.validation.password.olddifferent"))));
+				.and(Matchers.hasProperty("errorCodes",
+						CoreMatchers.hasItems("user.validation.password.length", "user.validation.password.numeric"))));
 
 		// Given + When
-		checkPassword("ChangeIt", "Change", "Wrong");
+		UserPreconditions.checkLengthAndNumeric("Change");
 
 		// Then - expectedEx
 	}
 
 	@Test
-	public void testCheckPasswordKo_withNumericAndNotDifferentErrors() throws ValidationException {
+	public void testCheckPasswordKo_withNumericError() throws ValidationException {
 		// Given
 		expectedEx.expect(CombinableMatcher.both(CoreMatchers.is(CoreMatchers.instanceOf(ValidationException.class)))
-				.and(Matchers.hasProperty("errorCodes", CoreMatchers.hasItems("user.validation.password.numeric",
-						"user.validation.password.notdifferent"))));
+				.and(Matchers.hasProperty("errorCodes", CoreMatchers.hasItems("user.validation.password.numeric"))));
 
 		// Given + When
-		checkPassword("ChangeIt", "ChangeIt", "ChangeIt");
+		UserPreconditions.checkLengthAndNumeric("ChangeItTodo");
 
 		// Then - expectedEx
-	}
-
-	private void checkPassword(String currentPassword, String newPassword, String oldPassword)
-			throws ValidationException {
-		UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
-		userPasswordUpdate.setNewPassword(newPassword);
-		userPasswordUpdate.setOldPassword(oldPassword);
-
-		// When
-		UserPreconditions.checkPassword(encoder, currentPassword, userPasswordUpdate);
 	}
 
 }

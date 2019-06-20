@@ -51,6 +51,9 @@ public class User extends AbstractEntity<Long> implements UserDetails {
 	@Column(name = "USR_USERNAME", unique = true)
 	private String username;
 
+	@Column(name = "USR_EMAIL")
+	private String email;
+
 	@Column(name = "USR_PASSWORD")
 	private String password;
 
