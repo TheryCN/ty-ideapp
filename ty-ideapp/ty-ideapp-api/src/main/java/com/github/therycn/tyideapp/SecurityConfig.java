@@ -66,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		corsConfig.addAllowedMethod(HttpMethod.DELETE);
 		corsConfig.addAllowedMethod(HttpMethod.PUT);
 		corsConfig.addAllowedMethod(HttpMethod.HEAD);
+		corsConfig.addAllowedMethod(HttpMethod.PATCH);
 		corsConfig.setMaxAge(1800L);
 		corsConfig.addAllowedHeader("*");
 		corsConfig.setAllowCredentials(true);

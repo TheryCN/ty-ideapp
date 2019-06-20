@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.therycn.tyideapp.UserInfo;
+import com.github.therycn.tyideapp.UserPasswordUpdate;
 import com.github.therycn.tyideapp.UserSave;
 import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.exception.ValidationException;
@@ -71,6 +73,23 @@ public class UserRestController {
 
 		// Save it with model checks
 		return userMapper.to(userService.update(user));
+	}
+
+	@ApiOperation(value = "Update user password")
+	@PatchMapping("/password")
+	public int updatePassword(@RequestBody UserPasswordUpdate passwordUpdate, Authentication authentication)
+			throws ValidationException {
+		// Retrieve logged user
+		User user = (User) authentication.getPrincipal();
+
+		// Check Inputs
+		UserPreconditions.checkLengthAndNumeric(passwordUpdate.getNewPassword());
+
+		if (!userService.checkOldPasswordEq(user, passwordUpdate.getOldPassword())) {
+			throw new ValidationException(Arrays.asList("user.validation.password.olddifferent"));
+		}
+
+		return userService.updatePassword(user.getId(), passwordUpdate.getNewPassword());
 	}
 
 	@ApiOperation(value = "Get user details")

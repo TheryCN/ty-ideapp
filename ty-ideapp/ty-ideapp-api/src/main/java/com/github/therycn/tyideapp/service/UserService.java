@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.exception.ValidationException;
@@ -56,6 +57,7 @@ public class UserService implements UserDetailsService {
 	 * @return {@link User}
 	 * @throws ValidationException
 	 */
+	@Transactional
 	public User create(User user) throws ValidationException {
 		if (user.getId() != null) {
 			throw new IllegalArgumentException("User must have no id, it's a creation !");
@@ -74,6 +76,7 @@ public class UserService implements UserDetailsService {
 	 * @return {@link User}
 	 * @throws ValidationException
 	 */
+	@Transactional
 	public User update(User user) throws ValidationException {
 		// If username has changed then check unicity
 		if (!hasUniqueUsername(user.getId(), user.getUsername())) {
@@ -96,6 +99,11 @@ public class UserService implements UserDetailsService {
 
 	public String encodePassword(String nonEncodedPassword) {
 		return passwordEncoder.encode(nonEncodedPassword);
+	}
+
+	@Transactional
+	public int updatePassword(Long id, String nonEncodedPassword) {
+		return userRepo.updatePassword(id, encodePassword(nonEncodedPassword));
 	}
 
 	private boolean hasUniqueUsername(Long id, String username) {
