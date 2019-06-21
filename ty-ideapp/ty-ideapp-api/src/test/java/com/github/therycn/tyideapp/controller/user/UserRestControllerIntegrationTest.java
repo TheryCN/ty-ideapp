@@ -33,7 +33,7 @@ import com.github.therycn.tyideapp.repository.UserRepository;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 public class UserRestControllerIntegrationTest extends AbstractIntegrationTest {
 
 	@Autowired

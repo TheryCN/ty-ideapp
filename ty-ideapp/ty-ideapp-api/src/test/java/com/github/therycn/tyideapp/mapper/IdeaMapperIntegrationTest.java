@@ -26,7 +26,7 @@ import com.google.common.collect.Iterables;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("dev")
+@ActiveProfiles("test")
 public class IdeaMapperIntegrationTest {
 
 	@Autowired
