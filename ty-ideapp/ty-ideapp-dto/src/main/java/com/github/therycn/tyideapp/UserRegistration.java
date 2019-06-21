@@ -1,23 +1,27 @@
 package com.github.therycn.tyideapp;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * User Save.
+ * User Update.
  * 
  * @author THERY
  *
  */
 @Getter
 @Setter
-public class UserSave {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class UserRegistration {
 
 	private String username;
 
 	private String email;
-
-	private String newPassword;
 
 	private String password;
 

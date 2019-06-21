@@ -36,10 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Returns 403 instead of redirect if login KO
 		http.exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
 
-		http.authorizeRequests().antMatchers("/login*").permitAll().anyRequest().authenticated().and().logout()
-				.permitAll().logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))).and()
-				.formLogin().defaultSuccessUrl("/user/").and().httpBasic().and().cors()
-				.configurationSource(request -> corsConfig()).and().csrf().disable();
+		http.authorizeRequests().antMatchers(HttpMethod.POST, "/user/").permitAll().antMatchers("/login*").permitAll()
+				.anyRequest().authenticated().and().logout().permitAll()
+				.logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))).and().formLogin()
+				.defaultSuccessUrl("/user/").and().httpBasic().and().cors().configurationSource(request -> corsConfig())
+				.and().csrf().disable();
 	}
 
 	/*

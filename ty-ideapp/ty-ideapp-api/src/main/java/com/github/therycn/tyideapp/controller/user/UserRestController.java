@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.therycn.tyideapp.UserInfo;
 import com.github.therycn.tyideapp.UserPasswordUpdate;
-import com.github.therycn.tyideapp.UserSave;
+import com.github.therycn.tyideapp.UserRegistration;
+import com.github.therycn.tyideapp.UserUpdate;
 import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.exception.ValidationException;
 import com.github.therycn.tyideapp.mapper.UserMapper;
@@ -38,16 +39,14 @@ public class UserRestController {
 
 	private UserService userService;
 
-	@ApiOperation(value = "Create user")
+	@ApiOperation(value = "User registration")
 	@PostMapping("/")
-	public UserInfo create(@RequestBody UserSave userSave) throws ValidationException {
+	public UserInfo register(@RequestBody UserRegistration userRegistration) throws ValidationException {
 		// Check Inputs
-		if (!StringUtils.isEmpty(userSave.getNewPassword())) {
-			UserPreconditions.checkLengthAndNumeric(userSave.getNewPassword());
-		}
+		UserPreconditions.checkLengthAndNumeric(userRegistration.getPassword());
 
 		// Map to a user object
-		User userToCreate = userMapper.to(userSave);
+		User userToCreate = userMapper.to(userRegistration);
 
 		// Save it with functionals checks
 		return userMapper.to(userService.create(userToCreate));
@@ -55,21 +54,22 @@ public class UserRestController {
 
 	@ApiOperation(value = "Update user")
 	@PutMapping("/")
-	public UserInfo update(@RequestBody UserSave userSave, Authentication authentication) throws ValidationException {
+	public UserInfo update(@RequestBody UserUpdate userUpdate, Authentication authentication)
+			throws ValidationException {
 		// Retrieve logged user
 		User user = (User) authentication.getPrincipal();
 
-		if (!StringUtils.isEmpty(userSave.getNewPassword())) {
+		if (!StringUtils.isEmpty(userUpdate.getNewPassword())) {
 			// Check Inputs
-			UserPreconditions.checkLengthAndNumeric(userSave.getNewPassword());
+			UserPreconditions.checkLengthAndNumeric(userUpdate.getNewPassword());
 
-			if (!userService.checkOldPasswordEq(user, userSave.getPassword())) {
+			if (!userService.checkOldPasswordEq(user, userUpdate.getPassword())) {
 				throw new ValidationException(Arrays.asList("user.validation.password.olddifferent"));
 			}
 		}
 
 		// Map changes to the existing user
-		userMapper.updateUser(userSave, user);
+		userMapper.updateUser(userUpdate, user);
 
 		// Save it with model checks
 		return userMapper.to(userService.update(user));

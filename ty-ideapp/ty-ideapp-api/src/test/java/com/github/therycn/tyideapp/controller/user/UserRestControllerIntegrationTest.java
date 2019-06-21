@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.github.therycn.tyideapp.AbstractIntegrationTest;
 import com.github.therycn.tyideapp.UserInfo;
 import com.github.therycn.tyideapp.UserPasswordUpdate;
+import com.github.therycn.tyideapp.UserRegistration;
 import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.repository.UserRepository;
 
@@ -99,7 +100,56 @@ public class UserRestControllerIntegrationTest extends AbstractIntegrationTest {
 
 		// Then
 		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-
 	}
 
+	/**
+	 * Test /user/ Endpoint for user registration.
+	 */
+	@Test
+	public void testPostRegisterOk() {
+		// Given - Auth not required to create a new user
+		UserRegistration userRegistration = UserRegistration.builder().username("Thery#2").password("ChangeIt001")
+				.build();
+
+		// When
+		ResponseEntity<UserInfo> response = restTemplate.exchange("/user/", HttpMethod.POST,
+				new HttpEntity<Object>(userRegistration), UserInfo.class);
+
+		// Then
+		assertThat(response.getBody().getUsername()).isEqualTo("Thery#2");
+	}
+
+	/**
+	 * Test /user/ Endpoint for user registration ko because password has no digits.
+	 */
+	@Test
+	public void testPostRegisterPasswordKo() {
+		// Given - Auth not required to create a new user
+		UserRegistration userRegistration = UserRegistration.builder().username("Thery#2").password("ChangeIt").build();
+
+		// When
+		ResponseEntity<String[]> response = restTemplate.exchange("/user/", HttpMethod.POST,
+				new HttpEntity<Object>(userRegistration), String[].class);
+
+		// Then
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
+
+	/**
+	 * Test /user/ Endpoint for user registration ko because username is already
+	 * used.
+	 */
+	@Test
+	public void testPostRegisterUsernameKo() {
+		// Given - Auth not required to create a new user
+		UserRegistration userRegistration = UserRegistration.builder().username("Thery").password("ChangeIt001")
+				.build();
+
+		// When
+		ResponseEntity<String[]> response = restTemplate.exchange("/user/", HttpMethod.POST,
+				new HttpEntity<Object>(userRegistration), String[].class);
+
+		// Then
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
 }

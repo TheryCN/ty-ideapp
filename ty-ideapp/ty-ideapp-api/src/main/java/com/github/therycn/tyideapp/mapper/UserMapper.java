@@ -5,7 +5,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 import com.github.therycn.tyideapp.UserInfo;
-import com.github.therycn.tyideapp.UserSave;
+import com.github.therycn.tyideapp.UserRegistration;
+import com.github.therycn.tyideapp.UserUpdate;
 import com.github.therycn.tyideapp.entity.User;
 
 /**
@@ -20,8 +21,8 @@ public interface UserMapper {
 
 	UserInfo to(User user);
 
-	User to(UserSave userSave);
+	User to(UserRegistration userRegistration);
 
-	User updateUser(UserSave userSave, @MappingTarget User existingUser);
+	User updateUser(UserUpdate userUpdate, @MappingTarget User existingUser);
 
 }
