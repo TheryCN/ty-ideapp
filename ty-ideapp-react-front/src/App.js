@@ -7,7 +7,7 @@ import 'typeface-roboto';
 import theme from './theme.js';
 
 import IdeApp from './containers/IdeApp.js';
-import Login from './containers/Login.js';
+import LoginPage from './components/LoginPage.js';
 
 class App extends Component {
 
@@ -16,7 +16,7 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <Router>
           <Switch>
-            <Route path="/login" component={Login} />
+            <Route path="/login" component={LoginPage} />
             <Route path="/" component={IdeApp} />
           </Switch>
         </Router>
