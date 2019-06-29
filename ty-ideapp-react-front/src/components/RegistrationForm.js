@@ -23,6 +23,7 @@ class RegistrationForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="login-form">
+        <h1>New user ? Welcome !</h1>
         <div className="title-content">
           <TextField
             label="Username"

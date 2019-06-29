@@ -32,6 +32,7 @@ class LoginForm extends Component {
     }
     return (
       <form onSubmit={this.handleSubmit} className="login-form">
+        <h1>Already have an account ?</h1>
         <div className="title-content">
           <TextField
             label="Username"
