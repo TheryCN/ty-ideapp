@@ -26,7 +26,11 @@ function* register(action) {
     yield put(resetApp());
     yield put(fetchLoggedUser(user));
   } catch (e) {
-    yield put(registrationError(e.response.data));
+    if(e.response && e.response.data) {
+      yield put(registrationError(e.response.data));
+    } else {
+      yield put(registrationError(e.message));
+    }
   }
 }
 

@@ -3,9 +3,9 @@ import { FETCH_LOGGED_USER, BEFORE_FETCH_LOGGED_USER, LOGIN_ERROR, REGISTRATION_
 const users = (state = {loggedUser: undefined, loggedUserLoaded: false}, action) => {
   switch (action.type) {
     case REGISTRATION_ERROR:
-      return Object.assign({}, state, {loggedUser: undefined, loggedUserLoaded: false, registrationError: action.registrationError});
+      return Object.assign({}, state, {loggedUser: undefined, loggedUserLoaded: false, registrationError: action.registrationError, loginError: undefined});
     case LOGIN_ERROR:
-      return Object.assign({}, state, {loggedUser: undefined, loggedUserLoaded: false, loginError: action.loginError});
+      return Object.assign({}, state, {loggedUser: undefined, loggedUserLoaded: false, loginError: action.loginError, registrationError: undefined});
     case BEFORE_FETCH_LOGGED_USER:
       return Object.assign({}, state, {loggedUserLoaded: false});
     case FETCH_LOGGED_USER:
