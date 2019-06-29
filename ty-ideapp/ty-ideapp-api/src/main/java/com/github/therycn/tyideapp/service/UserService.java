@@ -2,6 +2,7 @@ package com.github.therycn.tyideapp.service;
 
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.therycn.tyideapp.entity.User;
+import com.github.therycn.tyideapp.entity.Workspace;
 import com.github.therycn.tyideapp.exception.ValidationException;
 import com.github.therycn.tyideapp.repository.UserRepository;
-
-import lombok.AllArgsConstructor;
+import com.github.therycn.tyideapp.repository.WorkspaceRepository;
 
 /**
  * User Service.
@@ -22,12 +23,23 @@ import lombok.AllArgsConstructor;
  *
  */
 @Service
-@AllArgsConstructor
 public class UserService implements UserDetailsService {
 
 	private UserRepository userRepo;
 
+	private WorkspaceRepository workspaceRepo;
+
 	private PasswordEncoder passwordEncoder;
+
+	@Value("${default.workspace.name}")
+	private String defaultWorkspaceName;
+
+	public UserService(UserRepository userRepo, WorkspaceRepository workspaceRepo, PasswordEncoder passwordEncoder) {
+		super();
+		this.userRepo = userRepo;
+		this.workspaceRepo = workspaceRepo;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -66,7 +78,15 @@ public class UserService implements UserDetailsService {
 		if (!hasUniqueUsername(user.getId(), user.getUsername())) {
 			throw new ValidationException(Arrays.asList("user.validation.username.unicity"));
 		}
-		return userRepo.save(user);
+		User savedUser = userRepo.save(user);
+
+		Workspace defaultWorkspace = new Workspace();
+		defaultWorkspace.setName(defaultWorkspaceName);
+		defaultWorkspace.setUser(savedUser);
+
+		workspaceRepo.save(defaultWorkspace);
+
+		return savedUser;
 	}
 
 	/**
