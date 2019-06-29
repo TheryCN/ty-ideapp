@@ -4,7 +4,7 @@ import RegistrationForm from '../components/RegistrationForm';
 import { registrationRequested } from '../actions/userActions';
 
 const mapStateToProps = state => ({
-  registrationError: ""
+  registrationError: state.users.registrationError
 })
 
 const mapDispatchToProps = dispatch => ({

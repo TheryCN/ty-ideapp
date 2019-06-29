@@ -15,9 +15,9 @@ export const registrationRequested = user => ({
   user
 });
 
-export const registrationError = loginError => ({
+export const registrationError = registrationError => ({
   type: REGISTRATION_ERROR,
-  loginError
+  registrationError
 });
 
 export const beforeFetchLoggedUser = () => ({
