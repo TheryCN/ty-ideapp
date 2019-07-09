@@ -1,0 +1,5 @@
+# IdeApp
+
+Asciidoc initialization !
+
+https://asciidoctor.org/docs/asciidoc-vs-markdown/[AsciiDoc vs Markdown]
