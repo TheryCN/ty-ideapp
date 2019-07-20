@@ -17,6 +17,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.exception.ValidationException;
 import com.github.therycn.tyideapp.repository.UserRepository;
+import com.github.therycn.tyideapp.repository.WorkspaceRepository;
 
 /**
  * Test class {@link UserService}.
@@ -31,6 +32,9 @@ public class UserServiceTest {
 
 	@Mock
 	private UserRepository userRepo;
+
+	@Mock
+	private WorkspaceRepository workspaceRepo;
 
 	@InjectMocks
 	private UserService userService;
