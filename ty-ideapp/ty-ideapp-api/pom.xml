@@ -126,6 +126,37 @@
 				</configuration>
 			</plugin>
 
+			<!-- Unit Tests : mvn test -->
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<include>**/*IntegrationTest</include>
+						<include>**/*Tests</include>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<!-- Integration Tests : mvn failsafe:integration-test ; Unit Tests + 
+				Integration Tests : mvn integration-test -->
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includes>
+						<include>**/*IntegrationTest</include>
+						<include>**/*Tests</include>
+					</includes>
+				</configuration>
+			</plugin>
+
 			<!-- tag::unpack[] -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
