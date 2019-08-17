@@ -3,6 +3,8 @@ package com.github.therycn.tyideapp.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,20 +31,20 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class WorkspaceRestController {
 
-	private WorkspaceMapper workspaceMapper;
+    private WorkspaceMapper workspaceMapper;
 
-	private WorkspaceRepository workspaceRepo;
+    private WorkspaceRepository workspaceRepo;
 
-	@GetMapping("/")
-	public List<WorkspaceListItem> list(Authentication authentication) {
-		User user = (User) authentication.getPrincipal();
-		return workspaceRepo.findByUserIdOrderByName(user.getId()).stream().map(workspaceMapper::to)
-				.collect(Collectors.toList());
-	}
+    @GetMapping("/")
+    public List<WorkspaceListItem> list(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return workspaceRepo.findByUserIdOrderByName(user.getId()).stream().map(workspaceMapper::to)
+                .collect(Collectors.toList());
+    }
 
-	@PostMapping("/")
-	public WorkspaceListItem save(@RequestBody WorkspaceSave workspace, Authentication authentication) {
-		User user = (User) authentication.getPrincipal();
-		return workspaceMapper.to(workspaceRepo.save(workspaceMapper.to(workspace, user)));
-	}
+    @PostMapping("/")
+    public WorkspaceListItem save(@Valid @RequestBody WorkspaceSave workspace, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return workspaceMapper.to(workspaceRepo.save(workspaceMapper.to(workspace, user)));
+    }
 }

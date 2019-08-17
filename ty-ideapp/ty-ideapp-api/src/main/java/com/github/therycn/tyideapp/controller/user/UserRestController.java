@@ -1,13 +1,13 @@
 package com.github.therycn.tyideapp.controller.user;
 
-import java.util.Arrays;
+import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.therycn.tyideapp.UserInfo;
 import com.github.therycn.tyideapp.UserPasswordUpdate;
 import com.github.therycn.tyideapp.UserRegistration;
-import com.github.therycn.tyideapp.UserUpdate;
 import com.github.therycn.tyideapp.entity.User;
-import com.github.therycn.tyideapp.exception.ValidationException;
+import com.github.therycn.tyideapp.exception.UserNotFoundException;
+import com.github.therycn.tyideapp.exception.UserWrongOldPasswordException;
+import com.github.therycn.tyideapp.exception.UsernameAlreadyExistsException;
 import com.github.therycn.tyideapp.mapper.UserMapper;
 import com.github.therycn.tyideapp.service.UserService;
 
@@ -35,68 +36,41 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserRestController {
 
-	private UserMapper userMapper;
+    private UserMapper userMapper;
 
-	private UserService userService;
+    private UserService userService;
 
-	@ApiOperation(value = "User registration")
-	@PostMapping("/")
-	public UserInfo register(@RequestBody UserRegistration userRegistration) throws ValidationException {
-		// Check Inputs
-		UserPreconditions.checkLengthAndNumeric(userRegistration.getPassword());
+    @ApiOperation(value = "Get user details")
+    @GetMapping("/")
+    public ResponseEntity<UserInfo> getLoggedUser(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        return ResponseEntity.ok(userMapper.to(user));
+    }
 
-		// Map to a user object
-		User userToCreate = userMapper.to(userRegistration);
+    @ApiOperation(value = "User registration")
+    @PostMapping("/")
+    public ResponseEntity<UserInfo> register(@Valid @RequestBody UserRegistration userRegistration)
+            throws UsernameAlreadyExistsException {
+        // Map to a user object
+        User userToCreate = userMapper.to(userRegistration);
 
-		// Save it with functionals checks
-		return userMapper.to(userService.create(userToCreate));
-	}
+        // Save it with functionals checks
+        return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.to(userService.create(userToCreate)));
+    }
 
-	@ApiOperation(value = "Update user")
-	@PutMapping("/")
-	public UserInfo update(@RequestBody UserUpdate userUpdate, Authentication authentication)
-			throws ValidationException {
-		// Retrieve logged user
-		User user = (User) authentication.getPrincipal();
+    @ApiOperation(value = "Update user password")
+    @PatchMapping("/password")
+    public ResponseEntity<UserInfo> updatePassword(@Valid @RequestBody UserPasswordUpdate passwordUpdate,
+            Authentication authentication) throws UserWrongOldPasswordException, UserNotFoundException {
+        // Retrieve logged user
+        User user = (User) authentication.getPrincipal();
 
-		if (!StringUtils.isEmpty(userUpdate.getNewPassword())) {
-			// Check Inputs
-			UserPreconditions.checkLengthAndNumeric(userUpdate.getNewPassword());
+        if (!userService.checkOldPasswordEq(user, passwordUpdate.getOldPassword())) {
+            throw new UserWrongOldPasswordException();
+        }
 
-			if (!userService.checkOldPasswordEq(user, userUpdate.getPassword())) {
-				throw new ValidationException(Arrays.asList("user.validation.password.olddifferent"));
-			}
-		}
-
-		// Map changes to the existing user
-		userMapper.updateUser(userUpdate, user);
-
-		// Save it with model checks
-		return userMapper.to(userService.update(user));
-	}
-
-	@ApiOperation(value = "Update user password")
-	@PatchMapping("/password")
-	public int updatePassword(@RequestBody UserPasswordUpdate passwordUpdate, Authentication authentication)
-			throws ValidationException {
-		// Retrieve logged user
-		User user = (User) authentication.getPrincipal();
-
-		// Check Inputs
-		UserPreconditions.checkLengthAndNumeric(passwordUpdate.getNewPassword());
-
-		if (!userService.checkOldPasswordEq(user, passwordUpdate.getOldPassword())) {
-			throw new ValidationException(Arrays.asList("user.validation.password.olddifferent"));
-		}
-
-		return userService.updatePassword(user.getId(), passwordUpdate.getNewPassword());
-	}
-
-	@ApiOperation(value = "Get user details")
-	@GetMapping("/")
-	public UserInfo getLoggedUser(Authentication authentication) {
-		User user = (User) authentication.getPrincipal();
-		return userMapper.to(user);
-	}
+        User updatedUser = userService.updatePassword(user.getId(), passwordUpdate.getNewPassword());
+        return ResponseEntity.ok(userMapper.to(updatedUser));
+    }
 
 }

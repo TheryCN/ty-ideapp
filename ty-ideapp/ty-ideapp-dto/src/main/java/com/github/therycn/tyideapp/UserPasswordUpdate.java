@@ -1,5 +1,7 @@
 package com.github.therycn.tyideapp;
 
+import javax.validation.constraints.NotEmpty;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +19,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserPasswordUpdate {
 
-	private String newPassword;
+    @NotEmpty
+    private String newPassword;
 
-	private String oldPassword;
+    @NotEmpty
+    private String oldPassword;
 
 }

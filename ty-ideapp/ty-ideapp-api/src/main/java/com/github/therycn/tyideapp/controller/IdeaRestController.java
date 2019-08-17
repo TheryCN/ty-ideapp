@@ -1,5 +1,7 @@
 package com.github.therycn.tyideapp.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,13 +26,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class IdeaRestController {
 
-	private IdeaRepository ideaRepo;
+    private IdeaRepository ideaRepo;
 
-	private IdeaMapper ideaMapper;
+    private IdeaMapper ideaMapper;
 
-	@PostMapping("/")
-	public IdeaSave save(@RequestBody IdeaSave idea) {
-		return ideaMapper.to(ideaRepo.save(ideaMapper.to(idea)));
-	}
+    @PostMapping("/")
+    public IdeaSave save(@Valid @RequestBody IdeaSave idea) {
+        return ideaMapper.to(ideaRepo.save(ideaMapper.to(idea)));
+    }
 
 }

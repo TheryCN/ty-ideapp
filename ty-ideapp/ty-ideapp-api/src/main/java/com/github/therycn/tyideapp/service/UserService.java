@@ -1,7 +1,5 @@
 package com.github.therycn.tyideapp.service;
 
-import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.entity.Workspace;
+import com.github.therycn.tyideapp.exception.UserNotFoundException;
+import com.github.therycn.tyideapp.exception.UsernameAlreadyExistsException;
 import com.github.therycn.tyideapp.exception.ValidationException;
 import com.github.therycn.tyideapp.repository.UserRepository;
 import com.github.therycn.tyideapp.repository.WorkspaceRepository;
@@ -25,123 +25,111 @@ import com.github.therycn.tyideapp.repository.WorkspaceRepository;
 @Service
 public class UserService implements UserDetailsService {
 
-	private UserRepository userRepo;
+    private UserRepository userRepo;
 
-	private WorkspaceRepository workspaceRepo;
+    private WorkspaceRepository workspaceRepo;
 
-	private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-	@Value("${default.workspace.name}")
-	private String defaultWorkspaceName;
+    @Value("${default.workspace.name}")
+    private String defaultWorkspaceName;
 
-	public UserService(UserRepository userRepo, WorkspaceRepository workspaceRepo, PasswordEncoder passwordEncoder) {
-		super();
-		this.userRepo = userRepo;
-		this.workspaceRepo = workspaceRepo;
-		this.passwordEncoder = passwordEncoder;
-	}
+    public UserService(UserRepository userRepo, WorkspaceRepository workspaceRepo, PasswordEncoder passwordEncoder) {
+        super();
+        this.userRepo = userRepo;
+        this.workspaceRepo = workspaceRepo;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.springframework.security.core.userdetails.UserDetailsService#
-	 * loadUserByUsername(java.lang.String)
-	 */
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userRepo.findByUsername(username);
-	}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.springframework.security.core.userdetails.UserDetailsService#
+     * loadUserByUsername(java.lang.String)
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Invalid User"));
+    }
 
-	/**
-	 * Get user by id.
-	 * 
-	 * @param id
-	 * @return {@link User}
-	 */
-	public User getUser(Long id) {
-		return userRepo.getOne(id);
-	}
+    /**
+     * Get user by id.
+     * 
+     * @param id
+     * @return {@link User}
+     */
+    public User getUser(Long id) {
+        return userRepo.getOne(id);
+    }
 
-	/**
-	 * Create a new user.
-	 * 
-	 * @param user {@link User}
-	 * @return {@link User}
-	 * @throws ValidationException
-	 */
-	@Transactional
-	public User create(User user) throws ValidationException {
-		if (user.getId() != null) {
-			throw new IllegalArgumentException("User must have no id, it's a creation !");
-		}
+    /**
+     * Create a new user.
+     * 
+     * @param user
+     *            {@link User}
+     * @return {@link User}
+     * @throws ValidationException
+     */
+    @Transactional
+    public User create(User user) throws UsernameAlreadyExistsException {
+        if (user.getId() != null) {
+            throw new IllegalArgumentException("User must have no id, it's a creation !");
+        }
 
-		if (!hasUniqueUsername(user.getId(), user.getUsername())) {
-			throw new ValidationException(Arrays.asList("user.validation.username.unicity"));
-		}
-		User savedUser = userRepo.save(user);
+        if (userRepo.findByUsername(user.getUsername()).isPresent()) {
+            throw new UsernameAlreadyExistsException(user.getUsername());
+        }
 
-		Workspace defaultWorkspace = new Workspace();
-		defaultWorkspace.setName(defaultWorkspaceName);
-		defaultWorkspace.setUser(savedUser);
+        User savedUser = userRepo.save(user);
 
-		workspaceRepo.save(defaultWorkspace);
+        Workspace defaultWorkspace = new Workspace();
+        defaultWorkspace.setName(defaultWorkspaceName);
+        defaultWorkspace.setUser(savedUser);
 
-		return savedUser;
-	}
+        workspaceRepo.save(defaultWorkspace);
 
-	/**
-	 * Update an existing user.
-	 * 
-	 * @param user {@link User}
-	 * @return {@link User}
-	 * @throws ValidationException
-	 */
-	@Transactional
-	public User update(User user) throws ValidationException {
-		// If username has changed then check unicity
-		if (!hasUniqueUsername(user.getId(), user.getUsername())) {
-			throw new ValidationException(Arrays.asList("user.validation.username.unicity"));
-		}
+        return savedUser;
+    }
 
-		return userRepo.save(user);
-	}
+    /**
+     * Check if the old password is correct.
+     * 
+     * @param user
+     *            {@link User}
+     * @param oldPassword
+     *            the old password not encoded
+     * @return true if it's ok
+     */
+    public boolean checkOldPasswordEq(User user, String oldPassword) {
+        return passwordEncoder.matches(oldPassword, user.getPassword());
+    }
 
-	/**
-	 * Check if the old password is correct.
-	 * 
-	 * @param user        {@link User}
-	 * @param oldPassword the old password not encoded
-	 * @return true if it's ok
-	 */
-	public boolean checkOldPasswordEq(User user, String oldPassword) {
-		return passwordEncoder.matches(oldPassword, user.getPassword());
-	}
+    /**
+     * Encode the given password.
+     * 
+     * @param nonEncodedPassword
+     *            the non encoded password
+     * @return the encoded password
+     */
+    public String encodePassword(String nonEncodedPassword) {
+        return passwordEncoder.encode(nonEncodedPassword);
+    }
 
-	/**
-	 * Encode the given password.
-	 * 
-	 * @param nonEncodedPassword the non encoded password
-	 * @return the encoded password
-	 */
-	public String encodePassword(String nonEncodedPassword) {
-		return passwordEncoder.encode(nonEncodedPassword);
-	}
-
-	/**
-	 * Update user password.
-	 * 
-	 * @param id                 the user id
-	 * @param nonEncodedPassword the non encoded password
-	 * @return 1 if it has been updated
-	 */
-	@Transactional
-	public int updatePassword(Long id, String nonEncodedPassword) {
-		return userRepo.updatePassword(id, encodePassword(nonEncodedPassword));
-	}
-
-	private boolean hasUniqueUsername(Long id, String username) {
-		User user = userRepo.findByUsername(username);
-		return user == null || user.getId().equals(id);
-	}
+    /**
+     * Update user password.
+     * 
+     * @param id
+     *            the user id
+     * @param nonEncodedPassword
+     *            the non encoded password
+     * @return {@link User}
+     * @throws UserNotFoundException
+     */
+    @Transactional
+    public User updatePassword(Long id, String nonEncodedPassword) throws UserNotFoundException {
+        User user = userRepo.findById(id).orElseThrow(UserNotFoundException::new);
+        userRepo.updatePassword(id, encodePassword(nonEncodedPassword));
+        return user;
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.github.therycn.tyideapp;
 
+import javax.validation.constraints.Pattern;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,10 +21,12 @@ import lombok.Setter;
 @Builder
 public class UserRegistration {
 
-	private String username;
+    private String username;
 
-	private String email;
+    private String email;
 
-	private String password;
+    @Pattern(regexp = "^.{8,}$", message = "user.validation.password.length")
+    @Pattern(regexp = ".*[0-9].*", message = "user.validation.password.numeric")
+    private String password;
 
 }
