@@ -24,7 +24,7 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void testValidate() {
+    public void validate_AllOK_NoConstraintViolation() {
         // Given
         UserRegistration userRegistration = new UserRegistration("Thery", "thery@github.com", "ChangeIt#01");
 
@@ -36,7 +36,7 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void testValidate_whenPasswordHasNoDigits() {
+    public void validate_PasswordHasNoDigits_PasswordDigitsConstraintViolation() {
         // Given
         UserRegistration userRegistration = new UserRegistration("Thery", "thery@github.com", "ChangeIt");
 
@@ -50,7 +50,7 @@ public class UserRegistrationTest {
     }
 
     @Test
-    public void testValidate_whenPasswordHasNoMinimumLength() {
+    public void validate_PasswordHasNoMinimumLength_PasswordLengthConstraintViolation() {
         // Given
         UserRegistration userRegistration = new UserRegistration("Thery", "thery@github.com", "abc01");
 
