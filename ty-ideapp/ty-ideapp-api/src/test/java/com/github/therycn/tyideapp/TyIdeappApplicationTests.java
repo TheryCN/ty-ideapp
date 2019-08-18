@@ -26,27 +26,27 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ActiveProfiles("test")
 public class TyIdeappApplicationTests extends AbstractIntegrationTest {
 
-	@Autowired
-	private TestRestTemplate restTemplate;
+    @Autowired
+    private TestRestTemplate restTemplate;
 
-	@Test
-	public void contextLoads() {
-	}
+    @Test
+    public void contextLoads() {
+    }
 
-	/**
-	 * Test /workspace/ Endpoint.
-	 */
-	@Test
-	public void testListWorkspaces() {
-		// Given
-		HttpHeaders headers = createHeaders();
+    /**
+     * Test /workspace/ Endpoint.
+     */
+    @Test
+    public void getWorkspaces_WorkspacesArePresents_WorkspaceListItemList() {
+        // Given
+        HttpHeaders headers = createHeaders();
 
-		// When
-		ResponseEntity<WorkspaceListItem[]> response = restTemplate.exchange("/workspace/", HttpMethod.GET,
-				new HttpEntity<Object>(headers), WorkspaceListItem[].class);
+        // When
+        ResponseEntity<WorkspaceListItem[]> response = restTemplate.exchange("/workspace/", HttpMethod.GET,
+                new HttpEntity<Object>(headers), WorkspaceListItem[].class);
 
-		// Then
-		assertThat(response.getBody().length).isEqualTo(2);
-	}
+        // Then
+        assertThat(response.getBody().length).isEqualTo(2);
+    }
 
 }

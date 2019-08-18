@@ -4,6 +4,9 @@ API (back) : ty-ideapp-api + ty-ideapp-dto
 Front : ty-ideapp-react-front  
 BDD (Behavior Driven Development - Integration Tests) : ty-ideapp-cucumber  
 
+0. JUnit naming convention
+
+UnitOfWork_StateUnderTest_ExpectedBehavior
 
 1. Install API
 
