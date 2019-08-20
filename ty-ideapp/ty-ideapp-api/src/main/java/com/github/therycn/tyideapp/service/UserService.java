@@ -52,14 +52,8 @@ public class UserService implements UserDetailsService {
         return userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Invalid User"));
     }
 
-    /**
-     * Get user by id.
-     * 
-     * @param id
-     * @return {@link User}
-     */
-    public User getUser(Long id) {
-        return userRepo.getOne(id);
+    public User getUser(Long id) throws UserNotFoundException {
+        return userRepo.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     /**
@@ -127,7 +121,7 @@ public class UserService implements UserDetailsService {
      */
     @Transactional
     public User updatePassword(Long id, String nonEncodedPassword) throws UserNotFoundException {
-        User user = userRepo.findById(id).orElseThrow(UserNotFoundException::new);
+        User user = getUser(id);
         userRepo.updatePassword(id, encodePassword(nonEncodedPassword));
         return user;
     }
