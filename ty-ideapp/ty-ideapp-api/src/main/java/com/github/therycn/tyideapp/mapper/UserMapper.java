@@ -19,10 +19,10 @@ import com.github.therycn.tyideapp.entity.User;
 @DecoratedWith(UserMapperDecorator.class)
 public interface UserMapper {
 
-	UserInfo to(User user);
+    UserInfo to(User user);
 
-	User to(UserRegistration userRegistration);
+    User to(UserRegistration userRegistration);
 
-	User updateUser(UserUpdate userUpdate, @MappingTarget User existingUser);
+    User updateUser(UserUpdate userUpdate, @MappingTarget User existingUser);
 
 }

@@ -18,8 +18,8 @@ import com.github.therycn.tyideapp.entity.geom.Circle;
 import com.google.common.collect.Iterables;
 
 /**
- * Integration Test class {@link IdeaMapper}. Use Integration Test because we
- * are using Decorator, otherwise use Mappers#getMapper.
+ * Test class {@link IdeaMapper}. Use SprIng context test because we are using
+ * Decorator, otherwise use Mappers#getMapper.
  * 
  * @author tcharass
  *
@@ -27,7 +27,7 @@ import com.google.common.collect.Iterables;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class IdeaMapperIntegrationTest {
+public class IdeaMapperTest {
 
     @Autowired
     private IdeaMapper ideaMapper;

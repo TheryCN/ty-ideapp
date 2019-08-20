@@ -11,33 +11,33 @@ import com.github.therycn.tyideapp.service.UserService;
 
 public abstract class UserMapperDecorator implements UserMapper {
 
-	@Autowired
-	@Qualifier("delegate")
-	private UserMapper delegate;
+    @Autowired
+    @Qualifier("delegate")
+    private UserMapper delegate;
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Override
-	public User to(UserRegistration userRegistration) {
-		User user = delegate.to(userRegistration);
-		user.setPassword(userService.encodePassword(userRegistration.getPassword()));
+    @Override
+    public User to(UserRegistration userRegistration) {
+        User user = delegate.to(userRegistration);
+        user.setPassword(userService.encodePassword(userRegistration.getPassword()));
 
-		return user;
-	}
+        return user;
+    }
 
-	@Override
-	public User updateUser(UserUpdate userSave, User user) {
-		String existingPassword = user.getPassword();
-		user = delegate.updateUser(userSave, user);
+    @Override
+    public User updateUser(UserUpdate userSave, User user) {
+        String existingPassword = user.getPassword();
+        user = delegate.updateUser(userSave, user);
 
-		if (!StringUtils.isEmpty(userSave.getNewPassword())) {
-			user.setPassword(userService.encodePassword(userSave.getNewPassword()));
-		} else {
-			user.setPassword(existingPassword);
-		}
+        if (!StringUtils.isEmpty(userSave.getNewPassword())) {
+            user.setPassword(userService.encodePassword(userSave.getNewPassword()));
+        } else {
+            user.setPassword(existingPassword);
+        }
 
-		return user;
-	}
+        return user;
+    }
 
 }
