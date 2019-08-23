@@ -27,7 +27,7 @@ function* register(action) {
     yield put(fetchLoggedUser(user));
   } catch (e) {
     if(e.response && e.response.data) {
-      yield put(registrationError(e.response.data));
+      yield put(registrationError(JSON.stringify(e.response.data)));
     } else {
       yield put(registrationError(e.message));
     }
