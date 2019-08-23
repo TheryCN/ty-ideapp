@@ -1,0 +1,11 @@
+[cols="2", options="header"]
+|===
+|Workspace
+|Ideas
+
+|Sport
+|Running, Cycling, ...
+
+|Career
+|Move location, learn new technologies, ...
+|===

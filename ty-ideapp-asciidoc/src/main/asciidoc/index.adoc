@@ -3,3 +3,12 @@
 Asciidoc initialization !
 
 https://asciidoctor.org/docs/asciidoc-vs-markdown/[AsciiDoc vs Markdown]
+
+= Workspace
+Groupment of ideas.
+
+= Idea
+Whatever you think about can be materialized as an idea.
+
+== Example
+include::example.adoc[]
