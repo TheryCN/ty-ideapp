@@ -5,15 +5,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ViewIcon from '@material-ui/icons/ViewArray';
 
-import IdeaBackground from '../assets/idea-background.jpg';
 import IdeaView from './IdeaView';
 import IdeaEdit from '../containers/IdeaEdit';
 import IdeaAdd from '../containers/IdeaAdd';
 import './Idea.css';
-
-const ideaBackgroundStyle = {
-  background: "url(" + IdeaBackground + ") no-repeat fixed center"
-};
 
 export const ACTION_TYPE_ADD = 'ADD';
 export const ACTION_TYPE_EDIT = 'EDIT';
@@ -21,8 +16,12 @@ export const ACTION_TYPE_EDIT = 'EDIT';
 class Idea extends Component {
 
   render() {
+    let ideaBackgroundStyle = {
+      background: "url(/images/idea-background-1.jpg) no-repeat fixed center"
+    };
     const idea = this.props.ideas.filter(idea => idea.id === this.props.selectedIndex)[0];
     if(idea) {
+      ideaBackgroundStyle.background = "url(/images/idea-background-" + idea.id%6 + ".jpg) no-repeat fixed center";
       let ideaViewAction;
       switch(this.props.actionType) {
         case ACTION_TYPE_EDIT:
