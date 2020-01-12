@@ -6,7 +6,7 @@ import { fetchLoggedUser, beforeFetchLoggedUser } from '../actions/userActions';
 
 export const loadLoggedUserCall = (dispatch) => {
   dispatch(beforeFetchLoggedUser())
-  axios.get(process.env.REACT_APP_BACKEND+'/api/user/').then(response => {
+  axios.get(process.env.REACT_APP_BACKEND+'/api/users/').then(response => {
     dispatch(fetchLoggedUser(response.data));
   }, error => {
     dispatch(fetchLoggedUser(undefined));

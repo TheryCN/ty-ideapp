@@ -17,52 +17,52 @@ import com.github.therycn.tyideapp.entity.User;
 @DataJpaTest
 public class UserRepositoryTest {
 
-    @Autowired
-    private TestEntityManager entityManager;
+	@Autowired
+	private TestEntityManager entityManager;
 
-    @Autowired
-    private UserRepository userRepo;
+	@Autowired
+	private UserRepository userRepo;
 
-    private User user;
+	private User user;
 
-    @Before
-    public void setUp() {
-        user = new User(null, "Thery", "thery@github.com", "ChangeIt#01Encoded");
-        user = entityManager.persist(user);
-    }
+	@Before
+	public void setUp() {
+		user = new User(null, "Thery", "thery@github.com", "ChangeIt#01Encoded");
+		user = entityManager.persist(user);
+	}
 
-    @Test
-    public void findByUsername_UserExists_User() {
-        // Given
-        // When
-        Optional<User> requestedUser = userRepo.findByUsername(user.getUsername());
+	@Test
+	public void whenFindByUsername_thenReturnUser() {
+		// Given
+		// When
+		Optional<User> requestedUser = userRepo.findByUsername(user.getUsername());
 
-        // Then
-        Assertions.assertThat(requestedUser.get()).isEqualTo(user);
-    }
+		// Then
+		Assertions.assertThat(requestedUser.get()).isEqualTo(user);
+	}
 
-    @Test
-    public void updatePassword_UserExists_1() {
-        // Given
-        String newPassword = "ChangeIt#02Encoded";
+	@Test
+	public void whenUpdatePassword_thenReturnOne() {
+		// Given
+		String newPassword = "ChangeIt#02Encoded";
 
-        // When
-        int result = userRepo.updatePassword(user.getId(), newPassword);
+		// When
+		int result = userRepo.updatePassword(user.getId(), newPassword);
 
-        // Then
-        Assertions.assertThat(result).isEqualTo(1);
-    }
+		// Then
+		Assertions.assertThat(result).isEqualTo(1);
+	}
 
-    @Test
-    public void updatePassword_UserNotExists_0() {
-        // Given
-        String newPassword = "ChangeIt#02Encoded";
+	@Test
+	public void whenUpdatePassword_thenReturnZero() {
+		// Given
+		String newPassword = "ChangeIt#02Encoded";
 
-        // When
-        int result = userRepo.updatePassword(-1l, newPassword);
+		// When
+		int result = userRepo.updatePassword(-1l, newPassword);
 
-        // Then
-        Assertions.assertThat(result).isEqualTo(0);
-    }
+		// Then
+		Assertions.assertThat(result).isEqualTo(0);
+	}
 
 }

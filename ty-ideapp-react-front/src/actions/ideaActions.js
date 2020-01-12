@@ -32,7 +32,7 @@ export const deleteIdea = ideaId => ({
 });
 
 export const fetchIdeasCall = (dispatch, workspaceId) => {
-  axios.get(process.env.REACT_APP_BACKEND+'/api/workspaces/'+workspaceId+'/ideas').then(response => {
+  axios.get(process.env.REACT_APP_BACKEND+'/api/data-rest/workspaces/'+workspaceId+'/ideas').then(response => {
     dispatch(fetchIdeas(response.data._embedded.ideas));
   });
 }

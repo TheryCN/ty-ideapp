@@ -11,9 +11,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.github.therycn.tyideapp.repository.UserRepository;
 
 /**
  * Spring context + Endpoint tests.
@@ -26,27 +29,31 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ActiveProfiles("test")
 public class TyIdeappApplicationTests extends AbstractIntegrationTest {
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
-    @Test
-    public void contextLoads() {
-    }
+	@Autowired
+	private UserRepository userRepository;
 
-    /**
-     * Test /workspace/ Endpoint.
-     */
-    @Test
-    public void getWorkspaces_WorkspacesArePresents_WorkspaceListItemList() {
-        // Given
-        HttpHeaders headers = createHeaders();
+	@Test
+	public void contextLoads() {
+	}
 
-        // When
-        ResponseEntity<WorkspaceListItem[]> response = restTemplate.exchange("/workspace/", HttpMethod.GET,
-                new HttpEntity<Object>(headers), WorkspaceListItem[].class);
+	/**
+	 * Test /workspace/ Endpoint.
+	 */
+	@Test
+	public void whenGetWorkspaces_thenReturnWorkspaceListItemList() {
+		// Given
+		HttpHeaders headers = createHeaders();
+		userRepository.findAll();
+		// When
+		ResponseEntity<WorkspaceListItem[]> response = restTemplate.exchange("/workspaces/", HttpMethod.GET,
+				new HttpEntity<Object>(headers), WorkspaceListItem[].class);
 
-        // Then
-        assertThat(response.getBody().length).isEqualTo(2);
-    }
+		// Then
+		assertThat(response.getStatusCode()).isEqualByComparingTo(HttpStatus.OK);
+		assertThat(response.getBody().length).isEqualTo(2);
+	}
 
 }

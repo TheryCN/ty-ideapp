@@ -18,8 +18,6 @@ import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.mapper.WorkspaceMapper;
 import com.github.therycn.tyideapp.repository.WorkspaceRepository;
 
-import lombok.AllArgsConstructor;
-
 /**
  * Workspace Rest Controller.
  * 
@@ -27,24 +25,28 @@ import lombok.AllArgsConstructor;
  *
  */
 @RestController
-@RequestMapping("/workspace")
-@AllArgsConstructor
+@RequestMapping("/workspaces")
 public class WorkspaceRestController {
 
-    private WorkspaceMapper workspaceMapper;
+	private WorkspaceMapper workspaceMapper;
 
-    private WorkspaceRepository workspaceRepo;
+	private WorkspaceRepository workspaceRepository;
 
-    @GetMapping("/")
-    public List<WorkspaceListItem> list(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        return workspaceRepo.findByUserIdOrderByName(user.getId()).stream().map(workspaceMapper::to)
-                .collect(Collectors.toList());
-    }
+	public WorkspaceRestController(WorkspaceMapper workspaceMapper, WorkspaceRepository workspaceRepository) {
+		this.workspaceMapper = workspaceMapper;
+		this.workspaceRepository = workspaceRepository;
+	}
 
-    @PostMapping("/")
-    public WorkspaceListItem save(@Valid @RequestBody WorkspaceSave workspace, Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        return workspaceMapper.to(workspaceRepo.save(workspaceMapper.to(workspace, user)));
-    }
+	@GetMapping("/")
+	public List<WorkspaceListItem> list(Authentication authentication) {
+		User user = (User) authentication.getPrincipal();
+		return workspaceRepository.findByUserIdOrderByName(user.getId()).stream().map(workspaceMapper::to)
+				.collect(Collectors.toList());
+	}
+
+	@PostMapping("/")
+	public WorkspaceListItem save(@Valid @RequestBody WorkspaceSave workspace, Authentication authentication) {
+		User user = (User) authentication.getPrincipal();
+		return workspaceMapper.to(workspaceRepository.save(workspaceMapper.to(workspace, user)));
+	}
 }

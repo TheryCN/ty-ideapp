@@ -18,7 +18,7 @@ import com.github.therycn.tyideapp.entity.geom.Circle;
 import com.google.common.collect.Iterables;
 
 /**
- * Test class {@link IdeaMapper}. Use SprIng context test because we are using
+ * Test class {@link IdeaMapper}. Use Spring context test because we are using
  * Decorator, otherwise use Mappers#getMapper.
  * 
  * @author tcharass
@@ -29,55 +29,55 @@ import com.google.common.collect.Iterables;
 @ActiveProfiles("test")
 public class IdeaMapperTest {
 
-    @Autowired
-    private IdeaMapper ideaMapper;
+	@Autowired
+	private IdeaMapper ideaMapper;
 
-    /**
-     * Test method {@link IdeaMapper#to(Idea)}.
-     */
-    @Test
-    public void to_IdeaWithLocalizations_IdeaSave() {
-        // Given
-        Idea idea = new Idea();
-        idea.setName("Test");
-        idea.setLocalizations(new ArrayList<>());
+	/**
+	 * Test method {@link IdeaMapper#to(Idea)}.
+	 */
+	@Test
+	public void whenTo_IdeaWithLocalizations_thenReturnIdeaSave() {
+		// Given
+		Idea idea = new Idea();
+		idea.setName("Test");
+		idea.setLocalizations(new ArrayList<>());
 
-        Circle circle = new Circle();
-        circle.setRadius(2d);
-        circle.setCoordinates(new Double[] { 1d, 1d });
-        idea.getLocalizations().add(circle);
+		Circle circle = new Circle();
+		circle.setRadius(2d);
+		circle.setCoordinates(new Double[] { 1d, 1d });
+		idea.getLocalizations().add(circle);
 
-        // When
-        IdeaSave ideaSave = ideaMapper.to(idea);
+		// When
+		IdeaSave ideaSave = ideaMapper.to(idea);
 
-        // Then
-        assertThat(ideaSave.getLocalizations().size()).isEqualTo(1);
-        // Check that Radius is correctly setted
-        assertThat(ideaSave.getLocalizations().get(0).getRadius()).isEqualTo(2d);
-    }
+		// Then
+		assertThat(ideaSave.getLocalizations().size()).isEqualTo(1);
+		// Check that Radius is correctly setted
+		assertThat(ideaSave.getLocalizations().get(0).getRadius()).isEqualTo(2d);
+	}
 
-    /**
-     * Test method {@link IdeaMapper#to(IdeaSave)}.
-     */
-    @Test
-    public void to_IdeaSaveWithLocalizations_Idea() {
-        // Given
-        IdeaSave ideaSave = new IdeaSave();
-        ideaSave.setName("Test");
-        ideaSave.setLocalizations(new ArrayList<>());
+	/**
+	 * Test method {@link IdeaMapper#to(IdeaSave)}.
+	 */
+	@Test
+	public void whenTo_IdeaSaveWithLocalizations_thenReturnIdea() {
+		// Given
+		IdeaSave ideaSave = new IdeaSave();
+		ideaSave.setName("Test");
+		ideaSave.setLocalizations(new ArrayList<>());
 
-        CircleSave circleSave = new CircleSave();
-        circleSave.setRadius(2d);
-        circleSave.setCoordinates(new Double[] { 1d, 1d });
-        ideaSave.getLocalizations().add(circleSave);
+		CircleSave circleSave = new CircleSave();
+		circleSave.setRadius(2d);
+		circleSave.setCoordinates(new Double[] { 1d, 1d });
+		ideaSave.getLocalizations().add(circleSave);
 
-        // When
-        Idea idea = ideaMapper.to(ideaSave);
+		// When
+		Idea idea = ideaMapper.to(ideaSave);
 
-        // Then
-        assertThat(idea.getLocalizations().size()).isEqualTo(1);
-        // Check that the object reference has been updated
-        assertThat(Iterables.get(idea.getLocalizations(), 0).getIdea()).isEqualTo(idea);
-    }
+		// Then
+		assertThat(idea.getLocalizations().size()).isEqualTo(1);
+		// Check that the object reference has been updated
+		assertThat(Iterables.get(idea.getLocalizations(), 0).getIdea()).isEqualTo(idea);
+	}
 
 }

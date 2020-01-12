@@ -33,7 +33,7 @@ export const deleteWorkspace = workspaceId => ({
 });
 
 export const fetchWorkspacesCall = (dispatch) => {
-  axios.get(process.env.REACT_APP_BACKEND+'/api/workspace/').then(response => {
+  axios.get(process.env.REACT_APP_BACKEND+'/api/workspaces/').then(response => {
     dispatch(fetchWorkspaces(response.data));
   });
 }

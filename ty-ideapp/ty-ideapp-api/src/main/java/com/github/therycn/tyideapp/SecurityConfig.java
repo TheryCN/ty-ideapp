@@ -39,11 +39,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/swagger*", "/webjars/**", "/swagger-resources/**", "/configuration/security/**",
 						"/v2/api-docs")
-				.permitAll().antMatchers(HttpMethod.POST, "/user/").permitAll().antMatchers("/login*").permitAll()
+				.permitAll().antMatchers(HttpMethod.POST, "/users/").permitAll().antMatchers("/login*").permitAll()
 				.anyRequest().authenticated().and().logout().permitAll()
 				.logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))).and().formLogin()
-				.defaultSuccessUrl("/user/").and().httpBasic().and().cors().configurationSource(request -> corsConfig())
-				.and().csrf().disable();
+				.defaultSuccessUrl("/users/").and().httpBasic().and().cors()
+				.configurationSource(request -> corsConfig()).and().csrf().disable();
 	}
 
 	/*

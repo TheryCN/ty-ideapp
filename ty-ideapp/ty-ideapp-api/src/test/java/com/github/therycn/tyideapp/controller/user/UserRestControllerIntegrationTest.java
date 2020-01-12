@@ -40,155 +40,156 @@ import com.github.therycn.tyideapp.repository.UserRepository;
 @ActiveProfiles("test")
 public class UserRestControllerIntegrationTest extends AbstractIntegrationTest {
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+	@Autowired
+	private TestRestTemplate restTemplate;
 
-    @Autowired
-    private UserRepository userRepo;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Before
-    public void setUp() {
-        // Hack for PATCH requests
-        restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-    }
+	@Before
+	public void setUp() {
+		// Hack for PATCH requests
+		restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+	}
 
-    /**
-     * Test /user/ Endpoint.
-     */
-    @Test
-    public void getLoggedUser_UserIsLogged_UserInfo() {
-        // Given
-        UserInfo expectedUserInfo = new UserInfo(1l, "Thery");
-        HttpHeaders headers = createHeaders();
+	/**
+	 * Test /users/ Endpoint.
+	 */
+	@Test
+	public void whenGetLoggedUser_thenReturnUserInfo() {
+		// Given
+		UserInfo expectedUserInfo = new UserInfo(1l, "Thery");
+		HttpHeaders headers = createHeaders();
 
-        // When
-        ResponseEntity<UserInfo> responseEntity = restTemplate.exchange("/user/", HttpMethod.GET,
-                new HttpEntity<Object>(headers), UserInfo.class);
+		// When
+		ResponseEntity<UserInfo> responseEntity = restTemplate.exchange("/users/", HttpMethod.GET,
+				new HttpEntity<Object>(headers), UserInfo.class);
 
-        // Then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(responseEntity.getBody()).isEqualTo(expectedUserInfo);
-    }
+		// Then
+		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(responseEntity.getBody()).isEqualTo(expectedUserInfo);
+	}
 
-    @Test
-    public void getLoggedUser_UserIsNotLogged_Forbidden() {
-        // Given
-        // When
-        ResponseEntity<UserInfo> responseEntity = restTemplate.exchange("/user/", HttpMethod.GET, null, UserInfo.class);
+	@Test
+	public void whenGetLoggedUser_thenReturnForbidden() {
+		// Given
+		// When
+		ResponseEntity<UserInfo> responseEntity = restTemplate.exchange("/users/", HttpMethod.GET, null,
+				UserInfo.class);
 
-        // Then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-    }
+		// Then
+		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+	}
 
-    /**
-     * Test /user/password Endpoint.
-     */
-    @Test
-    public void patchUpdatePassword_OldPasswordIsOkAndLoggedUserFound_UserInfo() {
-        // Given
-        User user = userRepo.findById(1L).orElse(null);
-        HttpHeaders headers = createHeaders();
-        UserInfo expectedUserInfo = new UserInfo(1l, "Thery");
+	/**
+	 * Test /users/password Endpoint.
+	 */
+	@Test
+	public void whenPatchUpdatePassword_thenReturnUserInfo() {
+		// Given
+		User user = userRepository.findById(1L).orElse(null);
+		HttpHeaders headers = createHeaders();
+		UserInfo expectedUserInfo = new UserInfo(1l, "Thery");
 
-        try {
-            // When
-            ResponseEntity<UserInfo> responseEntity = restTemplate.exchange("/user/password", HttpMethod.PATCH,
-                    new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt01", "ChangeIt"), headers), UserInfo.class);
+		try {
+			// When
+			ResponseEntity<UserInfo> responseEntity = restTemplate.exchange("/users/password", HttpMethod.PATCH,
+					new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt01", "ChangeIt"), headers), UserInfo.class);
 
-            // Then
-            assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-            assertThat(responseEntity.getBody()).isEqualTo(expectedUserInfo);
-        } finally {
-            // Reset password
-            userRepo.save(user);
-        }
-    }
+			// Then
+			assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+			assertThat(responseEntity.getBody()).isEqualTo(expectedUserInfo);
+		} finally {
+			// Reset password
+			userRepository.save(user);
+		}
+	}
 
-    /**
-     * Test /user/password Endpoint + ValidationException Handler.
-     */
-    @Test
-    public void patchUpdatePassword_OldPasswordIsWrong_BadRequest() {
-        // Given
-        HttpHeaders headers = createHeaders();
+	/**
+	 * Test /users/password Endpoint + ValidationException Handler.
+	 */
+	@Test
+	public void whenPatchUpdatePassword_thenReturnBadRequest() {
+		// Given
+		HttpHeaders headers = createHeaders();
 
-        // When
-        ResponseEntity<String> response = restTemplate.exchange("/user/password", HttpMethod.PATCH,
-                new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt", "ChangeIt#Old"), headers), String.class);
+		// When
+		ResponseEntity<String> response = restTemplate.exchange("/users/password", HttpMethod.PATCH,
+				new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt", "ChangeIt#Old"), headers), String.class);
 
-        // Then
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    }
+		// Then
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
 
-    @Test
-    public void patchUpdatePassword_UserIsNotLogged_Forbidden() {
-        // Given
+	@Test
+	public void whenPatchUpdatePassword_thenReturnForbidden() {
+		// Given
 
-        // When
-        ResponseEntity<String> response = restTemplate.exchange("/user/password", HttpMethod.PATCH,
-                new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt", "ChangeIt#Old"), null), String.class);
+		// When
+		ResponseEntity<String> response = restTemplate.exchange("/users/password", HttpMethod.PATCH,
+				new HttpEntity<Object>(new UserPasswordUpdate("ChangeIt", "ChangeIt#Old"), null), String.class);
 
-        // Then
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
-    }
+		// Then
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
+	}
 
-    /**
-     * Test /user/ Endpoint for user registration.
-     */
-    @Test
-    public void postRegister_UserRegistrationIsOk_CreatedUserInfo() {
-        // Given - Auth not required to create a new user
-        UserRegistration userRegistration = UserRegistration.builder().username("Thery#2").password("ChangeIt001")
-                .build();
+	/**
+	 * Test /users/ Endpoint for user registration.
+	 */
+	@Test
+	public void whenPostRegister_thenReturnCreatedUserInfo() {
+		// Given - Auth not required to create a new user
+		UserRegistration userRegistration = UserRegistration.builder().username("Thery#2").password("ChangeIt001")
+				.build();
 
-        // When
-        ResponseEntity<UserInfo> responseEntity = restTemplate.exchange("/user/", HttpMethod.POST,
-                new HttpEntity<Object>(userRegistration), UserInfo.class);
+		// When
+		ResponseEntity<UserInfo> responseEntity = restTemplate.exchange("/users/", HttpMethod.POST,
+				new HttpEntity<Object>(userRegistration), UserInfo.class);
 
-        // Then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(responseEntity.getBody().getUsername()).isEqualTo("Thery#2");
-    }
+		// Then
+		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+		assertThat(responseEntity.getBody().getUsername()).isEqualTo("Thery#2");
+	}
 
-    /**
-     * Test /user/ Endpoint for user registration ko because password has no
-     * digits.
-     */
-    @Test
-    public void postRegister_PasswordLengthKO_BadRequest() {
-        // Given - Auth not required to create a new user
-        UserRegistration userRegistration = UserRegistration.builder().username("Thery#2").password("ChangeIt").build();
+	/**
+	 * Test /users/ Endpoint for user registration ko because password has no
+	 * digits.
+	 */
+	@Test
+	public void whenPostRegister_PasswordLengthKO_thenReturnBadRequest() {
+		// Given - Auth not required to create a new user
+		UserRegistration userRegistration = UserRegistration.builder().username("Thery#2").password("ChangeIt").build();
 
-        Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("password", "Add a numeric");
+		Map<String, String> errorMap = new HashMap<>();
+		errorMap.put("password", "Add a numeric");
 
-        // When
-        ParameterizedTypeReference<Map<String, String>> mapTypeRef = new ParameterizedTypeReference<Map<String, String>>() {
-        };
+		// When
+		ParameterizedTypeReference<Map<String, String>> mapTypeRef = new ParameterizedTypeReference<Map<String, String>>() {
+		};
 
-        ResponseEntity<Map<String, String>> responseEntity = restTemplate.exchange("/user/", HttpMethod.POST,
-                new HttpEntity<Object>(userRegistration), mapTypeRef);
+		ResponseEntity<Map<String, String>> responseEntity = restTemplate.exchange("/users/", HttpMethod.POST,
+				new HttpEntity<Object>(userRegistration), mapTypeRef);
 
-        // Then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-        assertThat(responseEntity.getBody()).isEqualTo(errorMap);
-    }
+		// Then
+		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+		assertThat(responseEntity.getBody()).isEqualTo(errorMap);
+	}
 
-    /**
-     * Test /user/ Endpoint for user registration ko because username is already
-     * used.
-     */
-    @Test
-    public void postRegister_UsernameAlreadyExists_Conflict() {
-        // Given - Auth not required to create a new user
-        UserRegistration userRegistration = UserRegistration.builder().username("Thery").password("ChangeIt001")
-                .build();
+	/**
+	 * Test /users/ Endpoint for user registration ko because username is already
+	 * used.
+	 */
+	@Test
+	public void whenPostRegister_UsernameAlreadyExists_thenReturnBadRequest() {
+		// Given - Auth not required to create a new user
+		UserRegistration userRegistration = UserRegistration.builder().username("Thery").password("ChangeIt001")
+				.build();
 
-        // When
-        ResponseEntity<String> response = restTemplate.exchange("/user/", HttpMethod.POST,
-                new HttpEntity<Object>(userRegistration), String.class);
+		// When
+		ResponseEntity<String> response = restTemplate.exchange("/users/", HttpMethod.POST,
+				new HttpEntity<Object>(userRegistration), String.class);
 
-        // Then
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
-    }
+		// Then
+		assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
 }

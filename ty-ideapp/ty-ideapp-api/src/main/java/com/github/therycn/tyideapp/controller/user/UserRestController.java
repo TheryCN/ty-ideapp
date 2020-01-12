@@ -16,14 +16,13 @@ import com.github.therycn.tyideapp.UserInfo;
 import com.github.therycn.tyideapp.UserPasswordUpdate;
 import com.github.therycn.tyideapp.UserRegistration;
 import com.github.therycn.tyideapp.entity.User;
-import com.github.therycn.tyideapp.exception.UserNotFoundException;
-import com.github.therycn.tyideapp.exception.UserWrongOldPasswordException;
-import com.github.therycn.tyideapp.exception.UsernameAlreadyExistsException;
+import com.github.therycn.tyideapp.exception.notfound.UserNotFoundException;
+import com.github.therycn.tyideapp.exception.validation.UserWrongOldPasswordException;
+import com.github.therycn.tyideapp.exception.validation.UsernameAlreadyExistsException;
 import com.github.therycn.tyideapp.mapper.UserMapper;
 import com.github.therycn.tyideapp.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
-import lombok.AllArgsConstructor;
 
 /**
  * User Rest Controller.
@@ -32,45 +31,49 @@ import lombok.AllArgsConstructor;
  *
  */
 @RestController
-@RequestMapping("/user")
-@AllArgsConstructor
+@RequestMapping("/users")
 public class UserRestController {
 
-    private UserMapper userMapper;
+	private UserMapper userMapper;
 
-    private UserService userService;
+	private UserService userService;
 
-    @ApiOperation(value = "Get user details")
-    @GetMapping("/")
-    public ResponseEntity<UserInfo> getLoggedUser(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(userMapper.to(user));
-    }
+	public UserRestController(UserMapper userMapper, UserService userService) {
+		this.userMapper = userMapper;
+		this.userService = userService;
+	}
 
-    @ApiOperation(value = "User registration")
-    @PostMapping("/")
-    public ResponseEntity<UserInfo> register(@Valid @RequestBody UserRegistration userRegistration)
-            throws UsernameAlreadyExistsException {
-        // Map to a user object
-        User userToCreate = userMapper.to(userRegistration);
+	@ApiOperation(value = "Get user details")
+	@GetMapping("/")
+	public ResponseEntity<UserInfo> getLoggedUser(Authentication authentication) {
+		User user = (User) authentication.getPrincipal();
+		return ResponseEntity.ok(userMapper.to(user));
+	}
 
-        // Save it with functionals checks
-        return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.to(userService.create(userToCreate)));
-    }
+	@ApiOperation(value = "User registration")
+	@PostMapping("/")
+	public ResponseEntity<UserInfo> register(@Valid @RequestBody UserRegistration userRegistration)
+			throws UsernameAlreadyExistsException {
+		// Map to a user object
+		User userToCreate = userMapper.to(userRegistration);
 
-    @ApiOperation(value = "Update user password")
-    @PatchMapping("/password")
-    public ResponseEntity<UserInfo> updatePassword(@Valid @RequestBody UserPasswordUpdate passwordUpdate,
-            Authentication authentication) throws UserWrongOldPasswordException, UserNotFoundException {
-        // Retrieve logged user
-        User user = (User) authentication.getPrincipal();
+		// Save it with functionals checks
+		return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.to(userService.create(userToCreate)));
+	}
 
-        if (!userService.checkOldPasswordEq(user, passwordUpdate.getOldPassword())) {
-            throw new UserWrongOldPasswordException();
-        }
+	@ApiOperation(value = "Update user password")
+	@PatchMapping("/password")
+	public ResponseEntity<UserInfo> updatePassword(@Valid @RequestBody UserPasswordUpdate passwordUpdate,
+			Authentication authentication) throws UserWrongOldPasswordException, UserNotFoundException {
+		// Retrieve logged user
+		User user = (User) authentication.getPrincipal();
 
-        User updatedUser = userService.updatePassword(user.getId(), passwordUpdate.getNewPassword());
-        return ResponseEntity.ok(userMapper.to(updatedUser));
-    }
+		if (!userService.checkOldPasswordEq(user, passwordUpdate.getOldPassword())) {
+			throw new UserWrongOldPasswordException();
+		}
+
+		User updatedUser = userService.updatePassword(user.getId(), passwordUpdate.getNewPassword());
+		return ResponseEntity.ok(userMapper.to(updatedUser));
+	}
 
 }

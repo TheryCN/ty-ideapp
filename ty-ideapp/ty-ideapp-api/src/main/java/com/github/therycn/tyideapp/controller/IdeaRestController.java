@@ -12,8 +12,6 @@ import com.github.therycn.tyideapp.IdeaSave;
 import com.github.therycn.tyideapp.mapper.IdeaMapper;
 import com.github.therycn.tyideapp.repository.IdeaRepository;
 
-import lombok.AllArgsConstructor;
-
 /**
  * Idea Rest Controller.
  * 
@@ -21,18 +19,22 @@ import lombok.AllArgsConstructor;
  *
  */
 @RestController
-@RequestMapping("/idea")
+@RequestMapping("/ideas")
 @CrossOrigin
-@AllArgsConstructor
 public class IdeaRestController {
 
-    private IdeaRepository ideaRepo;
+	private IdeaRepository ideaRepo;
 
-    private IdeaMapper ideaMapper;
+	private IdeaMapper ideaMapper;
 
-    @PostMapping("/")
-    public IdeaSave save(@Valid @RequestBody IdeaSave idea) {
-        return ideaMapper.to(ideaRepo.save(ideaMapper.to(idea)));
-    }
+	public IdeaRestController(IdeaRepository ideaRepo, IdeaMapper ideaMapper) {
+		this.ideaRepo = ideaRepo;
+		this.ideaMapper = ideaMapper;
+	}
+
+	@PostMapping("/")
+	public IdeaSave save(@Valid @RequestBody IdeaSave idea) {
+		return ideaMapper.to(ideaRepo.save(ideaMapper.to(idea)));
+	}
 
 }

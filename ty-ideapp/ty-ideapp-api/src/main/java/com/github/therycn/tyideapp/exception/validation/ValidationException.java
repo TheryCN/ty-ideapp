@@ -1,4 +1,6 @@
-package com.github.therycn.tyideapp.exception;
+package com.github.therycn.tyideapp.exception.validation;
+
+import com.github.therycn.tyideapp.exception.RecoverableException;
 
 /**
  * Validation Exception.

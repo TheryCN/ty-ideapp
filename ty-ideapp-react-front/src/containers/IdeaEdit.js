@@ -7,7 +7,7 @@ import { notify } from '../actions/notificationActions';
 
 export const fetchPostIdeaCall = (dispatch, idea, workspaceId) => {
   idea.workspaceId = workspaceId;
-  axios.post(process.env.REACT_APP_BACKEND+'/api/idea/', idea).then(response => {
+  axios.post(process.env.REACT_APP_BACKEND+'/api/ideas/', idea).then(response => {
     dispatch(editIdea(response.data));
     dispatch(notify("Idea edited"));
   });
