@@ -4,15 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * IDEAPP Application.
- * 
- * @author TheryLeopard
- *
+ * IdeApp Application.
  */
 @SpringBootApplication
 public class TyIdeappApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TyIdeappApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(TyIdeappApplication.class, args);
+    }
 }

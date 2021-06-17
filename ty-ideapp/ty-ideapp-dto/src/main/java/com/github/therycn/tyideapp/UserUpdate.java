@@ -1,16 +1,13 @@
 package com.github.therycn.tyideapp;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 /**
  * User Update.
- * 
- * @author THERY
- *
  */
 @Getter
 @Setter

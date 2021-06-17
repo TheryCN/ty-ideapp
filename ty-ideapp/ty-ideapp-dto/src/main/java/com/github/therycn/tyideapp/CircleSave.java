@@ -5,18 +5,15 @@ import lombok.Setter;
 
 /**
  * Circle Save.
- * 
- * @author tcharass
- *
  */
 @Getter
 @Setter
 public class CircleSave {
 
-	private Long id;
+    private Long id;
 
-	private Double[] coordinates;
+    private Double[] coordinates;
 
-	private Double radius;
+    private Double radius;
 
 }

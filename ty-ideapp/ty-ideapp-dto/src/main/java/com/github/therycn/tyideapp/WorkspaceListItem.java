@@ -5,17 +5,14 @@ import lombok.Setter;
 
 /**
  * Workspace List Item.
- * 
- * @author THERY
- *
  */
 @Getter
 @Setter
 public class WorkspaceListItem {
 
-	private Long id;
+    private Long id;
 
-	private String name;
+    private String name;
 
-	private int nbIdeas;
+    private int nbIdeas;
 }

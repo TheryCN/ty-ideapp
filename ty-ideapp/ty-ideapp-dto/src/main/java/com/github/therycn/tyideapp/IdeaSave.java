@@ -1,18 +1,14 @@
 package com.github.therycn.tyideapp;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.validation.constraints.NotEmpty;
-
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Idea Save.
- * 
- * @author TheryLeopard
- *
  */
 @Getter
 @Setter

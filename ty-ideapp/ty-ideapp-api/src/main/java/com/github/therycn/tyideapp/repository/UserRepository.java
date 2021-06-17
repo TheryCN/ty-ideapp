@@ -1,19 +1,17 @@
 package com.github.therycn.tyideapp.repository;
 
-import java.util.Optional;
-
+import com.github.therycn.tyideapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.github.therycn.tyideapp.entity.User;
+import java.util.Optional;
 
 /**
  * User Repository.
- * 
- * @author tcharass
  *
+ * @author tcharass
  */
 public interface UserRepository extends JpaRepository<User, Long> {
 

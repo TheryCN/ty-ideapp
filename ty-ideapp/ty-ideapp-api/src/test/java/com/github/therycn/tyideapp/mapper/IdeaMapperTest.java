@@ -20,8 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Test class {@link IdeaMapper}. Use Spring context test because we are using
  * Decorator, otherwise use Mappers#getMapper.
- *
- * @author tcharass
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest

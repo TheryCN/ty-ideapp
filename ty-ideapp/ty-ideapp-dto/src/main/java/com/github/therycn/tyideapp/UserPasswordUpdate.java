@@ -1,17 +1,14 @@
 package com.github.therycn.tyideapp;
 
-import javax.validation.constraints.NotEmpty;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * User Password Update.
- * 
- * @author TheryLeopard
- *
  */
 @Getter
 @Setter

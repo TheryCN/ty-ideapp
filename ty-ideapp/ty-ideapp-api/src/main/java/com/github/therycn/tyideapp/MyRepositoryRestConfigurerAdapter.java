@@ -1,19 +1,15 @@
 package com.github.therycn.tyideapp;
 
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 
+import javax.persistence.EntityManager;
+import java.util.stream.Collectors;
+
 /**
  * Repository Rest Configurer Adapter, used to add entities ids.
- * 
- * @author TheryLeopard
- *
  */
 @Configuration
 public class MyRepositoryRestConfigurerAdapter implements RepositoryRestConfigurer {
