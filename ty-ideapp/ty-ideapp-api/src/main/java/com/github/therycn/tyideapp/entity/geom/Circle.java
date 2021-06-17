@@ -9,9 +9,6 @@ import lombok.Setter;
 
 /**
  * Circle.
- * 
- * @author tcharass
- *
  */
 @Entity
 @DiscriminatorValue("CIRCLE")

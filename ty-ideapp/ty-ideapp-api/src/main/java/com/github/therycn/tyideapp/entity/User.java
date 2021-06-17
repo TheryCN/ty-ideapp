@@ -1,54 +1,31 @@
 package com.github.therycn.tyideapp.entity;
 
-import java.util.Collection;
-
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Collection;
 
 /**
  * Application User.
- * 
- * @author tcharass
- *
  */
 @Table(name = "APP_USER")
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-@AttributeOverrides({
-        @AttributeOverride(name = "createdOn", column = @Column(name = "USR_CREATED_ON", updatable = false)),
-        @AttributeOverride(name = "updatedOn", column = @Column(name = "USR_UPDATED_ON")),
-        @AttributeOverride(name = "createdBy", column = @Column(name = "USR_CREATED_BY", updatable = false)),
-        @AttributeOverride(name = "modifiedBy", column = @Column(name = "USR_MODIFIED_BY")) })
+@AttributeOverride(name = "id", column = @Column(name = "USR_ID"))
 @EqualsAndHashCode(callSuper = false)
-public class User extends AbstractEntity<Long> implements UserDetails {
+public class User extends AbstractAuditableEntity<Long> implements UserDetails {
 
-    /** Serial version. */
+    /**
+     * Serial version.
+     */
     private static final long serialVersionUID = 4182222775401128848L;
-
-    @Id
-    @Column(name = "USR_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(name = "USR_USERNAME", unique = true)
     private String username;
@@ -59,9 +36,23 @@ public class User extends AbstractEntity<Long> implements UserDetails {
     @Column(name = "USR_PASSWORD")
     private String password;
 
+    @Builder
+    public User(Long id, String username, String email, String password) {
+        setId(id);
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * org.springframework.security.core.userdetails.UserDetails#getAuthorities(
      * )
@@ -73,7 +64,7 @@ public class User extends AbstractEntity<Long> implements UserDetails {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.springframework.security.core.userdetails.UserDetails#
      * isAccountNonExpired ()
      */
@@ -84,7 +75,7 @@ public class User extends AbstractEntity<Long> implements UserDetails {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.springframework.security.core.userdetails.UserDetails#
      * isAccountNonLocked( )
      */
@@ -95,7 +86,7 @@ public class User extends AbstractEntity<Long> implements UserDetails {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.springframework.security.core.userdetails.UserDetails#
      * isCredentialsNonExpired()
      */
@@ -106,7 +97,7 @@ public class User extends AbstractEntity<Long> implements UserDetails {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see
      * org.springframework.security.core.userdetails.UserDetails#isEnabled()
      */
