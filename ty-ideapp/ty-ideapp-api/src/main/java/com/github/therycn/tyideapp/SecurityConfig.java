@@ -36,8 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
 
         http.authorizeRequests()
-                .antMatchers("/swagger*", "/webjars/**", "/swagger-resources/**", "/configuration/security/**",
-                        "/v2/api-docs")
+                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
                 .permitAll().antMatchers(HttpMethod.POST, "/users/").permitAll().antMatchers("/login*").permitAll()
                 .anyRequest().authenticated().and().logout().permitAll()
                 .logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))).and().formLogin()

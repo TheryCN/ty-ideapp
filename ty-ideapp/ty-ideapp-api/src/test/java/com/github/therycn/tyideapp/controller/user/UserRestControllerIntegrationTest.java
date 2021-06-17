@@ -6,9 +6,8 @@ import com.github.therycn.tyideapp.UserPasswordUpdate;
 import com.github.therycn.tyideapp.UserRegistration;
 import com.github.therycn.tyideapp.entity.User;
 import com.github.therycn.tyideapp.repository.UserRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -17,7 +16,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +25,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * UserRestController Integration Test.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 public class UserRestControllerIntegrationTest extends AbstractIntegrationTest {
@@ -38,7 +35,7 @@ public class UserRestControllerIntegrationTest extends AbstractIntegrationTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Hack for PATCH requests
         restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());

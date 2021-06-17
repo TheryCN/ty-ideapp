@@ -4,13 +4,11 @@ import com.github.therycn.tyideapp.CircleSave;
 import com.github.therycn.tyideapp.IdeaSave;
 import com.github.therycn.tyideapp.entity.Idea;
 import com.github.therycn.tyideapp.entity.geom.Circle;
-import com.google.common.collect.Iterables;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.github.therycn.tyideapp.entity.geom.Geometry;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Test class {@link IdeaMapper}. Use Spring context test because we are using
  * Decorator, otherwise use Mappers#getMapper.
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
 public class IdeaMapperTest {
@@ -74,7 +71,8 @@ public class IdeaMapperTest {
         // Then
         assertThat(idea.getLocalizations().size()).isEqualTo(1);
         // Check that the object reference has been updated
-        assertThat(Iterables.get(idea.getLocalizations(), 0).getIdea()).isEqualTo(idea);
+        Geometry geometry = idea.getLocalizations().stream().findFirst().orElseGet(null);
+        assertThat(geometry.getIdea()).isEqualTo(idea);
     }
 
 }

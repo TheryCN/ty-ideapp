@@ -22,11 +22,6 @@ import java.util.Collection;
 @EqualsAndHashCode(callSuper = false)
 public class User extends AbstractAuditableEntity<Long> implements UserDetails {
 
-    /**
-     * Serial version.
-     */
-    private static final long serialVersionUID = 4182222775401128848L;
-
     @Column(name = "USR_USERNAME", unique = true)
     private String username;
 

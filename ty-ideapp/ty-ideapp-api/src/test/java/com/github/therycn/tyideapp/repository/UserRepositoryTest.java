@@ -2,17 +2,14 @@ package com.github.therycn.tyideapp.repository;
 
 import com.github.therycn.tyideapp.entity.User;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 public class UserRepositoryTest {
 
@@ -24,7 +21,7 @@ public class UserRepositoryTest {
 
     private User user;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         user = new User(null, "Thery", "thery@github.com", "ChangeIt#01Encoded");
         user = entityManager.persist(user);

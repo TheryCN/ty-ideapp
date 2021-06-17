@@ -9,7 +9,7 @@ import com.github.therycn.tyideapp.exception.validation.UserWrongOldPasswordExce
 import com.github.therycn.tyideapp.exception.validation.UsernameAlreadyExistsException;
 import com.github.therycn.tyideapp.mapper.UserMapper;
 import com.github.therycn.tyideapp.service.UserService;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -33,14 +33,14 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @ApiOperation(value = "Get user details")
+    @Operation(summary = "Get user details")
     @GetMapping("/")
     public ResponseEntity<UserInfo> getLoggedUser(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         return ResponseEntity.ok(userMapper.to(user));
     }
 
-    @ApiOperation(value = "User registration")
+    @Operation(summary = "User registration")
     @PostMapping("/")
     public ResponseEntity<UserInfo> register(@Valid @RequestBody UserRegistration userRegistration)
             throws UsernameAlreadyExistsException {
@@ -51,7 +51,7 @@ public class UserRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userMapper.to(userService.create(userToCreate)));
     }
 
-    @ApiOperation(value = "Update user password")
+    @Operation(summary = "Update user password")
     @PatchMapping("/password")
     public ResponseEntity<UserInfo> updatePassword(@Valid @RequestBody UserPasswordUpdate passwordUpdate,
                                                    Authentication authentication) throws UserWrongOldPasswordException, UserNotFoundException {
