@@ -83,9 +83,6 @@ class IdeaForm extends Component {
           </TextField>
         </div>
         <div>
-          <IdeaMap localizations={this.props.idea.localizations} onChange={this.handleMapChange} />
-        </div>
-        <div>
           <FormControlLabel
             control={
               <Switch
@@ -96,6 +93,9 @@ class IdeaForm extends Component {
             }
             label="Achieved ?"
           />
+        </div>
+        <div>
+          <IdeaMap localizations={this.props.idea.localizations} onChange={this.handleMapChange} />
         </div>
         <div>
           <Button className="save-button" variant="contained" onClick={() => this.props.saveIdeaHandler(this.state.idea, this.props.workspaceId)}>

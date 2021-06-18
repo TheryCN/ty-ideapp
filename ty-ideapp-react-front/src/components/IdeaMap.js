@@ -6,13 +6,16 @@ import View from 'ol/View';
 import { Draw, Modify, Snap, Select } from 'ol/interaction.js';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer.js';
 import { Vector as VectorSource } from 'ol/source.js';
-import XYZ from 'ol/source/XYZ';
+import OSM from 'ol/source/OSM';
 import { Fill, Stroke, Style } from 'ol/style.js';
 import Feature from 'ol/Feature.js';
 import Circle from 'ol/geom/Circle.js';
 
 const mapStyle = {
-    margin: 10
+    marginTop: 10,
+    marginBottom: 10,
+    width: "100%",
+    height: 300
 };
 
 class IdeaMap extends Component {
@@ -46,9 +49,7 @@ class IdeaMap extends Component {
       target: 'map',
       layers: [
         new TileLayer({
-          source: new XYZ({
-            url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-          })
+          source: new OSM()
         }),
         vector
       ],
@@ -138,9 +139,13 @@ class IdeaMap extends Component {
 
   render() {
     if(this.props.readOnly) {
+      let customMapStyle = {...mapStyle};
+      if(this.props.localizations.length === 0){
+        customMapStyle = {...customMapStyle, display: "none"}
+      }
       return (
         <div>
-          <div id="map" style={mapStyle}></div>
+          <div id="map" style={customMapStyle}></div>
         </div>
       );
     } else {
