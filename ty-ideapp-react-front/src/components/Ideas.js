@@ -5,6 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
 import './Ideas.css';
 
@@ -26,9 +27,11 @@ class Ideas extends Component {
     let listItems = [];
     listItems.push(<ListItem button selected={this.props.selectedIndex === -1} key={-1}
           onClick={event => this.props.clickHandler(-1)}>
-          <Avatar>
-            <AddIcon />
-          </Avatar>
+          <ListItemAvatar>
+            <Avatar>
+              <AddIcon />
+            </Avatar>
+          </ListItemAvatar>
           <ListItemText primary="Add New Idea" />
         </ListItem>);
 
@@ -36,9 +39,11 @@ class Ideas extends Component {
       let checkIconRender = idea.achieve ? <CheckIcon /> : '';
       return <ListItem button selected={this.props.selectedIndex === idea.id} key={idea.id}
         onClick={event => this.props.clickHandler(idea.id)}>
-        <Avatar className={'rating-' + idea.rating}>
-          {checkIconRender}
-        </Avatar>
+        <ListItemAvatar>
+          <Avatar className={'rating-' + idea.rating}>
+            {checkIconRender}
+          </Avatar>
+        </ListItemAvatar>
         <ListItemText primary={idea.name} secondary={idea.subTitle} />
       </ListItem>
     }
