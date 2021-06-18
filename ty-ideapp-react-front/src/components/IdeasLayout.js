@@ -7,9 +7,16 @@ import IdeaWorkspaces from '../containers/IdeaWorkspaces.js';
 import Ideas from '../containers/Ideas.js';
 import Idea from '../containers/Idea.js';
 
+const styles = {
+  left: {
+    width: '100%',
+    maxWidth: 300
+  },
+};
+
 const IdeasLayout = () => (
   <Grid container className="layout">
-    <Grid key={1} item xs={3} sm={3} className="left-layout">
+    <Grid key={1} item xs={3} sm={3} className="left-layout" style={styles.left}>
       <FormControl>
         <IdeaWorkspaces />
         <Divider />

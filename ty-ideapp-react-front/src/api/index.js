@@ -14,7 +14,9 @@ export const registrationCall = (user) => {
   );
 }
 
-export default {
+const apis = {
   loginCall: loginCall,
   registrationCall: registrationCall
 }
+
+export default apis;
