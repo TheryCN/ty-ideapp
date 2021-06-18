@@ -16,6 +16,8 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -36,12 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint());
 
         http.authorizeRequests()
-                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
-                .permitAll().antMatchers(HttpMethod.POST, "/users/").permitAll().antMatchers("/login*").permitAll()
-                .anyRequest().authenticated().and().logout().permitAll()
-                .logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))).and().formLogin()
-                .defaultSuccessUrl("/users/").and().httpBasic().and().cors()
-                .configurationSource(request -> corsConfig()).and().csrf().disable();
+                .antMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/").permitAll()
+                .antMatchers("/login*").permitAll()
+                .anyRequest().authenticated()
+                .and().logout().permitAll().logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)))
+                .and().formLogin().defaultSuccessUrl("/users/")
+                .and().httpBasic(withDefaults()).cors().configurationSource(request -> corsConfig())
+                .and().csrf().disable();
     }
 
     /*
@@ -62,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private CorsConfiguration corsConfig() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.addAllowedOrigin("*");
+        corsConfig.addAllowedOrigin("http://localhost:3000");
         corsConfig.addAllowedMethod(HttpMethod.GET);
         corsConfig.addAllowedMethod(HttpMethod.POST);
         corsConfig.addAllowedMethod(HttpMethod.DELETE);
