@@ -62,7 +62,7 @@ class IdeaForm extends Component {
           <TextField
             label="Description"
             onChange={this.handleChange('description')}
-            value={this.state.idea.description}
+            value={this.state.idea.description || ""}
             multiline={true}
           />
         </div>
@@ -91,7 +91,7 @@ class IdeaForm extends Component {
               <Switch
                 checked={this.state.idea.achieve}
                 onChange={this.handleCheckChange('achieve')}
-                value="achieve"
+                name="achieve"
               />
             }
             label="Achieved ?"
